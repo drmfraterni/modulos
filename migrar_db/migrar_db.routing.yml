@@ -6,6 +6,15 @@ migrar_db.addform:
   requirements:
     _permission: 'access content'
 
+migrar_db.listarrecibos:
+  path: '/listarrecibos'
+  defaults:
+    _title: 'Listar todos los RECIBOS de la BBDD'
+    _controller: '\Drupal\migrar_db\Controller\migrar_dbController::listarRecibos'
+  requirements:
+    _permission: 'access content'
+
+
 migrar_db.listarusuarios:
   path: '/listarusuarios'
   defaults:
@@ -19,6 +28,14 @@ migrar_db.listarproductos:
   defaults:
     _title: 'comprobar conexión base de datos para Productos'
     _controller: '\Drupal\migrar_db\Controller\migrar_dbController::listarProductos'
+  requirements:
+    _permission: 'access content'
+
+migrar_db.listarpresencia:
+  path: '/listarpresencia'
+  defaults:
+    _title: 'comprobar conexión base de datos para la asistencia de los usuarios'
+    _controller: '\Drupal\migrar_db\Controller\migrar_dbController::listarPresencia'
   requirements:
     _permission: 'access content'
 

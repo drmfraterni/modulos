@@ -3,14 +3,22 @@
     <div class="col-md-6">
       <h1>{{ titulo }}</h1>
         <p>La cantidad de usuarios en la base de datos son: {{ cantidadTotal }}</p>
-        <p>veo por donde van los tiros</p>
         <p>{{ descripcion }}</p>
-        <h1>Usuarios en la base de datos</h1>
-    <ul>
-       {% for key, registro in registros %}
-           <li>{{ registro }}</li>
-       {% endfor %}
-   </ul>
+
+
+    {% if registros %}
+        <h1>Usuarios <strong>NUEVOS</strong> en la base de datos</h1>
+        <ul>
+            {% for key, registro in registros %}
+              <li>{{ registro }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+
+        <h2>LA BASE DE DATOS ESTÁ <strong>ACTUALIZADA</srong></h2>
+
+    {% endif %}
+
     </div>
 
 
