@@ -1,0 +1,14 @@
+campeonatos.altas:
+  path: '/alta/participante'
+  defaults:
+    _title: 'Alta Participante'
+    _controller: '\Drupal\campeonatos\Controller\CampeonatosController::alta_participante'
+  requirements:
+    _access: 'TRUE'
+campeonatos.campeonato:
+  path: '/campeonato/{clave}'
+  defaults:
+    _title: 'Alta Participante'
+    _controller: '\Drupal\campeonatos\Controller\CampeonatosController::puntos_campeonato'
+  requirements:
+    _access: 'TRUE'
