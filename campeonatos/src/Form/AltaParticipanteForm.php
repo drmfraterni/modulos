@@ -55,7 +55,7 @@ class AltaParticipanteForm extends FormBase {
 
 
 
-        var_dump($ruta);
+        //var_dump($ruta);
 
 
 
@@ -230,22 +230,61 @@ class AltaParticipanteForm extends FormBase {
     */
 
 
-    // CREAMOS UN NUEVO CONSENTIMIENTO INFORMADO
 
-    $node = Node::create([
-      'type' => 'bz_participantes',
-      'title' => $title,
-      'field_par_nombre' => $nombre,
-      'field_par_apellidos' => $apellidos,
-      'field_par_correo' => $correo,
-      'field_par_clave' => $this->clave,
-      'field_par_carnet' => $tarjeta,
-      //falta categoria//
-      'field_par_socio'=>$socio,
-      'uid' => 0,
-    ]);
-    $node->status = 1;
-    $node->save();
+    //COMPROBAMOS QUE EL USUARIO NO ESTÉ YA DADO DE ALTA.
+
+    $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+    $query->condition('type', 'bz_participantes')
+    ->condition('field_par_correo', $correo);
+    $nids = $query->execute();
+
+    /* foreach ($nids as $n) {
+      $nid = $n;
+    }
+
+    var_dump($nids);
+
+    $node = Node::load($nid);
+    $conCorreo = $node->get('field_par_correo')->value;
+    $conClave = $node->get('field_par_clave')->value;
+
+    */
+    //var_dump($nids);
+
+    if (!empty($nids)){
+      var_dump($nids);
+      foreach ($nids as $n) {
+        $nid = $n;
+      }
+      
+      $node = Node::load($nid);
+      $conCorreo = $node->get('field_par_correo')->value;
+      $conClave = $node->get('field_par_clave')->value;
+      //var_dump($node->get('field_par_correo')->value);
+      $this->clave = $conClave;
+      $this->messenger()->addStatus($this->t('HEMOS COMPROBADO QUE USTED ESTE DADO DE ALTA'));
+      $this->messenger()->addStatus($this->t('CLAVE: @clave', ['@clave' => $this->clave]));
+      $this->messenger()->addStatus($this->t('CORREO: @correo', ['@correo' => $conCorreo]));
+
+    } else {
+
+      // CREAMOS UN NUEVO USUARIO Y CLAVE DE PUNTOS
+      $node = Node::create([
+        'type' => 'bz_participantes',
+        'title' => $title,
+        'field_par_nombre' => $nombre,
+        'field_par_apellidos' => $apellidos,
+        'field_par_correo' => $correo,
+        'field_par_clave' => $this->clave,
+        'field_par_carnet' => $tarjeta,
+        //falta categoria//
+        'field_par_socio'=>$socio,
+        'uid' => 0,
+      ]);
+      $node->status = 1;
+      $node->save();
+
+    }
 
     //$node->save();
 

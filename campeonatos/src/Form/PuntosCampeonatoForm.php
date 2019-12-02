@@ -38,6 +38,8 @@ class PuntosCampeonatoForm extends FormBase {
 
   protected $textoHtmlForm = '';
 
+  protected $rellenaDatos = array();
+
 
 
   public function getFormId(){
@@ -81,6 +83,11 @@ class PuntosCampeonatoForm extends FormBase {
 
         $node = Node::load($nid);
 
+
+
+
+
+
         //SI LA CLAVE VINIERA ERRÓNEA O NO ENCUENTRA AL USUARIO
         if ($node == NULL){
           //CONTROLES DE ERRORES
@@ -93,6 +100,28 @@ class PuntosCampeonatoForm extends FormBase {
         //DATOS DEL PARTICIPANTE
         $this->datos['participante'] = $node->title->value;
         $this->datos['idparticipante'] = $nid;
+
+        // SI EXISTE YA EL USUARIO COMPROBAMOS SI YA HA RELLENADO LOS DATOS DEL FORMULARIO
+        $rForm = self::rellenarFormulario($this->datos['idparticipante']);
+        var_dump($rForm);
+        if (!empty($rForm)){
+          $rellenaDatos = Node::loadMultiple($rForm);
+          foreach ($rellenaDatos as $datos) {
+            $this->rellenarDatos['titulo'] = $datos->title->value;
+            $this->rellenarDatos['categoria'] = $datos->field_ficha_categoria->value;
+            $this->rellenarDatos['prueba'] = $datos->field_ficha_bloque_2->value;
+	          var_dump($this->rellenarDatos);
+          }
+
+
+
+        }
+
+
+        //$node = Node::load($nid);
+
+        //var_dump($node);
+
 
         // SACAR DATOS DE LA TAXONOMÍA
         $query = \Drupal::entityQuery('taxonomy_term');
@@ -790,6 +819,20 @@ class PuntosCampeonatoForm extends FormBase {
     $form_state->setRebuild();
 
   }
+
+  //*******FUNCIÓN PARA GENERAR CLAVE*************//
+  function rellenarFormulario ($participante){
+
+    $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+    $query->condition('type', 'bz_plantilla_bloques_competicion')
+    ->condition('field_ficha', $participante);
+    $nids = $query->execute();
+
+    return $nids;
+
+
+  }
+
 
 }
 
