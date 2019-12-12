@@ -25,6 +25,23 @@ class CampeonatosController extends ControllerBase {
 
   }
 
+  public function buscar_participante() {
+  // Utilizamos el formulario
+          $form = $this->formBuilder()->getForm('Drupal\campeonatos\Form\BuscarParticipanteForm');
+          //ksm($form);
+          //drupal_set_message(t('Formulario: '.$nombre), 'status', FALSE);
+
+  // Le pasamos el formulario y demás a la vista (tema configurado en el module)
+          return [
+              '#theme' => 'participante',
+              '#titulo' => $this->t('BUSCAR PARTICIPANTE'),
+              '#descripcion' => 'Formulario para buscar participante',
+              '#formulario' => $form
+          ];
+
+
+  }
+
   public function puntos_campeonato($clave) {
   // Utilizamos el formulario
           $form = $this->formBuilder()->getForm('Drupal\campeonatos\Form\PuntosCampeonatoForm', $clave);
