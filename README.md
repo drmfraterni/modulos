@@ -1,6 +1,7 @@
 # modulos
-modulos
-modulos de práctica de DRUPAL 8
-MODULO MIGRAR_DB:
-Este módulo está optimizado para drupal 8.*
-Se conecta a una base de datos externa y a través de ella va incorporando al drupal 8 las distintas tablas.
+## Campeonatos
+Módulo para la inscripción en los campeonatos de Boulder Zone REtiro. Hay que actualizarlo.
+## Migración
+Módulo para migrar la apliación de gestión a Drupal 8
+## elCej
+Plantilla de Tema en Bootstrap4, creada desde la versión de Barrio. Está modificada algunas de las regiones. 
