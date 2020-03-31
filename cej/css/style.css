@@ -1,0 +1,12 @@
+/**
+ * @file
+ * Subtheme specific CSS.
+ */
+/* IMAGEN DE CABECERA */
+#cej-cabecera-img {
+    padding: 15px;
+    background: url('../images/imagenPortada.png') no-repeat center top / cover;
+    min-height: 450px;
+    
+}
+/* COLOR DEL FONDO DE LA CABECERA */
