@@ -88,22 +88,28 @@
           </div>
           {% endif %}
           </nav>
-        {% endif %}            
-        {# PARTE PERSONALIZADA DE LA CABECERA #}
-        {% if page.cabecera_logo %}
-        <div id="cej-cabecera-logo" class="container">
-                <div id="cej-cabecera-lg" class="contextual-region cabecera-logo">
-                    {{ page.cabecera_logo }}
-                </div>                
-        </div>
         {% endif %}
-        {% if page.cabecera_content %}
-        <div id="cej-cabecera-img" class="toolbar cej-cabecera">            
+        
+        {# PARTE PERSONALIZADA DE LA CABECERA #}
+        
+        <div id="cej-cabecera-logo" class="cab-log">
+            {% if page.cabecera_logo %}
+                <div id="cej-cabecera-lg" class="container contextual-region cabecera-logo">
+                    {{ page.cabecera_logo }}
+                </div>
+            {% endif %}
+        </div>    
+        
+        <div id="cej-cabecera-img" class="toolbar cej-cabecera">
+            {% if page.cabecera_content %}
             <div id="cej-cabecera-content" class="cabecera cabecera-contenido">
                 {{ page.cabecera_content }}
             </div>
-        </div>
-        {% endif %}   
+            {% endif %}
+        </div>        
+        
+        {# FIN PARTE PERSONALIZADA DE LA CABECERA #}  
+        
         <nav{{ navbar_attributes }}>
           {% if container_navbar %}
           <div class="container">

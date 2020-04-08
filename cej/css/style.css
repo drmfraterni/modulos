@@ -10,3 +10,21 @@
     
 }
 /* COLOR DEL FONDO DE LA CABECERA */
+
+ /* LOGO Y TEMA    */
+#block-logoylema {
+    width: 100%;
+    margin: 25px;
+}
+
+.bg-primary {
+    background-color: #ae0909 !important;
+    border-top-style: solid;
+    border-top-color: #a6a3a2;
+    border-bottom-style: solid;
+    border-bottom-color: #a6a3a2;
+ }
+
+.titulo-logo-cabecera{
+    margin-left: 25px;
+}
