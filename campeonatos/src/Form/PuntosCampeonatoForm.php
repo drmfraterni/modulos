@@ -38,8 +38,6 @@ class PuntosCampeonatoForm extends FormBase {
 
   protected $textoHtmlForm = '';
 
-  protected $rellenaDatos = array();
-
 
 
   public function getFormId(){
@@ -52,9 +50,6 @@ class PuntosCampeonatoForm extends FormBase {
 
 
       $this->clave = $clave;
-
-
-
 
       //COMPROBAMOS QUE LA CLAVE NO EXISTE
       //SI NO EXISTE LA CLAVE
@@ -83,11 +78,6 @@ class PuntosCampeonatoForm extends FormBase {
 
         $node = Node::load($nid);
 
-
-
-
-
-
         //SI LA CLAVE VINIERA ERRÓNEA O NO ENCUENTRA AL USUARIO
         if ($node == NULL){
           //CONTROLES DE ERRORES
@@ -101,39 +91,23 @@ class PuntosCampeonatoForm extends FormBase {
         $this->datos['participante'] = $node->title->value;
         $this->datos['idparticipante'] = $nid;
 
-        // SI EXISTE YA EL USUARIO COMPROBAMOS SI YA HA RELLENADO LOS DATOS DEL FORMULARIO
-        $rForm = self::rellenarFormulario($this->datos['idparticipante']);
-        var_dump($rForm);
-        if (!empty($rForm)){
-          $rellenaDatos = Node::loadMultiple($rForm);
-          foreach ($rellenaDatos as $datos) {
-            $this->rellenarDatos['titulo'] = $datos->title->value;
-            $this->rellenarDatos['categoria'] = $datos->field_ficha_categoria->value;
-            $this->rellenarDatos['prueba'] = $datos->field_ficha_bloque_2->value;
-	          var_dump($this->rellenarDatos);
-          }
-
-
-
-        }
-
-
-        //$node = Node::load($nid);
-
-        //var_dump($node);
-
-
-        // SACAR DATOS DE LA TAXONOMÍA
+        // SACAR DATOS DE LA TAXONOMÍA LIGA INTERNA
         $query = \Drupal::entityQuery('taxonomy_term');
         $query->condition('vid', 'liga_interna');
         $tids = $query->execute();
         $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
         $term = NULL;
         foreach ($terms as $term) {
+          // Si queremos sacar todos términos de la taxonomía
+          // de Liga Interna tendriamos lo tendriamos que hacer de la siguiente manera:
+          /*
+          $taxname[] = $term->get('name')->getString();
+          $taxtid[] = $term->get('tid')->getString();
+          */
           $taxname = $term->get('name')->getString();
           $taxtid = $term->get('tid')->getString();
         }
-        //var_dump($terms);
+        //var_dump($taxname);
         // DATOS DE LA TAXONOMIA DEL TERMINO CAMPEONATO
         $this->datos['liga'] = $taxname;
         $this->datos['idliga'] = $taxtid;
@@ -272,19 +246,17 @@ class PuntosCampeonatoForm extends FormBase {
           '#required' => FALSE,
         );
 
-        // https://www.drupal8.ovh/en/tutoriels/370/taxonomy-form-autocomplete-create-taxonomy-term-field-fapi
-       //$this->datos['liga']
+        //$this->datos['liga']
 
-        $tag_terms = \Drupal::entityManager()->getStorage('taxonomy_term')->loadTree('categoria');
-        $tags = array();
-        foreach ($tag_terms as $tag_term) {
-            $tags[$tag_term->tid] = $tag_term->name;
-        }
 
         $form['datos_categoria']['categoria'] = [
           '#type' => 'select',
           '#title' => $this->t('SELECCIONA UNA CATEGORÍA'),
-          '#options' =>$tags,
+          '#options' => [
+            '3' => $this->t('PRO'),
+            '4' => $this->t('INICIACIÓN'),
+            '5' => $this->t('ROOKIE'),
+          ],
         ];
         // HORA DE COMIENZO DE LA COMPETICIÓN
         // HORA DE TERMINO DE LA COMPETICIÓN
@@ -819,20 +791,6 @@ class PuntosCampeonatoForm extends FormBase {
     $form_state->setRebuild();
 
   }
-
-  //*******FUNCIÓN PARA GENERAR CLAVE*************//
-  function rellenarFormulario ($participante){
-
-    $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
-    $query->condition('type', 'bz_plantilla_bloques_competicion')
-    ->condition('field_ficha', $participante);
-    $nids = $query->execute();
-
-    return $nids;
-
-
-  }
-
 
 }
 

@@ -12,6 +12,15 @@ campeonatos.campeonato:
     _controller: '\Drupal\campeonatos\Controller\CampeonatosController::puntos_campeonato'
   requirements:
     _access: 'TRUE'
+
+campeonatos.infoparticipante:
+  path: '/info-participante/{clave}/{token}'
+  defaults:
+    _title: 'Información del paticipante'
+    _controller: '\Drupal\campeonatos\Controller\CampeonatosController::info_participante'
+  requirements:
+    _access: 'TRUE'
+
 campeonatos.buscar:
   path: '/buscar-participante'
   defaults:

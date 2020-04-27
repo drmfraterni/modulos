@@ -44,6 +44,72 @@ class BuscarParticipanteForm extends FormBase {
 
       //var_dump($this->envioconf);
 
+      if (!empty($this->envioconf)){
+
+        //GENERAMOS TODOS LOS ENLACES A LISTADOS
+        $ruta = array(); // todas las rutas del listado
+        global $base_url;
+
+        // IMPRIMIMOS PARA IR A LA NUEVA PRUEBA
+        $ruta['link'][] = $base_url.'/campeonato/'.$this->token;
+        $ruta['tit'][] = '<div class="ficha-puntuacion">FICHA DE PUNTUACIÓN<br/>DE LA SEGUNDA PRUEBA<br/></div>';
+
+
+        $ruta['link'][] = $base_url.'/admin/listado-totales-puntos/all';
+        $ruta['tit'][] = 'listado totales de puntos';
+        $ruta['link'][] = $base_url.'/listado-totales-puntos/fem_pro';
+        $ruta['tit'][] = 'listado Femenino PRO';
+        $ruta['link'][] = $base_url.'/listado-totales-puntos/mas_pro';
+        $ruta['tit'][] = 'listado Masculino PRO';
+        $ruta['link'][] = $base_url.'/listado-totales-puntos/fem_rookie';
+        $ruta['tit'][] = 'listado Femenino ROOKIE';
+        $ruta['link'][] = $base_url.'/listado-totales-puntos/mas_rookie';
+        $ruta['tit'][] = 'listado Masculino ROOKIE';
+
+
+        //var_dump($this->clave);
+
+        //TERMINAMOS ENLACES GENERALES
+
+        // CREAMOS ENLACE A MIS PUNTOS //
+        $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+        //$query->condition('type', 'bz_plantilla_competicion') // local FM
+        $query->condition('type', 'bz_plantilla_bloques_competicion ') // servidor ionos
+        ->condition('field_ficha', $this->clave);
+        $nids = $query->execute();
+
+        $nPrueba = 1;
+        foreach ($nids as $n) {
+          $nid = $n;
+          $ruta['link'][] = $base_url.'/node/'.$n;
+          $ruta['tit'][] = 'Mis PUNTAZOS en la Prueba'.$nPrueba;
+          $nPrueba++;
+        }
+
+
+
+        // IMPRIMIMOS LA PRUEBAS REALIZADAS
+        $enlace = "";
+        for($i=0; $i<count($ruta['link']); $i++){
+          $enlace .= '<a href='.$ruta['link'][$i].'>'.$ruta['tit'][$i].'</a><br/>';
+        }
+
+
+
+
+        $textoInformativo = '<p>LISTADOS DE PUNTOS POR CATEGORÍA: </p>
+        <p align="center"><h2>CÓDIGO DE USUARIO'.$this->clave.'</h2><p>
+        <p align="center"><h2>'.$enlace.'</h2><p>';
+
+        //var_dump($ruta);
+
+        $form ['final']= array (
+          '#type' => 'markup',
+          '#markup' => $textoInformativo,
+          '#format' => 'full_html',
+        );
+
+      }else{
 
         $this->textoHtmlForm = "Formulario de Búsqueda de participación para la Interna de Boulder Zone Retiro";
 
@@ -75,16 +141,12 @@ class BuscarParticipanteForm extends FormBase {
           '#required' => FALSE,
         );
 
-        $form ['clave'] = array (
-          '#type' => 'hidden',
-          '#value' => 'Esto es una prueba',
-        );
-
         $form ['submit'] = [
             '#type'  => 'submit',
             '#value' => $this->t('Enviar'),
         ];
 
+      }
 
       return $form;
   }
@@ -165,6 +227,7 @@ class BuscarParticipanteForm extends FormBase {
           $this->token = $conClave;
 
 
+
           $this->messenger()->addStatus($this->t('HEMOS COMPROBADO QUE USTED ESTE DADO DE ALTA'));
           //$this->messenger()->addStatus($this->t('CLAVE: @clave', ['@clave' => $this->clave]));
           $this->messenger()->addStatus($this->t('CORREO: @correo', ['@correo' => $correo]));
@@ -183,11 +246,9 @@ class BuscarParticipanteForm extends FormBase {
 
     }
 
-    $datosUsuario['clave'] = $this->clave;
-    $datosUsuario['token'] = $this->token;
-    //$form_state->setRebuild();
-    $form_state->setRedirect('campeonatos.infoparticipante',
-    ['clave' => $datosUsuario['clave'], 'token' => $datosUsuario['token'] ]);
+
+    $form_state->setRebuild();
+
   }
 
 }
