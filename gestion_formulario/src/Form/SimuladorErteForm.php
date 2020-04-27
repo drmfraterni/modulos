@@ -261,9 +261,10 @@ public function submitForm(array &$form, FormStateInterface $form_state) {
       $this->messenger()->addStatus($this->t('El SALARIO CORRESPONDIENTE A LA REDUCCIÓN DE HORAS por horas: @sbrm', ['@sbrm' => self::redondear($salarioReducido) ]));
       $this->messenger()->addStatus($this->t('El SALARIO REDUCIDO AL MES DEL 70% PARA EL SEPE LOS 6 PRIMEROS MESES ES: @sbrmseis', ['@sbrmseis' => self::redondear($seisMeses) ]));
       $this->messenger()->addStatus($this->t('El SALARIO REDUCIDO AL MES AL 50% PARA EL SEPE A PARTIR DEL 7 MES: @sbrmsiete', ['@sbrmsiete' => self::redondear($septimoMes) ]));
-      $this->messenger()->addStatus($this->t('Salario según arreglo a tablas <strong>los primeros meses</strong> @seismeses', ['@seismeses' => self::redondear($salarioTotalprimero) ]));
-      $this->messenger()->addStatus($this->t('Salario según arreglo a tablas partir del 7 mes: @septimomes', ['@septimomes' => self::redondear($salarioTotalsegundo) ]));
+      $this->messenger()->addStatus($this->t('SALARIO SEGÚN ARREGLO A TABLAS <strong>los primeros 6 meses</strong> @seismeses', ['@seismeses' => self::redondear($salarioTotalprimero) ]));
+      $this->messenger()->addStatus($this->t('SALARIO SEGÚN ARREGLO A TABLAS <strong>a partir del 7 mes</strong>: @septimomes', ['@septimomes' => self::redondear($salarioTotalsegundo) ]));
 
+      
       return;
 
   }
