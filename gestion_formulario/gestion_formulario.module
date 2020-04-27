@@ -1,0 +1,415 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
+use Symfony\Component\HttpFoundation\Request;
+
+//dpm($form_id);
+
+  function gestion_formulario_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+
+    //dpm($form_id);
+    //ksm($form);
+
+    //-----temas de fechas ----------//
+
+    //dia actual
+
+    //$hoy = date("Y-m-d H:i:s");
+    $hoy = new DateTime(date("Y-m-d H:i:s"));
+
+    //primer día del drupal_set_message
+    $primerDiaMes = new DateTime();
+    $primerDiaMes->modify('first day of this month');
+    $primerDia=$primerDiaMes->format('d');
+    $priemrMes=$primerDiaMes->format('m');
+    $primerAnnio=$primerDiaMes->format('Y');
+    $date_format = 'Y-m-d';
+    //date($date_format, $primerDiaMes);
+
+
+    //dia último del mes
+    $ultimoDiaMes = new DateTime();
+    $ultimoDiaMes->modify('last day of this month');
+    $ultimoDia=$ultimoDiaMes->format('d');
+    $ultimoMes=$ultimoDiaMes->format('m');
+    $ultimoAnnio=$ultimoDiaMes->format('Y');
+
+    //dias de diferencia
+
+    $intervalo = date_diff($primerDiaMes, $hoy);
+
+    //$date_format = 'd/m/Y';
+    //$time_format = 'H:i';
+
+    //var_dump($ultimoDiaMes);
+    //var_dump($primerDiaMes);
+    //var_dump($intervalo->format("%a"));
+
+    if ($intervalo->format("%a")<16){
+
+      $comienzoFecha = $primerDiaMes;
+
+
+    }else{
+
+      $ultimoDiaMes =$ultimoDiaMes->format("Y-m-d");
+      $comienzoFecha = strtotime($ultimoDiaMes."+ 2 months");
+      $comienzoFecha = date("m",$comienzoFecha);
+
+    }
+
+
+    if ($form_id=='node_bz_recibo_form'){
+
+      //ksm($form['field_nmimporte']);
+      //ksm($form);
+
+
+      $id = \Drupal::request()->query->get('idComprarec');
+
+
+      if (isset($id)){
+
+
+
+          var_dump("ENTRA AQUÍ");
+
+          //CONSULTAMOS LA COMPRA PARA OBTENER LOS DATOS
+          $node = Node::load($id);
+          $newCompra = $node->getTitle();
+          $newProducto = $node->get('field_producto')->getValue();
+          $newPrecio = $node->get('field_precio_compra')->getValue();
+          $newIdCompra = $node->get('field_idcompra')->getValue();
+          $newIdUsuario = $node->get('field_idusuario')->getValue();
+
+          //CONSULTAMOS LOS NODOS TIPO RECIBO PARA AVERIGUAR EL ÚLTIMO RECIBO
+          $idRecibo = NULL;
+          $query = \Drupal::entityQuery('node')
+          ->condition('type', 'bz_recibo')
+          ->execute();
+          foreach ($query as $recibo) {
+            $idRecibo = $recibo;
+          }
+
+          // ENTRADA EN LOS DISTINTOS CAMPOS DEL FORMULARIO
+          $form['title']['widget']['0']['value']['#default_value']=t('RECIBO - '.($idRecibo+1).' - '.$id);// TÍTULO DEL RECIBO
+          $form['field_idcomprarec']['widget']['0']['target_id']['#value'] = $newCompra; // id de la compra
+          $form['field_idrecibo']['widget']['0']['value']['#value']=($idRecibo+1); // nuevo id del RECIBO.
+
+
+          $form['field_nmimporte']['widget']['0']['value']['#value']=$newPrecio[0]['value'];
+
+          $date_format = 'Y-m-d'; $time_format = 'H:i';
+          // INTRODUCIMOS LA FECHA POR DEFECTO DE LA ENTRADA DEL RECIBO
+          $form['field_dtfecha'] = [
+                '#type' => 'datetime',
+                '#title' => t('Fecha compra'),
+                '#date_date_format' => $date_format,
+                '#date_time_format' => $time_format,
+                '#description' => date($date_format, time()),
+                //'#default_value' => DrupalDateTime::createFromTimestamp(time())
+              ];
+
+        // metemos por defecto la fecha de inicio - de fin
+
+        $fechadeinicio = $comienzoFecha->format('Y/m/d');
+        $fechadeinicio = DrupalDateTime::createFromTimestamp(strtotime($fechadeinicio));
+        $fechadefin = $ultimoDiaMes->format('Y/m/d');
+        $fechadefin = DrupalDateTime::createFromTimestamp(strtotime($fechadefin));
+        // FECHA INICIO Y FIN EN LOS CAMPOS DEL FORMULARIO
+
+        $form['field_dtperiododesde'] = [
+              '#type' => 'datetime',
+              '#title' => t('Fecha de Inicio'),
+              '#date_date_format' => $date_format,
+              '#date_time_format' => $time_format,
+              '#default_value' => $fechadeinicio
+            ];
+        $form['field_dtperiodohasta'] = [
+                  '#type' => 'datetime',
+                  '#title' => t('Fecha de FIN'),
+                  '#date_date_format' => $date_format,
+                  '#date_time_format' => $time_format,
+                  '#default_value' => $fechadefin
+              ];
+
+
+
+      }else{
+
+          //CONSULTAMOS LOS NODOS TIPO COMPRAS PARA VER EL COD DEL NODO
+          $query = \Drupal::entityQuery('node')
+          ->condition('type', 'bz_compras')
+          ->condition('field_idcompra', $id, '=')
+          ->execute();
+
+          foreach ($query as $cod) {
+            $codigo = $cod;
+
+        }
+
+
+
+
+        //CARGAMOS EL NODO Y ASÍ SACAMOS EL TÍTULO QUE VA EN EL CAMPO REFERECIA
+        $node = Node::load($codigo);
+        $tcompra = $node->getTitle();
+        $producto = $node->get('field_producto')->getValue();
+        $tproducto = $producto[0]['target_id'];
+
+        //CONSULTAMOS LOS NODOS TIPO PRODUCTO PARA VER SABER EL PRECIO
+
+        $node = Node::load($tproducto);
+        $pprecio = $node->get('field_prod_precio')->value;
+        $titproducto = $node->getTitle();
+
+
+        //CONSULTAMOS LOS NODOS TIPO RECIBO PARA AVERIGUAR EL ÚLTIMO RECIBO
+        $idRecibo = NULL;
+        $query = \Drupal::entityQuery('node')
+        ->condition('type', 'bz_recibo')
+        ->execute();
+        foreach ($query as $recibo) {
+          $idNodoRecibo = $recibo;
+        }
+
+        //CONSULTAMOS LOS NODOS TIPO PRODUCTO PARA VER SABER EL PRECIO
+
+        $node = Node::load($idNodoRecibo);
+        $idRecibo = $node->get('field_idrecibo')->value;
+
+
+        drupal_set_message('NODO DE RECIBO: '.$idNodoRecibo);
+        drupal_set_message('ID DE RECIBO: '.$idRecibo);
+        drupal_set_message('TÍTULO DEL PRODUCTO: '.$titproducto);
+        drupal_set_message('PRECIO DEL PRODUCTO: '.$pprecio);
+        drupal_set_message('El código: '.$tproducto);
+
+
+
+        // Rellenamos automáticamente el ID de COMPRA
+        //  RECIBO - IDRECIBO - IDCOMPRA
+        $form['title']['widget']['0']['value']['#default_value']=t('RECIBO - '.($idRecibo+1).' - '.$codigo);
+        $form['field_idcomprarec']['widget']['0']['target_id']['#value']=t($tcompra);
+        $form['field_idrecibo']['widget']['0']['value']['#value']=($idRecibo+1);
+        $form['field_nmimporte']['widget']['0']['value']['#value']=$pprecio;
+
+      }
+
+    }
+
+
+    if ($form_id=='node_bz_usuarios_form'){
+      dpm( $form_id);
+      //ksm($form['field_fcalta']);
+      //kint( $form_id);
+      //drupal_set_message('====> nid: '.$node);
+      //drupal_set_message('DÍA ÚLTIMO DEL MES ====>'.$dia);
+
+      //FORMULARIO DE USUARIOS
+
+      $form['basico'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('DATOS BÁSICOS'),
+      );
+
+      $form ['basico']['field_nombre'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Nombre'),
+        '#required' => TRUE,
+      );
+
+      $form ['basico']['field_apellido1'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Apellido1'),
+        '#required' => TRUE,
+      );
+
+      $form ['basico']['field_apellido2'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Apellido2'),
+        '#required' => FALSE,
+      );
+
+      $form ['basico']['field_cd_tarjeta'] = array (
+        '#type'     => 'number',
+        '#title'    => t('cd_tarjeta'),
+        '#required' => FALSE,
+      );
+      $form['basico']['field_email'] = array(
+        '#type' => 'email',
+        '#title' => t('Email'),
+        '#required' => FALSE,
+      );
+
+      $form['basico']['field_activo'] = array(
+      '#type'          => 'checkbox',
+      '#title'         => t('ACTIVO'),
+      '#required'      => TRUE,
+      '#default_value' => TRUE,
+     );
+
+      //**********DATOS AVANZADOS********//
+
+      $form['avanzado'] = array(
+        '#type' => 'details',
+        '#title' => t('DATOS AVANZADOS'),
+        '#open' => TRUE,
+      );
+
+      $form['avanzado'] ['field_fcalta'] = array(
+        '#type' => 'date',
+        '#title' => t('Fecha de Alta'),
+        '#date_format' => $date_format,
+        '#default_value' => ['day' => 15, 'month' => 2, 'Year' => 2019],
+
+      );
+
+      $form ['avanzado']['field_telefono'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Teléfono'),
+        '#required' => FALSE,
+      );
+
+      //**********DATOS SOBRE EL DOMICILIO********//
+
+      $form['domicilio'] = array(
+        '#type' => 'details',
+        '#title' => t('DATOS DOMICILIO'),
+        '#open' => FALSE,
+
+      );
+
+      $form ['domicilio']['field_direccion'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Dirección'),
+        '#required' => FALSE,
+      );
+
+      $form ['domicilio']['field_cp'] = array (
+        '#type'     => 'textfield',
+        '#title'    => t('Código Postal'),
+        '#required' => FALSE,
+      );
+
+      //**********OBSERVACIONES********//
+
+      $form['observaciones'] = array(
+        '#type' => 'details',
+        '#title' => t('OBSERVACIONES'),
+        '#open' => FALSE,
+
+      );
+
+      $form ['observaciones']['body'] = array (
+        '#type'     => 'textarea',
+        '#title'    => t('Observaciones'),
+        '#required' => FALSE,
+      );
+
+      //OCULTAMOS LOS CAMPOS PARA QUE NO SE DUPLIQUEN.
+      hide($form['body']);
+      hide($form['field_nombre']);
+      hide($form['field_apellido1']);
+      hide($form['field_apellido2']);
+      hide($form['field_cd_tarjeta']);
+      hide($form['field_cp']);
+      hide($form['field_direccion']);
+      hide($form['field_email']);
+      hide($form['field_fcalta']);
+      hide($form['field_dni']);
+      hide($form['field_telefono']);
+      hide($form['field_activo']);
+
+
+    }
+
+    if ($form_id=='node_bz_mensualidad_form'){
+
+      $id = \Drupal::request()->query->get('id');
+
+      //$node = \Drupal::routeMatch()->getParameter('node');
+      //$node->id();
+
+      drupal_set_message('El id es: '.$id);
+
+
+
+    }
+
+
+    if ($form_id=='node_bz_presencia_form'){
+      //dpm( $form_id);
+      ksm($form);
+
+      // nos traemos el id de una vista (vista-all-usuarios) y cargamos los datos
+      $id = \Drupal::request()->query->get('id');
+      $usu = Node::load($id);
+      $nombre=$usu->get("Title")->value;
+      drupal_set_message('El id es: '.$nombre);
+
+
+      $form['field_mensualidad_usuario']['widget']['0']['target_id']['#value']=t($nombre);
+
+
+      //El id=1 es para la ENTRADA DE DIA de una persona que no esté dado de aggregator_element_data
+
+      if ($id==1){
+        $form['title']['widget']['0']['value']['#default_value']=t($annio.''.$mes.''.$dia.' - ENTRADA DE DIA');
+
+      }else{
+        $usu = Node::load($id);
+        dpm($usu->title->value);
+        $nombre=$usu->title->value;
+        //$nombre=$nodo->get("title")->value;
+        $form['title']['widget']['0']['value']['#default_value']=t($annio.''.$mes.''.$dia.' - '.$nombre);
+        //$form['field_idusupre']['widget']['0']['value']['#default_value']=$nombre;
+        $form['field_idusupre']['widget']['0']['target_id']['#value']=t($nombre);
+
+      }
+
+
+      hide($form['body']); // Ocultamos el campo body
+
+
+
+      //drupal_set_message('El id es: '.$usuarios);
+
+
+
+    }
+
+
+
+
+
+
+
+
+  }
+
+
+  function gestion_formulario_theme($existing, $type, $theme, $path) {
+  return [
+    'busqueda' => [
+      'variables' => [
+        'titulo' => 'Título por defecto',
+        'descripcion' => 'descripción por defecto',
+        'formulario'   => NULL
+        ],
+      ],
+      'control' => [
+      'variables' => [
+        'titulo' => 'Título por defecto',
+        'descripcion' => 'descripción por defecto',
+        'formulario'   => NULL
+        ],
+      ],
+  ];
+}
+
+
+?>

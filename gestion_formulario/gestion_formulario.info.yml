@@ -1,0 +1,5 @@
+name: Gestionar Formularios
+description: Módulo para la gestión de formularios estandar.
+package: GESTIÓN DE FORMULARIOS
+type: module
+core: 8.x

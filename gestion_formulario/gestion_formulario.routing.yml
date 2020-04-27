@@ -1,0 +1,15 @@
+gestion_formulario.busqueda_usuario:
+  path: '/admin/buscar-usuarios'
+  defaults:
+    _title: 'Buscando Usuario'
+    _controller: '\Drupal\gestion_formulario\Controller\BusquedasController::busqueda_usuario'
+  requirements:
+    _permission: 'administer site configuration'
+
+gestion_formulario.simulador:
+  path: '/simulador-erte'
+  defaults:
+    _title: 'Simulador cobro de ERTE'
+    _controller: '\Drupal\gestion_formulario\Controller\BusquedasController::simulador'
+  requirements:
+    _access: 'TRUE'
