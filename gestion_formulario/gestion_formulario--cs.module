@@ -401,13 +401,6 @@ use Symfony\Component\HttpFoundation\Request;
         'formulario'   => NULL
         ],
       ],
-    'resultado' => [
-      'variables' => [
-        'titulo' => NULL,
-        'descripcion' => NULL,
-        'mensajes'   => NULL
-        ],
-      ],
       'control' => [
       'variables' => [
         'titulo' => 'Título por defecto',

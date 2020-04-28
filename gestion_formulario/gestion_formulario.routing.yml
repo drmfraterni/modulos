@@ -13,3 +13,11 @@ gestion_formulario.simulador:
     _controller: '\Drupal\gestion_formulario\Controller\BusquedasController::simulador'
   requirements:
     _access: 'TRUE'
+
+gestion_formulario.simulador_resultado:
+  path: '/simulador-resultado/{salarioBruto}/{horas}/{hijos}'
+  defaults:
+    _title: 'Resultado del Simulador cobro de ERTE'
+    _controller: '\Drupal\gestion_formulario\Controller\BusquedasController::simulador_resultado'
+  requirements:
+    _access: 'TRUE'
