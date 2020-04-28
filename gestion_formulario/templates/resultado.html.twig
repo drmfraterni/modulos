@@ -5,28 +5,43 @@
         {% set pagoEmpresa = mensajes.salarioBrutoMensual - mensajes.salarioReducido %}
 
         <div class="todos-datos p-5 m-2">
+          <h2>Aclaraciones al resultado del simulador </h2>
+
+          <ul>
+            <li> Ya sea todo el ERTE o la parte proporcinal en el caso que se un
+              ERTE parcial,<span class= "cifra-destacada"><strong> el SEPE </strong></span>
+              lo paga en 12 mensualidades, estando incluidas las prorratas de las pagas extras,
+              y por lo tanto, cuando lleguen las pagas extras los meses que se estén en el ERTE
+              no cuentan ya que ha sido abonado de manera proporcional.
+            </li>
+
+          </ul>
+
           <h2>Datos introducidos en el simulador </h2>
           <ul>
-            <li> Salario Bruto Anual: {{ mensajes.salarioBruto }}</li>
-            <li> Horas de reducción en el ERTE: {{ mensajes.reduccion }}</li>
-            <li> Horas de reducción en el ERTE: {{ mensajes.jornada }}</li>
-            <li> Número de hijos: {{ mensajes.hijos }} </li>
+            <li> Salario Bruto Anual: <span class= "cifra-destacada"><strong>{{ mensajes.salarioBruto }}</strong></span></li>
+            <li> Horas de reducción en el ERTE: <span class= "cifra-destacada"><strong>{{ mensajes.jornada }} HORAS</strong></span></li>
+            <li> Porcentaje de reducción con respecto a 8 horas diarias del ERTE: <span class= "cifra-destacada"><strong>
+            {{ mensajes.reduccion * 100 }}%</strong> del tiempo </span></li>
+
+            <li> Número de hijos: <span class= "cifra-destacada"><strong>{{ mensajes.hijos }} </strong></span></li>
           </ul>
 
           <h2>Durante los primeros 6 meses</h2>
           <ul>
-            <li> Parte del salario que paga la empresa: {{ pagoEmpresa }}</li>
-            <li> Parte del salario que paga la SEPE: {{ mensajes.salarioTotalprimero }}</li>
-            <li> Salario Total durante los primero 6 meses: {{ mensajes.salarioTotalprimero + pagoEmpresa }} </li>
+            <li> Parte del salario que paga la empresa: <span class= "cifra-destacada"><strong>{{ pagoEmpresa }}</strong></span></li>
+            <li> Parte del salario que paga la SEPE: <span class= "cifra-destacada"><strong>{{ mensajes.salarioTotalprimero }}</strong></span></li>
+            <li> Salario Total durante los primero 6 meses: <span class= "cifra-destacada"><strong>{{ mensajes.salarioTotalprimero + pagoEmpresa }} </strong></span></li>
           </ul>
 
           <h2>A partir del séptimo mes </h2>
           <ul>
-            <li> Parte del salario que paga la empresa: {{ pagoEmpresa }}</li>
-            <li> Parte del salario que paga la SEPE: {{ mensajes.salarioTotalsegundo }}</li>
-            <li> Salario Total durante los siguientes meses: {{ mensajes.salarioTotalsegundo + pagoEmpresa }} </li>
+            <li> Parte del salario que paga la empresa: <span class= "cifra-destacada"><strong>{{ pagoEmpresa }}</strong></span></li>
+            <li> Parte del salario que paga la SEPE: <span class= "cifra-destacada"><strong>{{ mensajes.salarioTotalsegundo }}</strong></span></li>
+            <li> Salario Total durante los siguientes meses: <span class= "cifra-destacada"><strong>{{ mensajes.salarioTotalsegundo + pagoEmpresa }} </strong></span></li>
           </ul>
-          <p>{{ mensajes.salarioBruto }}</p>
+          {% set ruta = url('<front>') %}
+          <p><a href="{{ruta}}/simulador-erte">Volver al simulador </a></p>
         </div>
       </div>
 
