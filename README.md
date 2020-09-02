@@ -12,4 +12,8 @@ Plantilla de Tema en Bootstrap4, creada desde la versión de Barrio. Está modif
 * O activarlo manualmente a través de administracion > ampliar > gestion-formulario
 * Ver un ejemplo: http://doc.cgtaltenmadrid.es/simulador-erte
 * Actualmente en desarrollo por lo que puede contener fallos.
+# Themes - Drupal 
+## bzretiro - Boulder Zone Retiro.
+* Temas de Boulder Zone Retiro.
+* Plantilla básica de bootstrap basada en el tema Barrio.
 
