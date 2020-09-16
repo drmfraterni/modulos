@@ -1,0 +1,39 @@
+<script>
+    var url = window.location.origin;
+</script>
+<link rel="stylesheet" type="text/css" href="themes/custom/elcej/css/jquery.e-calendar.css"/>
+<script src="themes/custom/elcej/js/jquery-1.11.0.min.js"></script>
+<script src="themes/custom/elcej/js/jquery.e-calendar.js"></script>
+<div id="calendario" class="container-fluid cal-general">
+	{# Título alternativo y descripción del bloque de calendario #}
+	{% if datos['titulo']  %}
+		<h2>{{ datos['titulo'] }}</h2>
+	{% endif %}
+	{% if datos['descrip']  %}
+		<p>{{ datos['descrip'] }}</p>
+	{% endif %}
+	<div id="calendar" class="row"></div>
+</div>
+<style>
+.c-event-grid {
+	width: 49% !important;
+}
+</style>
+<script>
+	window.addEventListener("load",function(event) {
+		pintarCalendario();
+	});
+	/**
+	*
+	**/
+	function pintarCalendario(){
+		$('#calendar').eCalendar({
+			weekDays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+			months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			textArrows: {previous: '<', next: '>'},
+			eventTitle: 'Eventos',
+			url: '{{ path('alterar_formulario.cargarDatos') }}',
+			firstDayOfWeek: 1
+		});
+	}
+</script>

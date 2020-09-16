@@ -1,0 +1,53 @@
+alterar_formulario.control_registro:
+  path: '/oficina-virtual'
+  defaults:
+    _title: 'Oficina Virtual'
+    _controller: '\Drupal\alterar_formulario\Controller\BusquedasController::registro_usuarios'
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.admin_settings:
+  path: '/admin/config/services/oficina-virtual'
+  defaults:
+    _title: 'Configuración Ruta Oficina Virtual'
+    _form: '\Drupal\alterar_formulario\Form\OficinavirtualConfigurationForm'
+  requirements:
+    _permission: 'administer site configuration'
+alterar_formulario.externa_cabecera:
+  path: '/externa/cabecera'
+  defaults:
+    _title: 'Cabecera Externa'
+    _controller: '\Drupal\alterar_formulario\Controller\BusquedasController::externa_cabecera'
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.vista_convocatorias:
+  path: '/ultimas-noticias'
+  defaults:
+    _title: 'Noticias'
+    _controller: '\Drupal\alterar_formulario\Controller\BusquedasController::vista_convocatorias'
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.destacados:
+  path: '/destacados'
+  defaults:
+    _title: 'EL CEJ'
+    _controller: '\Drupal\alterar_formulario\Controller\BusquedasController::vista_convocatorias'
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.cargarDatos:
+  path: '/calendario-datos/{fecha_inicio}/{fecha_fin}'
+  defaults:
+    _title: 'EL CEJ'
+    _controller: '\Drupal\alterar_formulario\Controller\BusquedasController::calendario_datos'
+    fecha_inicio: ''
+    fecha_fin: ''
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.ver_toda_agenda:
+  path: '/ver-toda-agenda/{fecha_inicio}/{fecha_fin}'
+  defaults:
+    _title: 'AGENDA DEL CEJ'
+    _controller: '\Drupal\alterar_formulario\Controller\AgendaController::ver_agenda'
+    fecha_inicio: ''
+    fecha_fin: ''
+  requirements:
+    _access: 'TRUE'

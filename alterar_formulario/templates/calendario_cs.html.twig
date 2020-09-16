@@ -1,0 +1,44 @@
+<div id="calendario" class="container">
+  <div class="cal-events">
+
+{# Título alternativo y descripción del bloque de calendario #}
+
+{% if datos['titulo']  %}
+    <h2>{{ datos['titulo'] }}</h2>
+{% endif %}
+{% if datos['descrip']  %}
+    <p>{{ datos['descrip'] }}</p>
+{% endif %}
+
+
+<script>
+    var url = window.location.origin;
+</script>
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/jquery.e-calendar.js"></script>
+<script type="text/javascript" src="index.js"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="http://localhost/portal/themes/custom/elcej/css/jquery.e-calendar.css"/>
+  <script src="http://localhost/portal/themes/custom/elcej/js/jquery-1.11.0.min.js"></script>
+  <script src="http://localhost/portal/themes/custom/elcej/js/jquery.e-calendar.js"></script>
+  <script src="http://localhost/portal/themes/custom/elcej/js/index.js"></script>
+  <script type="text/javascript" src="http://localhost/portal/sites/default/files/cursos/cursos.json"></script>
+
+
+<div id="calendar"></div>
+
+<script>
+
+// CARGAR EL JSON CON LOS EVENTOS Y LOS CURSOS.
+$.getJSON("http://localhost/portal/sites/default/files/cursos/cursos.json", function(cursos){
+  var curso = cursos['filas'];
+  //document.write(curso[0]);
+});
+
+
+</script>
+
+
+  </div>
+</div>

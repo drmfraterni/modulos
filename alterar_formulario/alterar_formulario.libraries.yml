@@ -1,0 +1,11 @@
+custom: // This would basically work as a key for you.
+  version: 1.x
+  js:
+    js/evo-calendar.js: {}  // Name of your js file
+  dependencies:  // Adding dependencies if you have any.
+    - core/jquery
+    - core/drupalSettings
+  css:
+    theme:
+    css/evo-calendar.css: {} // Name of your css file.
+    css/evo-calendar.midnight-blue.css: {} // Name of your css file.

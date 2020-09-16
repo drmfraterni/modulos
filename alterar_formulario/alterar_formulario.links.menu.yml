@@ -1,0 +1,5 @@
+alterar_formulario.admin_settings:
+  title: 'OFICINA VIRTUAL'
+  parent: system.admin_config_services
+  route_name: alterar_formulario.admin_settings
+  description: 'Dirección del iframe para la Oficina Virtual.'

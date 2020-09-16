@@ -1,0 +1,75 @@
+{% set baseUrl = convocatorias.ruta ~ "/sites/default/files" %}
+
+<div class="container mb-2 col-12">
+
+    <div id="magicCarousel" class="carousel slide" data-ride="carousel">
+      <div class="col-12 col-md-12 p-3 dest-general"><h3 class="tit-destacados">DESTACADOS</h3></div>
+<!--    Carousel Indicators    -->
+      <ol class="carousel-indicators">
+        <li data-target="#magicCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#magicCarousel" data-slide-to="1"></li>
+        <li data-target="#magicCarousel" data-slide-to="2"></li>
+      </ol>
+
+<!--    Carousel Slider    -->
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+          <a href="{{ convocatorias.urlNode[0] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[0] }}" class="d-block w-100"></a>
+          <div class="carousel-caption">
+            <h3>{{ convocatorias.titulo[0] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At placeat dolore obcaecati perspiciatis neque in, iusto, quia aut molestias minus ipsam modi dolorem odit eos.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <a href="{{ convocatorias.urlNode[1] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[1] }}" class="d-block w-100"></a>
+          <div class="carousel-caption">
+            <h3>{{ convocatorias.titulo[1] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia vel in placeat corrupti. Velit quidem eos, accusantium vitae nostrum reiciendis ratione libero? Aperiam, recusandae culpa.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <a href="{{ convocatorias.urlNode[2] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[2] }}" class="d-block w-100"></a>
+          <div class="carousel-caption">
+            <h3>{{ convocatorias.titulo[2] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ut beatae porro ullam quidem officia dignissimos facilis? Blanditiis nesciunt labore pariatur quaerat exercitationem quibusdam modi!</p>
+          </div>
+        </div>
+
+<!--     Carousel Controls     -->
+        <a href="#magicCarousel" class="carousel-control-prev" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a href="#magicCarousel" class="carousel-control-next" role="button" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="sr-only">Next</span>
+        </a>
+
+
+
+      </div>
+    </div>
+  
+</div>
+    <div class="container nini-imagenes">
+      <div class="row pt-2">
+        <div class="col-12 col-sm-6 col-md-4 new-primera">
+          <a href="{{ convocatorias.urlNode[3] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[3] }}" class="d-block w-100 imagen-peq"></a>
+          <div class="mini-tit">{{ convocatorias.titulo[3] }}</div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 new-segunda">
+          <a href="{{ convocatorias.urlNode[4] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[4] }}" class="d-block w-100 imagen-peq"></a>
+          <div class="mini-tit">{{ convocatorias.titulo[4] }}</div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 new-tercera">
+          <a href="{{ convocatorias.urlNode[5] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[5] }}" class="d-block w-100 imagen-peq"></a>
+          <div class="mini-tit">{{ convocatorias.titulo[5] }}</div>
+
+        </div>
+      </div>
+
+        <div class="btn-mas-noticias m-3"><a href="todas-noticias" class="btn btn-secondary btn-lg boton-noticias" role="button">Más Noticias</a></div>
+
+    </div>

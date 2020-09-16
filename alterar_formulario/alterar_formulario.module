@@ -1,0 +1,205 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
+
+
+
+  function alterar_formulario_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+
+    
+
+
+    //dpm($form_id);
+    //ksm($form);
+
+    //-----temas de fechas ----------//
+
+    //dia último del mes
+    $fecha = new DateTime();
+    $fecha->modify('last day of this month');
+    $dia=$fecha->format('d');
+    $mes=$fecha->format('m');
+    $annio=$fecha->format('Y');
+
+    $date_format = 'd/m/Y';
+    $time_format = 'H:i';
+
+
+    // nombre del mes en ESPAÑOL //
+    /*
+    setlocale(LC_ALL, 'es_ES');
+    $monthNum  = $mes;
+    $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+    $monthName = strftime('%B', $dateObj->getTimestamp());
+
+    switch($monthNum)
+    {
+        case 1:
+        $monthNameSpanish = "ENERO";
+        break;
+
+        case 2:
+        $monthNameSpanish = "FEBRERO";
+        break;
+
+        case 3:
+        $monthNameSpanish = "MARZO";
+        break;
+
+        case 4:
+        $monthNameSpanish = "ABRIL";
+        break;
+
+        case 5:
+        $monthNameSpanish = "MAYO";
+        break;
+
+        case 6:
+        $monthNameSpanish = "JUNIO";
+        break;
+
+        case 7:
+        $monthNameSpanish = "JULIO";
+        break;
+
+        case 8:
+        $monthNameSpanish = "AGOSTO";
+        break;
+
+    }
+
+    */
+
+    /*$categories = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree('MES', 0, 1, true);
+        foreach ($categories as $categorie) {
+        var_dump( $categorie>get('name')->getValue() );
+        }
+*/
+    /*
+        $vid = 'MES';
+        $terms =\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+        foreach ($terms as $term) {
+         $term_data[] = array(
+          'id' => $term->tid,
+          'name' => $term->name
+         );
+        }
+
+        //var_dump ($monthNameSpanish);
+        //var_dump($mes);
+        var_dump($term->name);
+        //die();
+    */
+
+    //buscar en la base de base de datos
+    //$node = \Drupal::entityManager()->getStorage('node')->load($nid);
+    // add libraries
+
+
+// code to get nid
+
+    if ($form_id == "formulario_agenda"){
+      $form['fecha_inicio']['#prefix'] = '<div class="col-12 col-md-6 finicio">';
+      $form['fecha_inicio']['#suffix'] = '<div>';
+
+
+    }
+
+    if ($form_id =='search_block_form'){
+      $form['actions']['submit']['#value']=t('BUSCAR');
+    }
+
+    if ($form_id == 'node_eventos_form'){
+      //ksm($form);
+
+      $form['field_evento_ano']['widget']['0']['value']['#default_value'] = $annio;
+      //$form['field_evento_mes']['widget']['0']['target_id']['#default_value'] = 'DICIEMBRE';
+
+      /*
+      $form['field_evento_mes'] = array(
+        '#type' => 'entity_autocomplete',
+        '#target_type' => 'taxonomy_term',
+        '#selection_settings' => [
+          'target_bundles' => [
+            'MES'
+          ],
+        ],
+        '#title' => t('messs'),
+        '#size' => 20,
+      );
+      */
+
+
+    }
+
+
+  }
+
+
+  function alterar_formulario_theme($existing, $type, $theme, $path) {
+  return [
+      'registro_usuarios' => [
+        'variables' => [
+          'titulo' => 'OFICINA VIRTUAL',
+          'direccion' => NULL,
+
+          ],
+        ],
+      'nuevas_convocatorias' => [
+        'variables' => [
+          'titulo' => 'TODAS LAS CONVOCATORIAS',
+          'convocatorias' => NULL,
+
+          ],
+        ],
+      'destacados' => [
+        'variables' => [
+          'titulo' => 'DESTACADOS',
+          'convocatorias' => NULL,
+
+          ],
+        ],
+      'gestion_externa' => [
+        'variables' => [
+          'titulo' => 'CABECERA EXTERNA',
+          'cabecera' => NULL,
+
+          ],
+        ],
+        'calendario' => [
+          'variables' => [
+            'titulo' => 'Eventos del CEJ',
+            'datos' => NULL,
+
+            ],
+          ],
+        'cursos_eventos' => [
+          'variables' => [
+            'titulo' => 'Próximos Eventos',
+            'datos' => NULL,
+
+            ],
+          ],
+        'agenda' => [
+          'variables' => [
+            'titulo' => 'AGENDA',
+            'datos' => NULL,
+
+            ],
+          ],
+        'toda_agenda' => [
+          'variables' => [
+            'titulo' => 'TODOS LOS EVENTOS',
+            'datos' => NULL,
+            'formulario' => NULL,
+            'agenda' => NULL,
+
+          ],
+         ],
+      ];
+}
+
+?>

@@ -1,0 +1,50 @@
+<div class="ultimas-noticias">
+  <h1>{{ titulo }}</h1>
+  {% set baseUrl = "http://localhost/portal/sites/default/files" %}
+
+  {# http://localhost/cej-demo/sites/default/files  #}
+
+  <div class="container">
+    <div class="row mx-1">
+      <div class="allConvocatoria-1 col-12 col-sm-8 border border-secondary">
+        <p><span class="noticias-fecha">{{ convocatorias.fecha[0]|date("d-m-Y") }}</span></p>
+        <h4><span class="noticias-titulo">{{ convocatorias.titulo[0] }}<span></h4>
+        {% if convocatorias.imagen.url[0] %}
+          <p><span class="noticias-img"><img class="img-fluid text-align-center" src="{{ baseUrl }}{{ convocatorias.imagen.url[0] }}" width="200" >
+          </span></p>
+        {% endif %}
+        <p><span class="noticias-descripcion">{{ convocatorias.descripcion[0] }}<span></p>
+      </div>
+      <div class="allConvocatoria-2 col-12 col-sm-4 border border-secondary">
+        <p><span class="noticias-fecha">{{ convocatorias.fecha[1]|date("d-m-Y") }}</span></p>
+        <h4><span class="noticias-titulo">{{ convocatorias.titulo[1] }}<span></h4>
+        {% if convocatorias.imagen.url[1] %}
+          <p><span class="noticias-img"><img class="img-fluid text-align-center" src="{{ baseUrl }}{{ convocatorias.imagen.url[1] }}" width="150" >
+          </span></p>
+        {% endif %}
+        <p><span class="noticias-descripcion">{{ convocatorias.descripcion[1] }}<span></p>
+      </div>
+      <div class="allConvocatoria-3 col-12 col-sm-5 border border-secondary">
+        <p><span class="noticias-fecha">{{ convocatorias.fecha[2]|date("d-m-Y") }}</span></p>
+        <h4><span class="noticias-titulo">{{ convocatorias.titulo[2] }}<span></h4>
+        {% if convocatorias.imagen.url[2] %}
+          <p><span class="noticias-img"><img class="img-fluid text-align-center" src="{{ baseUrl }}{{ convocatorias.imagen.url[2] }}" width="200" >
+          </span></p>
+        {% endif %}
+        <p><span class="noticias-descripcion">{{ convocatorias.descripcion[2] }}<span></p>
+      </div>
+      <div class="allConvocatoria-4 col-12 col-sm-7 border border-secondary">
+        <p><span class="noticias-fecha">{{ convocatorias.fecha[3]|date("d-m-Y") }}</span></p>
+        <h4><span class="noticias-titulo">{{ convocatorias.titulo[3] }}<span></h4>
+        {% if convocatorias.imagen.url[3] %}
+          <p><span class="noticias-img"><img class="img-fluid text-align-center" src="{{ baseUrl }}{{ convocatorias.imagen.url[3] }}" width="250" ></span></p>
+        {% endif %}
+        <p><span class="noticias-descripcion">{{ convocatorias.descripcion[3] }}<span></p>
+      </div>
+    </div>
+    <div class="col-12 text-align-center m-2 p-2"><a href="{{ convocatorias.ruta}}noticias">--Más Noticias--</a></div>
+  </div>
+
+{# dump(convocatorias.imagen.target_id) #}
+
+</div>
