@@ -1,0 +1,31 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
+
+
+  function boulder_zone_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+
+
+    
+
+  }
+
+   
+  function boulder_zone_theme($existing, $type, $theme, $path) {
+
+      return array(
+          'busqueda' => array(
+                                  'variables' => array(
+                                      'titulo' => 'Título por defecto',
+                                      'descripcion' => 'descripción por defecto',
+                                      'datos'   => NULL
+                                      ),
+                                  'template' => 'busqueda'
+                              )
+      );
+  }
+
+
+?>

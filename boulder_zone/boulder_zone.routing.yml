@@ -1,0 +1,14 @@
+boulder_zone.buscando:
+  path: '/admin/buscando'
+  defaults:
+    _title: 'Buscando Usuario'
+    _controller: '\Drupal\boulder_zone\Controller\BusquedasController::busqueda_usuario'
+  requirements:
+    _access: 'TRUE'
+boulder_zone.portada:
+  path: '/portada/nuevo'
+  defaults:
+    _title: 'Destacados'
+    _controller: '\Drupal\boulder_zone\Controller\BusquedasController::portada'
+  requirements:
+    _access: 'TRUE'
