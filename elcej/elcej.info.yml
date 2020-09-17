@@ -1,8 +1,9 @@
-name: Tema Centro de Estudios Jurídicos
+name: elcej
 type: theme
-description: 'Estructura básica del Centro de Estudios Jurídicos.'
+description: 'Nueva estructura de tema del Centro de Estudios Jurídicos.'
 # version: VERSION
 core: 8.x
+core_version_requirement: ^8 || ^9
 base theme: bootstrap_barrio
 
 libraries:
@@ -12,9 +13,6 @@ libraries:
 regions:
   top_header: 'Top header'
   top_header_form: 'Top header form'
-  cabecera: Cabecera
-  cabecera_logo: 'Cabecera Logo'
-  cabecera_content: 'Cabecera Contenido'
   header: Header
   header_form: 'Header form'
   primary_menu: 'Primary menu'
@@ -27,6 +25,10 @@ regions:
   content: Content
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
+  content_second_izq: 'Content second izquierda'
+  content_second_der: 'Content second derecha'
+  content_varios: 'Content varios'
+  content_third: 'Content third'
   featured_bottom_first: 'Featured bottom first'
   featured_bottom_second: 'Featured bottom second'
   featured_bottom_third: 'Featured bottom third'
@@ -36,7 +38,7 @@ regions:
   footer_fourth: 'Footer fourth'
   footer_fifth: 'Footer fifth'
 
-# Information added by Drupal.org packaging script on 2020-03-28
-version: '8.x-4.23'
-project: 'bootstrap_barrio'
-datestamp: 1585402737
+# Information added by Drupal.org packaging script on 2020-05-03
+#version: '8.x-4.27'
+#project: 'bootstrap_barrio'
+#datestamp: 1588520759
