@@ -1,0 +1,105 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+
+
+function bz_suscripcion_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  if ($form_id=='node_bz_mensualidad_form'){
+
+  //$id = \Drupal::request()->query->get('id');
+
+  }
+}
+
+function bz_suscripcion_theme($existing, $type, $theme, $path) {
+  return [
+    'busqueda' => [
+      'variables' => [
+        'titulo' => 'Título por defecto',
+        'descripcion' => 'descripción por defecto',
+        'formulario'   => NULL
+        ],
+      ],
+      'envioCorreo' => [
+        'variables' => [
+            'contenido' => NULL
+
+        ],
+      ],      
+      'control' => [
+      'variables' => [
+        'titulo' => 'Título por defecto',
+        'descripcion' => 'descripción por defecto',
+        'datos'   => NULL
+        ],
+      ],
+      'firmado' => [
+      'variables' => [
+        'titulo' => NULL,
+        'descripcion' => NULL,
+        'token'   => NULL,
+        'datos' => NULL
+        ],
+      ],
+  ];
+}
+
+//email_consentimiento
+
+function bz_suscripcion_mail($key, &$message, $params) {
+  $options = array(
+     'langcode' => $message['langcode'],
+  );
+
+  switch ($key) {
+   case 'email_consentimiento':
+     $header = array(
+           'MIME-Version' => '1.0',
+           'Content-Type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
+           'Content-Transfer-Encoding' => '8Bit',
+           'X-Mailer' => 'Drupal'
+     );
+
+     if(!empty($params['bcc'])) {
+       $message['headers']['Bcc'] = $params['bcc'];
+       unset($params['bcc']);
+     }
+
+     if(!empty($params['cc'])) {
+       $message['headers']['Cc'] = $params['cc'];
+       unset($params['cc']);
+     }
+
+     $message['headers'] = $header;
+     $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed; delsp=yes';
+     $message['from'] = \Drupal::config('system.site')->get('mail');
+     $message['subject'] = $params['subject'].' de '.$params['nom_completo'];
+
+
+
+    $theme = [
+      '#theme' => 'envioCorreo',
+      '#contenido' => $params
+    ];
+
+
+    //var_dump($theme);
+    //die();
+    $message['body'][] = \Drupal::service('renderer')->render($theme);
+
+    break;
+
+ }
+
+
+ }
+
+?>
