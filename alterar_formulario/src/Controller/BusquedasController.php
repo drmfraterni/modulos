@@ -51,6 +51,8 @@ class BusquedasController extends ControllerBase {
 
       $convocatorias = [ 'ruta' => $direccion ];
 
+      $convocatorias['urlAmbito'] = self::nuevaRuta();
+
 
       // sacamos todas las convocatorias de la base de datos
       $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
@@ -127,6 +129,32 @@ class BusquedasController extends ControllerBase {
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
+
+
+
+  function nuevaRuta () {  // rutas para que carguen las imágenes en el carousel
+
+
+    if (isset($_SERVER['REQUEST_URI'])){
+      $subruta = explode("/", $_SERVER['REQUEST_URI']);
+      $subruta = "/".$subruta[1];
+
+    }
+
+    if (isset($_SERVER['HTTPS'])) {
+      $pt = "https://";
+    }else{
+      $pt = "http://";
+    }
+
+
+    $nr = $pt.$_SERVER['HTTP_HOST'].$subruta;
+
+    return $nr;
+
+  }
+
+
 	  
 
 }

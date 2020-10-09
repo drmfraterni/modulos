@@ -35,7 +35,7 @@ class AgendaController extends ControllerBase {
 		$rutaBase = $this->urlConfig->get('ambito');
 
 		$textos['rutaBase'] = $rutaBase;
-
+		
 
 		// FORMATEO DE LAS FECHAS DE INICIO Y FIN  //
 		// comprobramos si es para cambio de calendario $this->cambioMes = true

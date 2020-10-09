@@ -1,12 +1,9 @@
-{% set baseUrl = convocatorias.urlAmbito ~ "/sites/default/files" %}
-
-
+{% set baseUrl = convocatorias.ruta ~ "/sites/default/files" %}
 
 <div class="container mb-2 col-12">
 
-
     <div id="magicCarousel" class="carousel slide" data-ride="carousel">
-      {# <div class="col-12 col-md-12 p-3 dest-general"><h3 class="tit-destacados">DESTACADOS</h3></div> #}
+      <div class="col-12 col-md-12 p-3 dest-general"><h3 class="tit-destacados">DESTACADOS</h3></div>
 <!--    Carousel Indicators    -->
       <ol class="carousel-indicators">
         <li data-target="#magicCarousel" data-slide-to="0" class="active"></li>
@@ -20,6 +17,7 @@
           <a href="{{ convocatorias.urlNode[0] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[0] }}" class="d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[0] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At placeat dolore obcaecati perspiciatis neque in, iusto, quia aut molestias minus ipsam modi dolorem odit eos.</p>
           </div>
         </div>
 
@@ -27,6 +25,7 @@
           <a href="{{ convocatorias.urlNode[1] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[1] }}" class="d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[1] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia vel in placeat corrupti. Velit quidem eos, accusantium vitae nostrum reiciendis ratione libero? Aperiam, recusandae culpa.</p>
           </div>
         </div>
 
@@ -34,9 +33,9 @@
           <a href="{{ convocatorias.urlNode[2] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[2] }}" class="d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[2] }}</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ut beatae porro ullam quidem officia dignissimos facilis? Blanditiis nesciunt labore pariatur quaerat exercitationem quibusdam modi!</p>
           </div>
         </div>
-
 
 <!--     Carousel Controls     -->
         <a href="#magicCarousel" class="carousel-control-prev" role="button" data-slide="prev">
@@ -49,24 +48,10 @@
         </a>
 
 
-      </div>
-      <div class="mas-img"><a class="mensaje" href="{{rutaCompleta}}/portal/todas-noticias" data-toogle="tooltip" data-placement="top" title="Más imágenes"><h1>+</h1></div>
 
       </div>
-</div>
-
-
-<script>
-
-$(document).ready(function(){
-  $('[data-toogle="tooltip"]').tooltip();
+    </div>
   
-});
-
-
-</script>
-
-{#  
 </div>
     <div class="container nini-imagenes">
       <div class="row pt-2">
@@ -88,4 +73,3 @@ $(document).ready(function(){
         <div class="btn-mas-noticias m-3"><a href="todas-noticias" class="btn btn-secondary btn-lg boton-noticias" role="button">Más Noticias</a></div>
 
     </div>
-#}
