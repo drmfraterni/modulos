@@ -2,6 +2,38 @@
  * @file
  * Subtheme specific CSS.
  */
+/*body .cabecera {
+  position: fixed;
+  top: 50;
+  right: 0;
+  left: 0;
+  padding: 12px 30px;
+  background-color: red;
+  z-index: 1030;
+  height: 145;
+}*/
+
+/* BODY */
+
+body .cabecera{
+  background-color: #154481;
+}
+
+/* FOOTER  */
+
+.site-footer {
+  background-color: #154481;
+}
+
+
+/* SIBEBAR  */
+
+.sidebar .block {
+  padding: 0px 0px 15px 0px;
+}
+
+/* CAROUSEL  */
+
  .carousel {
    position: relative;
  }
@@ -81,10 +113,10 @@
 
 @media screen and (max-width: 576px){
 
- #block-pruebadebloque h2, #block-calendario h2, #block-campanasinstitucionales h2,
+ #block-pruebadebloque h2, #block-calendario h2, #block-f h2,
  #block-paginasmasvisitadas h2, #block-campusvirtual h2, #block-calendariodeeventos-2 h2,
  #block-views-block-bloque-vista-calendario-block-1 h2, #block-views-block-bloque-enlaces-de-interes-block-1 h2,
- #block-galerias h2 {
+ #block-galerias h2, #block-enlacesdeinteres h2 {
    font-size: 1em;
    text-align: center;
    color: #154481;
@@ -97,7 +129,7 @@
  #block-pruebadebloque h2, #block-calendario h2, #block-campanasinstitucionales h2,
  #block-paginasmasvisitadas h2, #block-campusvirtual h2, #block-calendariodeeventos-2 h2,
  #block-views-block-bloque-vista-calendario-block-1 h2, #block-views-block-bloque-enlaces-de-interes-block-1 h2,
- #block-galerias h2 {
+ #block-galerias h2, #block-enlacesdeinteres h2 {
    font-size: 1.5em;
    text-align: center;
    color: #154481;
@@ -112,7 +144,7 @@
  #block-pruebadebloque h2, #block-calendario h2, #block-campanasinstitucionales h2,
  #block-paginasmasvisitadas h2, #block-campusvirtual h2, #block-calendariodeeventos-2 h2,
  #block-views-block-bloque-vista-calendario-block-1 h2, #block-views-block-bloque-enlaces-de-interes-block-1 h2,
- #block-galerias h2 {
+ #block-galerias h2, #block-enlacesdeinteres h2 {
    font-size: 2em;
    text-align: center;
    color: #154481;
@@ -281,7 +313,6 @@ nav .breadcrumb {
 }
 
 /* paragraph archivos Adjuntos */
-}
 .field--name-field-adjuntos-inicial {
     padding: 15px;
     border-top: 1px solid #c1bcbc;
@@ -308,7 +339,7 @@ nav .breadcrumb {
 #block-actividadinternacional-3 ul li, #block-aulaglobal ul li , #block-nuevapruebabloque ul li {
   font-size: 15px;
   text-transform: uppercase;
-  line-height: 75%;
+  line-height: 120%;
 }
 
 #block-elcej-3 ul li ul li, #block-formacion ul li ul li, #block-areastematicas ul li ul li,
@@ -316,7 +347,8 @@ nav .breadcrumb {
   font-size: 14px;
   text-transform: capitalize;
   list-style: square;
-  line-height: 75%;
+  line-height: 120%;
+  color:#db8927;
 }
 
 
@@ -368,10 +400,8 @@ ul.nav ul.dropdown-menu li.menu-item--expanded:hover ul.dropdown-menu{
  display: block;
  position: absolute;
  left: 220px !important;
- top: -5px !important;*/
-/*background: #92996F;
- border: 1px solid white;
- width: 270px;*/
+ top: -5px !important;
+
 }
 
 .dropdown-item.active, .dropdown-item:active {
@@ -463,35 +493,35 @@ img.align-right {
 /* DETALLE DE LAS CONVOCATORIAS   */
 
 .field--name-field-imagen-convocatoria img {
-  width: 100%
+  width: 100%;
   height:100%;
 }
 
-.field--type-image img{
-  width: 100%
+/* .field--type-image img{
+  width: 100%;
   height:100%;
-}
+} */
 
 /* CARD CONVOCATORIAS  */
-.card {
+.card-convocatoria-bloque .card {
     min-height: 550px;
     margin-bottom: 1.5em;
 }
-.card-img-top {
+.card-convocatoria-bloque .card-img-top {
     max-height: 223px;
 }
-.card-title {
+.card-convocatoria-bloque .card-title {
 	text-align: center;
 	background-color: #d7e3ee;
 }
-.card {
+.card-convocatoria-bloque .card {
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
 	0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
-.card-body {
+.card-convocatoria-bloque .card-body {
 	text-align: center;
 }
-.card-body p {
+.card-convocatoria-bloque .card-body p {
 	text-align: justify;
 }
 
@@ -569,8 +599,8 @@ img.align-right {
   background-color: #dae5f2;
 }
 
-/* bloque de campañas institucionales */
-#block-campanasinstitucionales {
+/* CAMPAÑAS INSTITUCIONALES Y ENLACES DE INTERES*/
+#block-campanasinstitucionales, #block-enlacesdeinteres {
   width: 100%;
 }
 
@@ -578,10 +608,19 @@ img.align-right {
   height: 200px;
 
 }
+
+.logo-img {
+
+  overflow: hidden;
+  text-align: center;
+
+}
+
 .logo-img img{
 
-  width: 100%
-  height:100%;
+  /* width: 100%; */
+  /* height:100%; */
+  text-align: center;
   transition: transform .2s ease;
 
 
@@ -665,7 +704,39 @@ header #search-block-form {
     height: 100%;
   }
 
+  /* FORMULARIO BUSCADOR */
+
+  .form-control{
+    width: 250px;
+  }
   
+  #edit-submit {
+    width: 100px;
+    margin-top: 10px;
+  }
+
+  #search-block-form {
+    text-align: center;
+  }
+
+  .js-form-type-search {
+
+    padding-left: 38px;
+  }
+
+ 
+  #menu-principal .row {
+    margin-left: 5px;
+  }
+
+  .redes-sociales {
+    margin-left: 225px;
+  }
+  
+  #block-redessociales-2 {
+    margin-left: 0px !important;
+  }
+
 }
 
 @media screen and (min-width: 577px){
@@ -680,6 +751,7 @@ header #search-block-form {
     background-color: #3a72bb;
     border: solid 2px #1762c3;
     font-size: 12px;
+    margin-top:5px;
 
   }
 
@@ -978,6 +1050,16 @@ header .text-formatted {
 #edit-submit {
   padding: 0 1rem .1rem 1rem;
 }
+
+.redes-sociales .sociales {
+  margin-top: -3px;
+}
+
+
+.region-redes-sociales {
+  float: right;
+}
+
 /* FIN CABECERA------------ */
 
 /* AREA DE CONTENIDO------------ */
@@ -999,15 +1081,67 @@ header .text-formatted {
 
 /* Carrusel */
 .carousel-caption {
-  bottom: 0;
+  bottom: auto;
   right: 0;
   left: 0;
-  background-color: #154481c4;
+  background-color: #154481;
+  top: 0;
+}
+
+.carousel-indicators li {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: solid 1px black;
 }
 
 .carousel-indicators {
-  margin-bottom: 0;
+  background-color: #aeababa8;
+  padding: 5px;
+  width: 115px;
+  height: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 38px;
 }
+
+/* CAROUSEL MÁS IMÁGENES  */
+
+
+.mas-img {
+  position: relative;
+  left: 60%;
+  top: -50px;
+  width: 20px;
+  transition: all 0.3s ease;
+}
+
+.mas-img:hover {
+  cursor: pointer;
+  transform: scale(1.5);
+  transform: rotate(20deg);
+  color:#db8927;
+}
+
+.mas-img a:hover {
+    text-decoration: none;
+}
+
+/* Tooltip   */
+
+.mensaje + .tooltip > .tooltip-inner {
+  background-color: #73AD21;
+  color:white;
+  border: 1px solid green;
+  padding:15px;
+  font-size: 20px;
+}
+
+.mensaje + .tooltip.top > .tooltip-arrow {
+  border-top:5px solid green;
+}
+
+
 
 .mini-tit {
   position: absolute;
@@ -1134,4 +1268,60 @@ header .text-formatted {
 
 .nini-imagenes div > a > img {
 	max-height: 136px;
+}
+
+
+/*  NUEVOS APARTADOS DEL CEJ   */
+
+.bloque-formacion {
+  background-color: #154481;
+  padding: 5px;
+  height: 220px;
+}
+
+div .tit-formacion {
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  border: solid 0.1em white;
+}
+
+/* tipo cards  */
+
+#area-interes .card-body, #area-formacion .card-body {
+  padding: 10px;
+  background-color: #154481;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  border: solid 1px white;
+  margin: 4px;
+  transition: all 0.4s ease;
+}
+
+#area-interes .card-body:hover, #area-formacion .card-body:hover {
+
+  background-color: #ffc107;
+  cursor:pointer;
+
+}
+
+#area-formacion .card-title span {
+  font-size: 14px;
+}
+
+#area-interes .card, #area-formacion .card {
+  background-color: #154481;
+  border-radius: 0px;
+}
+
+#area-interes .card-title, #area-formacion .card-title {
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+#area-interes .card-title a, #area-formacion .card-title a {
+  color:white;
 }

@@ -2,6 +2,7 @@ global-styling:
   version: VERSION
   js:
     js/global.js: {}
+    js/variosjs.js: {}
   css:
     component:
       css/style.css: {}
@@ -21,6 +22,7 @@ color.preview:
       color/preview.css: {}
   js:
     color/preview.js: {}
+
   dependencies:
     - color/drupal.color
     - core/jquery
