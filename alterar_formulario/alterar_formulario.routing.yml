@@ -12,6 +12,13 @@ alterar_formulario.admin_settings:
     _form: '\Drupal\alterar_formulario\Form\OficinavirtualConfigurationForm'
   requirements:
     _permission: 'administer site configuration'
+alterar_formulario.proteccion_settings:
+  path: '/admin/config/services/config-proteccion'
+  defaults:
+    _title: 'Configuración Formulario Protección de datos'
+    _form: '\Drupal\alterar_formulario\Form\ProteccionDatosConfigurationForm'
+  requirements:
+    _permission: 'administer site configuration'
 alterar_formulario.externa_cabecera:
   path: '/externa/cabecera'
   defaults:
@@ -47,6 +54,15 @@ alterar_formulario.ver_toda_agenda:
   defaults:
     _title: 'AGENDA DEL CEJ'
     _controller: '\Drupal\alterar_formulario\Controller\AgendaController::ver_agenda'
+    fecha_inicio: ''
+    fecha_fin: ''
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.proteccion-datos:
+  path: '/proteccion-datos'
+  defaults:
+    _title: 'FORMULARIO PROTECCIÓN DE DATOS'
+    _controller: '\Drupal\alterar_formulario\Controller\ProteccionController::form_proteccion'
     fecha_inicio: ''
     fecha_fin: ''
   requirements:

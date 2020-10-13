@@ -1,0 +1,208 @@
+<div class="bs-example my-4">
+	<div>
+		<h3>PROTECCIÓN DE DATOS DE CARÁCTER PERSONAL</h3>
+		<p>El ciudadano puede ejercitar en todo momento, ante el responsable del tratamiento, los siguientes derechos</p>
+	</div>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne">1. DERECHO DE ACCESO</button>									
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_acceso }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo">2. DERECHO DE RECTIFICACIÓN</button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_rectificacion }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseThree">3. DERECHO DE SUPRESIÓN</button>                     
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_supresion }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseThree">4. DERECHO DE OPOSICIÓN</button>                     
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_oposicion }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseFive">5. DERECHO DE LIMITACIÓN</button>                     
+                </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_limitacion }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingSix">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseSix">6. DERECHO DE PORTABILIDAD</button>                     
+                </h2>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>{{ formulario.datos_solicitud.texto_portabilidad }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{# FORMULARIO DE PROTECCIÓN DE DATOS #}
+
+<form id="{{ formulario['#id']}}" method="{{ formulario['#method'] }}">
+	<div id="solicitante" class="nueva-solicitud">
+
+		<div class="datos-solicitante"> 
+
+			<div class="row dto-form-sol">
+					
+				<div class="col-12">
+					<div class="col-12 tit-sol">
+						<h3> {{ formulario['datos_solicitante']['#title'] }}</h3>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.nombre }}</div>
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.apellido1 }}</div>
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.apellido2 }}</div>
+
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.dni }}</div>
+				<div class="col-12 col-md-8">{{ formulario.datos_solicitante.domicilio }}</div>
+				
+
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.localidad }}</div>
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.provincia }}</div>
+				<div class="col-12 col-md-4">{{ formulario.datos_solicitante.cp }}</div>
+
+				<div class="col-12 col-md-3">{{ formulario.datos_solicitante.movil }}</div>
+				<div class="col-12 col-md-3">{{ formulario.datos_solicitante.fijo }}</div>
+				<div class="col-12 col-md-6">{{ formulario['datos_solicitante']['email'] }}</div>
+			</div>
+
+		</div>
+
+		<div class="datos-responsable">
+			<div class="row dto-form-sol">
+				
+
+				<div class="col-12">
+					<div class="col-12 tit-sol">
+						<h3> {{ formulario['datos_responsable']['#title'] }}</h3>
+					</div>
+				</div>
+				<div class="col-12">{{ formulario.datos_responsable.texto_responsable }}</div>
+				
+			</div>
+
+
+		</div>
+
+		<div class="datos-derechos">
+
+			<div class="row dto-form-sol">
+
+				<div class="col-12">
+					<div class="col-12 tit-sol">
+						<h3> {{ formulario['datos_solicitud']['#title'] }}</h3>
+					</div>
+				</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_solicitud }}</div>
+
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.acceso }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_acceso }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.rectificacion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_rectificacion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.supresion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_supresion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.oposicion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_oposicion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.limitacion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_limitacion }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.portabilidad }}</div>
+				<div class="col-12 dto-sol-der">{{ formulario.datos_solicitud.texto_portabilidad }}</div>
+
+			</div>
+
+
+
+
+		</div>
+
+		<div class="datos-mensaje">
+			<div class="row dto-form-sol">
+
+				<div class="col-12">
+					<div class="col-12 tit-sol">
+						<h3> {{ formulario['datos_mensaje']['#title'] }}</h3>
+					</div>
+				</div>
+
+				<div class="col-12">{{ formulario.datos_mensaje.mensaje }}</div>
+				<div class="col-12">{{ formulario.datos_mensaje.documentacion }}</div>
+
+
+			</div>
+
+
+		</div>
+
+
+			<div class="col-12">
+				<div class="col-8 col-md-4 boton-enviar">{{ formulario.actions }}</div>
+			</div>
+
+			{{formulario.form_build_id }}
+			{{formulario.form_token }}
+			{{formulario.form_id }}
+
+
+
+			{# formulario|without('nombre', 'apellido1', 'apellido2', 'domicilio', 'localidad', 'provincia', 'cp', 'movil', 'fijo', 'email', 'submit') #}
+
+			
+
+			<div>{#formulario #}</div>
+
+					
+
+		
+	</div>
+</form>

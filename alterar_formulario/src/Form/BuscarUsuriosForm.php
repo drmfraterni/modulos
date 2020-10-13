@@ -8,7 +8,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
