@@ -9,7 +9,7 @@ use Drupal\media\Entity\Media;
 use Drupal\file\Entity\File;
 use Symfony\Component\HttpFoundation\Response;
 use Drupal\alterar_formulario\Services\Calendario;
-
+use Symfony\Component\HttpFoundation\Request;
 /**
 * Controlador para la Agenda   
 */
@@ -22,117 +22,54 @@ class AgendaController extends ControllerBase {
 
 	private $fecha_inicio;
 
-	private $fecha_fin;
+	private $sefecha_fin;
 
 
 	public function ver_agenda($fecha_inicio, $fecha_fin) {
-
-		// configuración ruta del servidor
-		// Este parte se configura en la aplicación en la opción:
-		// configuración > servicio web > oficina virtual > Dirección del servidor
-
 		$this->urlConfig = $this->config('alterar_formulario.settings');
-		$rutaBase = $this->urlConfig->get('ambito');
-
-		$textos['rutaBase'] = $rutaBase;
 		
+		$req = \Drupal::request();
+		$rutaBase = $req->getSchemeAndHttpHost().$req->getBaseUrl().'/ver-toda-agenda/';
 
 		// FORMATEO DE LAS FECHAS DE INICIO Y FIN  //
 		// comprobramos si es para cambio de calendario $this->cambioMes = true
 		// o si se elige un evento $this->cambioMes = false
-		//
-		if($fecha_inicio == null || $fecha_inicio == '' || empty($fecha_incio)) {
+		if($fecha_inicio == null || $fecha_inicio == '' || empty($fecha_inicio)) {
 			$this->fecha_inicio = date("Ymd");
 		} else {
 			$this->fecha_inicio = self::formatearFecha($fecha_inicio);
 		}
 
 		if($fecha_fin == null || $fecha_fin == '' || empty($fecha_fin)) {
-		        $this->fecha_fin = $this->fecha_inicio;
+			if($this->cambioMes) {
+				$this->fecha_fin = self::formatearFecha($fecha_inicio, date('t',strtotime($this->fecha_inicio ))); 
+			} else {
+			        $this->fecha_fin = $this->fecha_inicio;
+			}
 		} else {
 			$this->fecha_fin = self::formatearFecha($fecha_fin);
 		}
-
-		// dirección en el SERVIDOR CEJ
 		
-		$direccion = $this->urlConfig->get('agenda') .$this->fecha_inicio .'\\' .$this->fecha_inicio;
-
-		// dirección en el servidor LOCAL
-
-		if (empty($dirección)){
-			$direccion = "http://localhost/cej-demo/sites/default/files/cursos/cursos.json";
-		}
+		$direccion = $this->urlConfig->get('agenda') .$this->fecha_inicio .'\\' .$this->fecha_fin;
 
 
 		// CONSTRUCCIÓN DEL CALENDARIO  //	
-
-		//	nos traemos el servicio calendario de archivo Calendario.php 
-		// instanciamos la clase Calendario para construir el calendario
 		$usCalendar = new Calendario();
 
 
-		if(isset($fechaCalendario)){
-			$cambioCalendario = $usCalendar->cambiodecalendario($fechaCalendario);
-			$month = $cambioCalendario['fecha'];			
-			$elmes = $cambioCalendario['mes'];
-			$calAnyo = date("Y");
-			$entra = 'nuevo mes del calendario';
-			$diaHoy ="01/".$elmes."/".$calAnyo;
-
-			
-		} else {
-			$diaHoy = date("d/m/Y");
-			$month = date("Y-m");
-			$elmes = date("m");
-			$entra = 'calendario por defecto';
-		}
-
+		$fecha = strtotime($this->fecha_inicio);
+		$diaHoy = date("d-m-Y", $fecha);
+		$month = date("Y-m", $fecha);
+		$elmes = date("m", $fecha);
 		$verMeses = $usCalendar->calendar_month($month);
 		$verMes = $usCalendar->spanish_month($verMeses['month']);
 
 		$agenda['data'] = $verMeses;
 		$agenda['elmes'] = $verMes;
 
-		// FIN DE CALENDARIO
-
-
-		// CONSTRUCCIÓN DEL LISTADO DE EVENTOS //
-
-
-		//$fechaInicio = $fecha_inicio;
-		//$fechaFin = $fecha_fin;
-
-		//$urlConfig = $this->config('alterar_formulario.settings');
-      	//$direccion = $urlConfig->get('agenda');
-
-		//$url = 'http://10.12.99.62:8080/IntraCEJ/ws?accion=nivel&usr=jmrodriguez&pwd=&app=IntraCEJ&nivel=WSCalendario&params=' .$fecha_inicio .'\\' .$fecha_fin;
-
-		// MÉTODO 1 DE CARGA //
-		/*
-		$url = 'http://localhost/cej-demo/sites/default/files/cursos/cursos.json';
-		$handle = curl_init();
-		curl_setopt($handle, CURLOPT_POST, 0);
-		curl_setopt($handle, CURLOPT_URL, $url);
-		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($handle, CURLOPT_HTTPPROXYTUNNEL, 0);
-		curl_setopt($handle, CURLOPT_PROXY, '192.168.100.250:8086');
-		curl_setopt($handle, CURLOPT_FOLLOWLOCATION, 1);
-		$datos = curl_exec($handle);
-		if(curl_errno($handle)) {
-			print curl_error($handle);
-		}	
-		curl_close($handle);
-		$cat_facts = json_decode(utf8_encode($datos));
-
-		*/
-
-		// MÉTODO 2 DE CARGA  //
-
-
-		//Drupal::logger('alterar_formulario') ->notice( $direccion );
+		//Drupal::logger('alterar_formulario') ->notice($rutaBase);
 		$data = file_get_contents($direccion);
 		$cat_facts = json_decode(utf8_encode($data), true);
-		//\Drupal::logger('alterar_formulario') ->notice( json_last_error() );
 
 		$textos['cantInicio'] = 0;
 		$textos['cantidad'] = 0;
@@ -144,45 +81,25 @@ class AgendaController extends ControllerBase {
 	        $textos['fecha'][] = $cat_fact[0];
 	        $eventMes = self::eventosMes($cat_fact[0], $elmes);
 
-
 	        // vemos las fechas de los eventos del mes en el que estamos.
 	        if (!empty($eventMes)){
 	        	//$textos['eventMes'][$textos['cantidad']] = $eventMes;
 	        	$textos['eventMes'][] = $eventMes;
 	        }
-	        // cambiamos el formato de fecha a Y-m-d
-	        // $textos['nfecha'][] = self::formatearFecha($cat_fact[0]);
-	        $textos['horario'][]= $cat_fact[1];
-	        $textos['planta'][] = $cat_fact[2];
-	        $textos['dirigido'][] = $cat_fact[3];
-	        $textos['curso'][] = $cat_fact[4];  
-	        $textos['cantidad']++; 
 
+	    	}
+		$textos['cantEventosMes'] = 0;
 
-	        // COMPARANDO FECHAS PARA MOSTRAR EN TODOS LOS EVENTOS DEL DÍA EN EL QUE ESTAMOS
-	        $ncontrol = self::comparadorFechas($diaHoy, $cat_fact[0], $textos['cantInicio'] );
-	        if ($ncontrol == "true"){
-	        	$textos['cantInicio']++;
-	        }
+		if(isset($textos['eventMes'])){
+			$textos['cantEventosMes'] = count($textos['eventMes']);
+		}
 
-	    }
-	
-
-
-	    $textos['cantEventosMes'] = 0;
-
-	    if(isset($textos['eventMes'])){
-		    $textos['cantEventosMes'] = count($textos['eventMes']);
-	    }
-
-		//\Drupal::logger('alterar_formulario') ->notice( implode($textos) );
 		return array(
-      		'#datos' => $cat_facts['filas'],//$textos,
-      		'#agenda' => $agenda,
-      		'#theme' => 'toda_agenda'
-    	);
-
-   
+			'#base' => $rutaBase,
+      			'#datos' => $cat_facts['filas'],
+      			'#agenda' => $agenda,
+	      		'#theme' => 'toda_agenda'
+		);
 	}
 
 	public function comparadorFechas($f1, $f2, $contador){
@@ -212,12 +129,11 @@ class AgendaController extends ControllerBase {
 	}
 
 	public function eventosMes ($eventos, $mes){
-
+		$fechaEvents = null;
 		$events = explode("/", $eventos);
 		$diaf1    = $events[0];  
   		$mesf1  = $events[1];  
   		$anyof1  = $events[2];
-
 
   		if ($mesf1 == $mes){  			
   			$fechaEvents = $anyof1."-".$mesf1."-".$diaf1;
@@ -228,10 +144,10 @@ class AgendaController extends ControllerBase {
 
 	}
 
-	public function formatearFecha ($fecha){
+	public function formatearFecha ($fecha, $diadef="01"){
 		$ret =  date("Ymd");
 		$nfecha = explode("-", $fecha);
-		if(count($nfecha) != 3) {
+		if(count($nfecha) == 1) { // No viene separada por guión
 			 $nfecha = explode("/", $fecha);
 		}
 		if(count($nfecha) == 3) {
@@ -240,13 +156,14 @@ class AgendaController extends ControllerBase {
 			$dia  = $nfecha[2];
 			if(checkdate ($mes , $dia , $anyo)) {
 				$ret = $anyo."".$mes."".$dia;
-			} elseif(checkdate ($anyo , $mes , $dis)) {
+			} elseif(checkdate ($anyo , $mes , $dia)) {
 				$ret = $dia."".$mes."".$anyo;
 			}
+		} elseif(count($nfecha) == 2) { // Viene año y mes, el mes como nombre corto, "Oct"
+			$mes = date('m', strtotime($nfecha[1]));
+			$ret =  $nfecha[0]."".$mes."".$diadef;
+			$this->cambioMes = true; // Indica que se trata de la consulta de un mes entero
 		}
-  		if ($anyo!= null && $dia == null){
-  			$this->cambioMes = true;
-  		}
   		return $ret;
   	}
 

@@ -188,6 +188,13 @@ use Drupal\node\Entity\Node;
 
             ],
           ],
+
+        'enviocorreo' => [
+          'variables' => [
+              'contenido' => NULL
+
+            ],
+        ],
         'toda_agenda' => [
           'variables' => [
             'titulo' => 'TODOS LOS EVENTOS',
@@ -241,7 +248,7 @@ function alterar_formulario_mail($key, &$message, $params) {
 
 
     $theme = [
-      '#theme' => 'envioCorreo',
+      '#theme' => 'enviocorreo',
       '#contenido' => $params
     ];
 

@@ -30,7 +30,6 @@ class Agenda extends BlockBase {
    $mensaje = $config['cursos_mensaje_settings'];
    $fechaPrueba = $config['cursos_fechafija_settings'];
 
-
    if (empty($mensaje)){
     $mensaje = "No hay enventos";
    }
@@ -74,16 +73,8 @@ class Agenda extends BlockBase {
     $textos['eventos'] = false;
     $textos['cantidad'] = 0;
 
-    // carga desde el SERVIDOR  //
     $data =  file_get_contents($config['cursos_ruta_settings']  .date('Ymd') .'\\' .date('Ymd'));
-    $cat_facts = json_decode(utf8_encode($data), true);    
-    // carga desde LOCAL //
-    if (empty($data)){
-      $data =  file_get_contents($config['cursos_ruta_settings']);
-      $cat_facts = json_decode($data, true);
-    }
-
-   
+    $cat_facts = json_decode(utf8_encode($data), true);
 
     foreach ($cat_facts['filas'] as $cat_fact) {
 

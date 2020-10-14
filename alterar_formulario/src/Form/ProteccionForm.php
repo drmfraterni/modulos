@@ -30,6 +30,10 @@ class ProteccionForm extends FormBase {
 
   protected $textoHtmlAcceso;
 
+  protected $correoCej;
+
+  protected $valores;
+
   // protected $datos = [];
 
 
@@ -53,15 +57,58 @@ class ProteccionForm extends FormBase {
     $textOposicion = $textHtml->get('texto_oposicion');
     $textoLimitacion = $textHtml->get('texto_limitacion');
     $textoPortabilidad = $textHtml->get('texto_portabilidad');
-    $correoCej = $textHtml->get('correo_cej');
+    $this->correoCej = $textHtml->get('correo_cej');
+
 
     //var_dump($textHtml->get('texto_solicitud'));
 
     //$this->envioconf = TRUE;
 
     if (!empty($this->envioconf)){
-      drupal_set_message('EL FORMULARIO SE HA ENVIDO');
+
+      $textoConsent ="<p><h3>FORMULARIO DE PROTECCIÓN DE DATOS</h3></p>";
+
+      $textoConsent .= "<p>Estimado/a ".$this->valores['nombre']." ".$this->valores['apellido1']." ".$this->valores['apellido2']."</p>";
+      $textoConsent .= "El mensaje se ha enviado de forma correcta.<br/>";
+      $textoConsent .= "En breve nos pondremos en contacto con usted.<br/>";
+
+      if ($this->valores['acceso']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['acceso']."<br/>";
+      }
+      if ($this->valores['rectificacion']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['rectificacion']."<br/>";
+      }
+      if ($this->valores['supresion']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['supresion']."<br/>";
+      }
+      if ($this->valores['oposicion']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['oposicion']."<br/>";
+      }
+      if ($this->valores['limitacion']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['limitacion']."<br/>";
+      }
+      if ($this->valores['portabilidad']){
+        $textoConsent .= "Usted ha ejercido el derecho a ". $this->valores['portabilidad']."<br/>";
+      }
+
+      $textoConsent .= "<p>Y nos ha envido el siguiente mensaje: </p> ";
+      $textoConsent .= "<p>".$this->valores[mensaje]."</p>";
+
+      $form ['final']= array (
+          '#type' => 'markup',
+          '#markup' => $textoConsent,
+          '#format' => 'full_html',
+
+      );
+
+      //var_dump($this->valores);
+
+      //drupal_set_message('EL FORMULARIO DE PROTECCIÓN DE DATOS SE HA ENVIDO');
+
+
+
     }else{
+
 
       /**  DATOS DE SOLICITANTE **/
 
@@ -92,7 +139,7 @@ class ProteccionForm extends FormBase {
       $form ['datos_solicitante']['apellido2'] = array (
         '#type'     => 'textfield',
         '#title'    => $this->t('Apellido 2'),
-        '#required' => TRUE,
+        '#required' => FALSE,
       );
 
       $form ['datos_solicitante']['domicilio'] = array (
@@ -134,7 +181,7 @@ class ProteccionForm extends FormBase {
       $form ['datos_solicitante']['email'] = array (
         '#type'     => 'email',
         '#title'    => $this->t('Correo electrónico'),
-        '#required' => TRUE,
+        '#required' => FALSE,
       );
 
       /** DATOS DEL RESPONSABLE **/
@@ -263,7 +310,7 @@ class ProteccionForm extends FormBase {
         '#required' => FALSE,
       );
       
-      $form['datos_mensaje']['documentacion'] = array (
+      /*$form['datos_mensaje']['documentacion'] = array (
           '#type' => 'managed_file',
           '#title' => $this->t('DOCUMENTACIÓN ADJUNTA'),
           '#upload_validators' => array (
@@ -273,7 +320,7 @@ class ProteccionForm extends FormBase {
           '#upload_location' => 'public://proteccion_datos/',
           '#required' => FALSE,
 
-      );
+      );*/
 
 
       // ACTION 
@@ -288,9 +335,11 @@ class ProteccionForm extends FormBase {
       $form['#theme'] = 'proteccion';
 
 
-      return $form;
+      
 
     }
+
+    return $form;
 
   }
 
@@ -302,6 +351,12 @@ class ProteccionForm extends FormBase {
 
     $patron_texto = '/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/';
     $patron_tel='/^[0-9]{9}$/';
+    $val_dni = TRUE;
+
+    if (!empty($form_state->getValue('dni'))){
+      $val_dni = self::validar_dni($form_state->getValue('dni'));
+    }
+
     // Hacemos las validaciones necesarias
     // Validación del MONBRE
     if (empty($form_state->getValue('nombre'))) {
@@ -310,6 +365,41 @@ class ProteccionForm extends FormBase {
         //print_r(preg_match($patron_texto, $form_state->getValue('nombre')));
         $form_state->setErrorByName('nombre', $this->t('No puede contener números'));
     }
+
+    if (empty($form_state->getValue('apellido1'))) {
+        $form_state->setErrorByName('apellido1', $this->t('Es necesario introducir un apellido1'));
+    }else if (!preg_match($patron_texto, $form_state->getValue('apellido1'))){
+        //print_r(preg_match($patron_texto, $form_state->getValue('nombre')));
+        $form_state->setErrorByName('apellido1', $this->t('No puede contener números'));
+    }
+
+    /*if (!preg_match($patron_telf, $form_state->getValue('movil'))){
+        //print_r(preg_match($patron_texto, $form_state->getValue('movil')));
+        $form_state->setErrorByName('movil', $this->t('No puede contener letras'));
+    }*/
+
+    if (empty($form_state->getValue('movil'))) {
+        $form_state->setErrorByName('movil', $this->t('Es necesario introducir un nombre'));
+    }else if (!preg_match($patron_tel, $form_state->getValue('movil'))){
+        //print_r(preg_match($patron_texto, $form_state->getValue('nombre')));
+        $form_state->setErrorByName('movil', $this->t('No puede contener números'));
+    }
+
+    if (!valid_email_address($form_state->getValue('email'))){
+
+      $form_state->setErrorByName('email', $this->t('Correo erróneo'));
+
+
+    }
+
+    if ($val_dni == FALSE){
+
+      $form_state->setErrorByName('dni', $this->t('dni incorrecto'));
+    }
+
+
+
+
 
   }
 
@@ -321,6 +411,7 @@ class ProteccionForm extends FormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
+    $this->envioconf = TRUE;
 
     $datos['nombre'] = strip_tags($form_state->getValue('nombre'));    
     $datos['apellido1'] = strip_tags($form_state->getValue('apellido1'));
@@ -367,22 +458,24 @@ class ProteccionForm extends FormBase {
     
     $module = 'alterar_formulario';
     $key = 'email_proteccion_datos';
-    $to = $correoCej; // viene de las variables del formulario de protección de datos
+    $to = $this->correoCej; // viene de las variables del formulario de protección de datos
     $params['subject'] = 'FORMULARIO DE SOLICITUD DE EJERCICIO DE DERECHOS DE '.$nombreCompleto;
     $params['titulo']='Protección de dato en el Centro de Estudios Jurídicos';
     $params['message'] =  $datos['mensaje'];
 
     //$params['attachments'] = $file.$nombrePDF;
+
+    $this->valores = $datos;
     
     $params = $datos + $params;
     
 
     $from = \Drupal::config('system.site')->get('mail');
-        //drupal_set_message('esto es de: '.$to);
-    $from = $datos['email'];
+
+    //drupal_set_message('esto es de: '.$to);
     $language_code ='es';
 
-    //$form_state->setRebuild();
+    $form_state->setRebuild();
 
  
     $result = \Drupal::service('plugin.manager.mail')->mail($module, $key, $to, $language_code, $params, $from, TRUE);
@@ -422,6 +515,19 @@ class ProteccionForm extends FormBase {
     return $texto;
 
   }
+
+  function validar_dni ($dni){
+    $letra = substr($dni, -1);
+    $numeros = substr($dni, 0, -1);
+    $validado = false;
+
+    if (substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros%23, 1) == $letra && strlen($letra) == 1 && strlen($numeros) == 8) {
+      $validado = true;
+    }
+
+    return $validado;
+  }
+
 
 }
 
