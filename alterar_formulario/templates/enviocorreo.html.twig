@@ -2,12 +2,10 @@
 
   <div class="cuerpo-mensaje"> 
 
-    {{ dump(contenido)}}
-
     <p>Prueba de mensaje de correo del FORMULARIO DE PROTECCIÓN DE DATOS</p>
 
     <p>Nombre de usuario: {{contenido.nombre ~ " " ~ contenido.apellido1 ~ " " ~ contenido.apellido2 }}</p>
-    <p>Datos del usuario:</p>
+    <p><h3>Datos del usuario:</h3></p>
       <ul>
         <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
         <li><strong>Localidad</strong>: {{ contenido.localidad }}</li>
@@ -20,35 +18,35 @@
 
         <li><strong>Correo Electrónico</strong>: {{ contenido.email }}</li>
       </ul>
-      <p>Envío de derechos</p>
+    <p><h3>Envío de derechos</h3></p>
       <ul>
         {% if contenido.acceso %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Acceso</strong>: {{ contenido.acceso }}</li>
         {% endif %}
 
         {% if contenido.rectificacion %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Rectificación</strong>: {{ contenido.rectificacion }}</li>
         {% endif %}
 
         {% if contenido.supresion %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Supresión</strong>: {{ contenido.supresion }}</li>
         {% endif %}
 
         {% if contenido.oposicion %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Oposición</strong>: {{ contenido.oposicion }}</li>
         {% endif %}
 
         {% if contenido.limitacion %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Limitación del tratamiento</strong>: {{ contenido.limitacion }}</li>
         {% endif %}
 
         {% if contenido.portabilidad %}
-          <li><strong>Domicilio</strong>: {{ contenido.domicilio }}</li>
+          <li><strong>Portabilidad</strong>: {{ contenido.portabilidad }}</li>
         {% endif %}
 
       </ul>
 
-    <p>Mensaje enviado por el Usuario</p>
+    <p>Mensaje enviado por el Usuario:</p>
     <p>{{contenido.mensaje}}</p>  
 
   </div>

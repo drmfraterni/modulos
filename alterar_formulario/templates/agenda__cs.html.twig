@@ -1,0 +1,126 @@
+
+{% set contador = (datos['cantidad']-1) %}
+
+
+<div id="proximos_eventos" class="proximos-eventos">
+
+  {# datos['factual']['diaHoy'] #}
+
+  <h2>{{ datos['titulo'] }}</h2>
+
+  <div class="eventos-general">
+
+
+    {% if datos['eventos'] == true %}
+      {# si el día viene CON eventos #}
+
+      {# Mejor mostrar todo siempre igual if contador < 1 #}
+	{% if false %} 
+        {# CON EVENTOS PERO SÓLO UNO #}
+        <div class="cal-tit-uno">
+          <div class="row">
+            {# FECHA GENERAL #}
+            <div class="col-3 cal-dia">
+              <div class="rect-cal-dia">
+                <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
+                <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
+                <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
+              </div>
+            </div>
+            {# HORARIO Y CURSO #}
+            <div class="col-9 cal-body">
+              <div class="cal-tit-desc"><strong>{{ datos['curso'][0] }}</strong></div>              
+            </div>
+            {# PLANTA Y DIRIGIDO A #}
+            <div class="cal-cuerpo">
+              <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong></div>
+              <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
+              <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
+            </div>
+          </div>  
+        </div>
+        </div> 
+
+      {% else %}
+         {# MÁS DE UN EVENTO #} 
+        <div class="cal-tit-grande">
+
+            {# FECHA GENERAL #}
+            <div class="cal-cuerpo">
+
+                <div class="cal-tit-desc"><strong>aaaaaa{{ datos['curso'][0] }}</strong></div>
+                <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong> </div>
+                <div class="cal-redate"><strong>Fecha:</strong> {{ datos['fecha'][0] }}</div>  
+                <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
+                <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
+                
+
+            </div>
+
+
+              {# for i in 0..contador #}
+
+              {# PLANTA Y DIRIGIDO A #}
+              <!-- <div class="cal-cuerpo">
+
+                <div class="cal-tit-desc"><strong>{{ datos['curso'][i] }}</strong></div>
+                <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][i] }}</strong> </div>
+                <div class="cal-redate"><strong>Fecha:</strong> {{ datos['fecha'][i] }}</div>  
+                <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][i] }}</div>
+                <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][i] }}</div>
+                
+
+              </div>-->
+            {# endfor #}
+
+              
+  
+      </div>
+      {% endif %}
+      
+      
+      
+
+    {% else %}
+      {# si el día viene SIN eventos #}
+      <div class="cal-tit">
+        <div class="row">
+            {# FECHA GENERAL  #}
+          <!--div class="col-3 cal-dia">
+            <div class="rect-cal-dia">
+              <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
+              <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
+              <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
+            </div>
+          </div-->
+          {# Sin eventos #}
+          <div class="col-9 cal-body">
+            <div class="cal-tit-desc py-1 my-2"><h4>{{ datos['nota'] }}</h4></div>            
+          </div>
+            
+        </div>  
+      </div>
+    {% endif %}
+
+    <div class="contador"> 
+
+        <ul>
+
+        {% for i in 0..contador %}
+          <li class="puntos"> {{ i }} </li>
+        {% endfor %}
+
+      </ul>
+
+
+    </div>
+
+  
+
+
+
+	  	{# <div class="all-agenda">
+        		 <a href="ver-toda-agenda">{{ datos['factual']['diaHoy'] }} - Ver toda la Agenda</a> 
+		</div> #}
+	</div>
+</div>

@@ -51,6 +51,7 @@ class AgendaController extends ControllerBase {
 		}
 		
 		$direccion = $this->urlConfig->get('agenda') .$this->fecha_inicio .'\\' .$this->fecha_fin;
+		//$direccion = 'http://localhost/portal/sites/default/files/cursos/cursos.json';
 
 
 		// CONSTRUCCIÓN DEL CALENDARIO  //	

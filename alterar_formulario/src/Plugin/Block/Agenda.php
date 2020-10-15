@@ -73,8 +73,12 @@ class Agenda extends BlockBase {
     $textos['eventos'] = false;
     $textos['cantidad'] = 0;
 
-    $data =  file_get_contents($config['cursos_ruta_settings']  .date('Ymd') .'\\' .date('Ymd'));
+    // SERVIDOR $data =  file_get_contents($config['cursos_ruta_settings']  .date('Ymd') .'\\' .date('Ymd'));
+    $data =  file_get_contents($config['cursos_ruta_settings']);  // LOCAL 
     $cat_facts = json_decode(utf8_encode($data), true);
+
+
+
 
     foreach ($cat_facts['filas'] as $cat_fact) {
 

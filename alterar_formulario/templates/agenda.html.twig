@@ -4,72 +4,46 @@
 
 <div id="proximos_eventos" class="proximos-eventos">
 
-  <h2>{{ datos['titulo'] }} para el {{ datos['factual']['diaHoy'] }}</h2>
+  {# datos['factual']['diaHoy'] #}
+
+  <h2>{{ datos['titulo'] }}</h2>
 
   <div class="eventos-general">
 
 
-    {% if datos['eventos'] == true %}
+  {% if datos['eventos'] == true %}
       {# si el día viene CON eventos #}
 
       {# Mejor mostrar todo siempre igual if contador < 1 #}
-	{% if false %} 
-        {# CON EVENTOS PERO SÓLO UNO #}
-        <div class="cal-tit-uno">
-          <div class="row">
-            {# FECHA GENERAL #}
-            <div class="col-3 cal-dia">
-              <div class="rect-cal-dia">
-                <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
-                <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
-                <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
-              </div>
-            </div>
-            {# HORARIO Y CURSO #}
-            <div class="col-9 cal-body">
-              <div class="cal-tit-desc"><strong>{{ datos['curso'][0] }}</strong></div>              
-            </div>
-            {# PLANTA Y DIRIGIDO A #}
-            <div class="cal-cuerpo">
-              <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong></div>
-              <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
-              <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
-            </div>
-          </div>  
-        </div>
-        </div> 
-
-      {% else %}
+	
          {# MÁS DE UN EVENTO #} 
         <div class="cal-tit-grande">
-          <!--div class="row calend-largo">
+
             {# FECHA GENERAL #}
-            <div class="col-3 cal-dia">
-              <div class="rect-cal-dia">
-                <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
-                <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
-                <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
-              </div>
-          </div>
-            {# HORARIO Y CURSO #}
 
-            
-            <div class="col-9 cal-body">
-              <div class="cal-tit-desc"><strong>{{ datos['curso'][0] }}</strong></div>
-              <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong></div>              
-            </div>
-          </div>
-              <div class="cal-cuerpo">
-                <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
-                <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
-              </div-->
-
-              {% for i in 0..contador %}
+            {% for i in 0..contador %}
 
               {# PLANTA Y DIRIGIDO A #}
-              <div class="cal-cuerpo">
 
-                <div class="cal-tit-desc"><strong>{{ datos['curso'][i] }}</strong></div>
+              {% if i == 0 %}
+              <div id="bcursos{{i}}" style="display:" class="cal-cuerpo">
+              {% else %}
+                <div id="bcursos{{i}}" style="display:none" class="cal-cuerpo">
+              {% endif %}
+
+                {% if datos['curso'][i]|length > 50 %}
+                 {# Acortamos el título a 50 caracteres#} 
+
+                  <div class="cal-tit-desc"><strong>{{ datos['curso'][i]|slice(0, 50) }}...</strong></div>
+
+                {% else %}
+
+                  <div class="cal-tit-desc"><strong>{{ datos['curso'][i] }}</strong></div>
+
+                {% endif %}
+
+                {# El resto de los campos que aparecen en la agenda#} 
+
                 <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][i] }}</strong> </div>
                 <div class="cal-redate"><strong>Fecha:</strong> {{ datos['fecha'][i] }}</div>  
                 <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][i] }}</div>
@@ -77,16 +51,31 @@
                 
 
               </div>
+
             {% endfor %}
 
               
-        </div>
-      {% endif %}
-      
-      
+  
+      </div>  
+      <div class="contador"> 
+
+        <ul>
+
+        {# Mostras los eventos del días con unos círculos. si hacemos clic 
+        sobre uno aparece un evento y se ocultan los otros #}
+
+        {% for i in 0..contador %}
+          <li class="puntos"><a onClick="mostrar_eventos('bcursos{{i}}', '{{ contador }}')"><div class="btn-curs-red"></div></a></li>
+        {% endfor %}
+
+      </ul>
+
+
+    </div>
+ 
       
 
-    {% else %}
+  {% else %}
       {# si el día viene SIN eventos #}
       <div class="cal-tit">
         <div class="row">
@@ -106,8 +95,40 @@
         </div>  
       </div>
     {% endif %}
-	  	<div class="all-agenda">
-        		<a href="ver-toda-agenda">{{ datos['factual']['diaHoy'] }} - Ver toda la Agenda</a>
-		</div>
+
+    	  	{# <div class="all-agenda">
+        		 <a href="ver-toda-agenda">{{ datos['factual']['diaHoy'] }} - Ver toda la Agenda</a> 
+		</div> #}
 	</div>
 </div>
+<script type="text/javascript">
+
+
+
+  function mostrar_eventos(id, cant){
+    
+    var cantidad = cant;
+       
+
+    for (var i = 0; i < cantidad; i++) {
+      console.log(document.getElementById("bcursos"+i));
+      document.getElementById("bcursos"+i).style.display="none";
+    }
+
+    if ("bcursos"+id != "bcursos"+cantidad) {
+
+      document.getElementById("bcursos"+cantidad).style.display="none";
+
+    }
+
+    var elem = document.getElementById(id);
+    elem.style.display="";
+
+    //document.getElementById("bcursos"+i).style.display = none;
+    //console.log(document.getElementById("bcursos"+i));
+
+
+
+  }
+
+</script>
