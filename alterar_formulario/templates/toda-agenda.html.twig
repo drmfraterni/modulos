@@ -15,21 +15,20 @@
 
 
 
-{% set rutaBase = datos['rutaBase'] ~ 'ver-toda-agenda/' %}
-
+{% set rutaBase = base %}
 
 
 <div class="container pb-4 ">
       <div class="row header-calendar"  >
 
         <div class="col" style="display: flex; justify-content: space-between;">
-          {% set rutaBaseLast = datos['rutaBase'] ~ 'ver-toda-agenda/' ~ aCalendario['last']  %} 
+          {% set rutaBaseLast = rutaBase ~ '/' ~ aCalendario['last']  %} 
           <a  href={{ rutaBaseLast }} style="margin:10px;">
             <i class="fas fa-chevron-circle-left" style="font-size:30px;color:white;"></i>
           </a>
 
           <h3 style="font-weight:bold;margin:10px;">{{ agenda['elmes'] }}  <small>{{ aCalendario['year'] }}</small></h3>
-          {% set rutaBaseNext = datos['rutaBase'] ~ 'ver-toda-agenda/' ~ aCalendario['next']  %} 
+          {% set rutaBaseNext = rutaBase ~ '/' ~ aCalendario['next']  %} 
           <a  href={{ rutaBaseNext }} style="margin:10px;">
             <i class="fas fa-chevron-circle-right" style="font-size:30px;color:white;"></i>
           </a>
@@ -54,12 +53,14 @@
               {# coloreamos los días que hay eventos #}
               {% for i in 0..datos['cantEventosMes'] %}
                 {% if  dayweek['fecha'] == datos['eventMes'][i] %}
-                  id="destacado"
+                  id="destacado" 
                 {% endif %}
               {% endfor %} 
               {# terminamos de colorear #} 
-              {% set rutaBase = datos['rutaBase'] ~ 'ver-toda-agenda/' ~ dayweek['fecha']  %}                         
-              ><a href={{ rutaBase }}> {{ dayweek['dia'] }}</a></div>
+              {% set urlDia = rutaBase ~ '/' ~ dayweek['fecha']  %}
+                
+                       
+              ><a href={{ urlDia }}> {{ dayweek['dia'] }}</a></div>
             {% else %}
               <div class="col box-dayoff"></div>
             {% endif %}
@@ -69,20 +70,33 @@
 
 </div> <!-- /container -->
 
+<div class="tipo-events clearfix">
+  <div class="event-curso"><i class="fas fa-square"></i>Cursos</div><div class="event-evento"><i class="fas fa-square"></i>Eventos</div>
+</div>
 
 <div class="container">
-  <div id="proximos_eventos" class="proximos-eventos">
+
+  <div id="proximos_eventos" class="proximos-eventos pt-5">
 
     <h2>PRÓXIMOS EVENTOS</h2>
 
 	<div class="eventos-general">
 	{% for evento in datos %}
-		<div class="cal-cuerpo">
+
+    {% if evento[5] == "1" %}
+      {% set eventoDestacado = 'geven-destacado' %}
+    {% else %}
+      {% set eventoDestacado = '' %}
+    {% endif %}
+
+		<div class="cal-cuerpo-grande {{ eventoDestacado }}">
 			<div class="cal-tit-desc"><strong>{{ evento[4] }}</strong></div>
 			<div class="cal-fecha-inicio">Hora: <strong>{{ evento[1] }}</strong> </div>
 			<div class="cal-redate"><strong>Fecha:</strong> {{ evento[0] }}</div>  
-			<div class="cal-planta"><strong>Aula:</strong> {{ evento[2] }}</div>
-			<div class="cal-dirigido"><strong>Dirigido a:</strong> {{ evento[3] }}</div>                  
+			<div class="cal-planta"><strong>Lugar:</strong> {{ evento[2] }}</div>
+      {% if evento[3] != "" %}
+			   <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ evento[3] }}</div>
+      {% endif %}                  
 		</div>
 	{% endfor %}
 	</div>

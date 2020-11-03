@@ -3,6 +3,7 @@ namespace Drupal\alterar_formulario\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Cache\UncacheableDependencyTrait;
 
 /**
  * Provides a 'Agenda' Block
@@ -13,6 +14,9 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class Agenda extends BlockBase {
+
+
+  use UncacheableDependencyTrait;
 
   /**
    * {@inheritdoc}
@@ -31,7 +35,7 @@ class Agenda extends BlockBase {
    $fechaPrueba = $config['cursos_fechafija_settings'];
 
    if (empty($mensaje)){
-    $mensaje = "No hay enventos";
+    $mensaje = "NO HAY EVENTOS NI CURSOS";
    }
 
    
@@ -60,7 +64,9 @@ class Agenda extends BlockBase {
     }
     $diaTexto = $dias[date("w")];
     $diaMes = $meses[date("n")];
+    $diaMesNum = date("m");
     $diaNum = date("d");
+    $diaYear = date("Y");
 
 
     $textos['factual']['diaHoy'] = $diaHoy;
@@ -77,25 +83,36 @@ class Agenda extends BlockBase {
     $data =  file_get_contents($config['cursos_ruta_settings']);  // LOCAL 
     $cat_facts = json_decode(utf8_encode($data), true);
 
-
-
+    $recodarTit = "";
 
     foreach ($cat_facts['filas'] as $cat_fact) {
 
+
+
       if ($cat_fact[0] == $diaHoy){
-        
-        $textos['fecha'][] = $cat_fact[0];
-        $textos['horario'][]= $cat_fact[1];
-        $textos['planta'][] = $cat_fact[2];
-        $textos['dirigido'][] = $cat_fact[3];
-        $textos['curso'][] = $cat_fact[4];
-        $textos['eventos'] = true; 
-        $textos['cantidad']++;
 
+        $tit = self::limpiarTitulo($cat_fact[4]); // limpiamos el título del curso actual
+        $rTit = self::limpiarTitulo($recodarTit); // limpiamos el título del curso anterior
 
-      }      
+        if ($tit !== $rTit) {
+          //$prb[] = "distinto";
+            $textos['fecha'][] = $cat_fact[0];
+            $textos['horario'][]= $cat_fact[1];
+            $textos['planta'][] = $cat_fact[2];
+            $textos['dirigido'][] = $cat_fact[3];
+            $textos['curso'][] = $cat_fact[4];
+            $textos['tipo'][] = $cat_fact[5];
+            $textos['eventos'] = true; 
+            $textos['cantidad']++;
+          }
+      }  
+
+      $recodarTit = $cat_fact[4];    
 
     }
+
+    $textos['circulos'] = ($textos['cantidad']%3);
+
 
     if ($textos['eventos'] == false){
         
@@ -111,6 +128,9 @@ class Agenda extends BlockBase {
     else {
       $name = $this->t('Esto es una prueba');
     }
+
+    $textos['nuevaRuta'] = self::nuevaRuta()."/ver-toda-agenda/".$diaYear."-".$diaMesNum."-".$diaNum;
+
 
     //$ruta = $config['cursos_ruta_settings'];
     return array(
@@ -178,6 +198,44 @@ class Agenda extends BlockBase {
     $this->setConfigurationValue('cursos_mensaje_settings', $form_state->getValue('cursos_mensaje_settings'));
     $this->setConfigurationValue('cursos_fechafija_settings', $form_state->getValue('cursos_fechafija_settings'));
   }
+
+  public function nuevaRuta () {  // 
+
+
+      if (isset($_SERVER['REQUEST_URI'])){
+        $subruta = explode("/", $_SERVER['REQUEST_URI']);
+        $subruta = "/".$subruta[1];
+
+      }
+
+      if (isset($_SERVER['HTTPS'])) {
+        $pt = "https://";
+      }else{
+        $pt = "http://";
+      }
+
+
+      $nr = $pt.$_SERVER['HTTP_HOST'].$subruta;
+
+      return $nr;
+
+    }
+
+    public function limpiarTitulo ($tit){
+
+      $limpiar = trim(strtolower($tit));
+      $separar = explode(" ", $limpiar);
+      $nuevo = implode("", $separar);
+
+      $cadBuscar = array("á", "Á", "é", "É", "í", "Í", "ó", "Ó", "ú", "Ú");
+      $cadPoner = array("a", "A", "e", "E", "i", "I", "o", "O", "u", "U");
+      $nuevo = str_replace ($cadBuscar, $cadPoner, $nuevo); 
+
+      //var_dump($nuevo);
+
+
+      return $nuevo;
+    }
 
 
 }

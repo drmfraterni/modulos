@@ -29,7 +29,9 @@ class AgendaController extends ControllerBase {
 		$this->urlConfig = $this->config('alterar_formulario.settings');
 		
 		$req = \Drupal::request();
-		$rutaBase = $req->getSchemeAndHttpHost().$req->getBaseUrl().'/ver-toda-agenda/';
+		//$rutaBase = $req->getSchemeAndHttpHost().$req->getBaseUrl().'/ver-toda-agenda/';
+		$rutaBase = $req->getSchemeAndHttpHost().$req->getBaseUrl().'/ver-toda-agenda';
+
 
 		// FORMATEO DE LAS FECHAS DE INICIO Y FIN  //
 		// comprobramos si es para cambio de calendario $this->cambioMes = true
@@ -59,17 +61,22 @@ class AgendaController extends ControllerBase {
 
 
 		$fecha = strtotime($this->fecha_inicio);
-		$diaHoy = date("d-m-Y", $fecha);
+
+		$diaHoy = date("d-m-Y", $fecha);		
 		$month = date("Y-m", $fecha);
 		$elmes = date("m", $fecha);
 		$verMeses = $usCalendar->calendar_month($month);
 		$verMes = $usCalendar->spanish_month($verMeses['month']);
+
 
 		$agenda['data'] = $verMeses;
 		$agenda['elmes'] = $verMes;
 
 		//Drupal::logger('alterar_formulario') ->notice($rutaBase);
 		$data = file_get_contents($direccion);
+
+		//var_dump($data);
+		//die();
 		$cat_facts = json_decode(utf8_encode($data), true);
 
 		$textos['cantInicio'] = 0;
@@ -97,9 +104,9 @@ class AgendaController extends ControllerBase {
 
 		return array(
 			'#base' => $rutaBase,
-      			'#datos' => $cat_facts['filas'],
-      			'#agenda' => $agenda,
-	      		'#theme' => 'toda_agenda'
+      		'#datos' => $cat_facts['filas'],
+      		'#agenda' => $agenda,
+	      	'#theme' => 'toda_agenda'
 		);
 	}
 

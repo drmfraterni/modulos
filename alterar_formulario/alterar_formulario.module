@@ -199,7 +199,7 @@ use Drupal\node\Entity\Node;
           'variables' => [
             'titulo' => 'TODOS LOS EVENTOS',
             'datos' => NULL,
-            'formulario' => NULL,
+            'base' => NULL,
             'agenda' => NULL,
 
           ],

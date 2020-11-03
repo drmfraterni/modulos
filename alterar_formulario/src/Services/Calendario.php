@@ -26,9 +26,28 @@ class Calendario {
 
     // sacar el lunes de la primera semana
     $nuevaFecha = mktime(0,0,0,$montmonth,$daysmonth,$yearmonth);
+
+
     $diaDeLaSemana = date("w", $nuevaFecha);
+
+
+    // Cuando el día de la semana es 0 indica que comienza en domingo, pero
+    //como se va al lunes da un error para corregir esto le sumamos 1
+    if ($diaDeLaSemana == 0) {
+      $diaDeLaSemana = '07';
+    }
+
+
     $nuevaFecha = $nuevaFecha - ($diaDeLaSemana*24*3600); //Restar los segundos totales de los dias transcurridos de la semana
+    
+    if ($montmonth == '04' && $yearmonth = '2021' ) {
+      $nuevaFecha = ($nuevaFecha+45000);
+    }
+
     $dateini = date ("Y-m-d",$nuevaFecha);
+
+
+
     //$dateini = date("Y-m-d",strtotime($dateini."+ 1 day"));
 
     // numero de primer semana del mes
@@ -37,20 +56,26 @@ class Calendario {
     $semana2 = date("W",strtotime($daylast));
 
     // semana todal del mes
-    // en caso si es diciembre
-    if (date("m", strtotime($mes))==12) {
+    
+    if (date("m", strtotime($mes))==12) { //en caso que sea diciembre
         $semana = 5;
-    }
-    else {
+    }else if (date("m", strtotime($mes))==1) { // en el caso que sea enero
+        //$semana = 5;
+        $semana1 = '01';
+        $semana = (($semana2+1)-$semana1)+1;
+    }else {
       $semana = ($semana2-$semana1)+1;
     }
+
 
     // semana todal del mes
     $datafecha = $dateini;
     $calendario = array();
 
+
     $iweek = 0;
     while ($iweek < $semana):
+
 
         $iweek++;
         //echo "Semana $iweek <br>";
@@ -59,7 +84,9 @@ class Calendario {
 
         for ($iday=0; $iday < 7 ; $iday++){
           // code...
+
           $datafecha = date("Y-m-d",strtotime($datafecha."+ 1 day"));
+
 
           $datanew['mes'] = date("M", strtotime($datafecha));
           $datanew['dia'] = date("d", strtotime($datafecha));
@@ -77,6 +104,7 @@ class Calendario {
 
     endwhile;
 
+
     $nextmonth = date("Y-M",strtotime($mes."+ 1 month"));
     $lastmonth = date("Y-M",strtotime($mes."- 1 month"));
     $month = date("M",strtotime($mes));
@@ -90,6 +118,7 @@ class Calendario {
       'last' => $lastmonth,
       'calendar' => $calendario,
     );
+
 
     return $data;
 

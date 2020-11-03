@@ -3,8 +3,8 @@
 {% set contador = datos['cantidad']-1 %}  
 
 
-{# los dividimos en grupos de 3 #}
-{% set control = (contador/3) %}
+{# los dividimos en grupos de 4 #}
+{% set control = (contador/4) %}
 
 {# vemos cuantos grupos de noticias vamos a sacar #}
 {# El primer grupo estará visible y los otro ocultos #}
@@ -24,7 +24,6 @@
 {% if control > 3 %}
   {% set circulos = 4 %}
 {% endif %}
-
 
 <div id="proximos_eventos" class="proximos-eventos">
 
@@ -51,11 +50,11 @@
             {% if circulos < 2 %}
               {% set cant = contador %}
             {% else %}
-              {% set cant = 2 %}
+              {% set cant = 3 %}
             {% endif %}
 
             <div id="bcursos0" style="display:" class="cal-cuerpo">
-            {% for i in 0..cant %}
+            {% for i in 0..3 %}
 
                 <div class="grupo-evento ">              
                   <div class="cal-tit-desc">{{ datos['curso'][i] }}</div>
@@ -68,11 +67,11 @@
               {% if circulos < 3 %}
                 {% set cant = contador %}
               {% else %}
-                {% set cant = 5 %}
+                {% set cant = 7 %}
               {% endif %}
 
               <div id="bcursos1" style="display:none" class="cal-cuerpo">
-                {% for i in 3..cant %} 
+                {% for i in 4..cant %} 
   
 
                   <div class="grupo-evento ">
@@ -86,7 +85,7 @@
 
             {% if circulos >= 3 %}
               <div id="bcursos2" style="display:none" class="cal-cuerpo">
-                {% for i in 6..contador %}            
+                {% for i in 7..contador %}            
                   <div class="cal-tit-desc">{{ datos['curso'][i] }}</div>
                   <div class="evento-horario">{{ datos['horario'][i] }}</div>
                 {% endfor %}
@@ -99,10 +98,10 @@
         {% if (circulos-1) != 0 %}
           {% for i in 0..(circulos-1) %}
             {% if i == 0 %}
-              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}')"><i id="cir-event-{{i}}" style="color:#3c83df" class="fas fa-circle"></i></a></div>
+              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}', 'cir-event-{{i}}', '{{ circulos-1 }}')"><i id="cir-event-{{i}}" style="color:#3c83df" class="fas fa-circle"></i></a></div>
 
             {% else %}
-              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}')"><i id="cir-event-{{i}}" style="color:#154481" class="fas fa-circle"></i></a></div>
+              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}', 'cir-event-{{i}}', '{{ circulos-1 }}')"><i id="cir-event-{{i}}" style="color:#154481" class="fas fa-circle"></i></a></div>
             {% endif %}
 
           {% endfor %}
@@ -114,7 +113,7 @@
 
     <div class="col-10">
       <div id="bcursos0" style="display:" class="cal-cuerpo">
-        <div class="dia-nota text-center">{{ datos['nota'] }}</div>
+        <div class="dia-grande text-center">{{ datos['nota'] }}</div>
         
       </div>
 
@@ -135,53 +134,37 @@
 
 <script type="text/javascript">
 
-  function mostrar_eventos(id){
 
-    const cuerpoAgenda = document.querySelector('.cal-cuerpo');
-    const bcursos0 = document.querySelector('#bcursos0');
-    const bcursos1 = document.querySelector('#bcursos1');
-    const bcursos2 = document.querySelector('#bcursos2');
-    const circulo0 = document.querySelector('#cir-event-0');
-    const circulo1 = document.querySelector('#cir-event-1');
-    const circulo2 = document.querySelector('#cir-event-2');
 
-    var ident = id;
+  function mostrar_eventos(idcont, idcir, cant){
 
-    switch (ident) {
-      case 'bcursos0':
-        bcursos0.style.display = 'block';
-        circulo0.style.color = '#3c83df';
-        if (bcursos1) {
-          bcursos1.style.display ='none';
-          circulo1.style.color = '#154481';          
-        }
-        if (bcursos2) {
-          bcursos2.style.display ='none';
-          circulo2.style.color = '#154481';          
-        }
-     
-        break;
-      case 'bcursos1':
-        bcursos0.style.display = 'none';
-        bcursos1.style.display ='block';
-        circulo0.style.color = '#154481';
-        circulo1.style.color = '#3c83df';
-        if (bcursos2) {
-          bcursos2.style.display ='none';
-          circulo2.style.color = '#154481';
+    
+    var cantidad = cant;
 
-          
-        }
-        break;
-      default:
-        bcursos0.style.display = 'none';
-        bcursos1.style.display ='none';
-        bcursos2.style.display ='block';
-        circulo0.style.color = '#154481';
-        circulo1.style.color = '#154481';
-        circulo2.style.color = '#3c83df';
-        break;
+
+
+    for (var i = 0; i < cantidad; i++) {
+      //console.log(document.getElementById("bcursos"+i));
+      document.getElementById("bcursos"+i).style.display="none";
+      document.getElementById("cir-event-"+i).style.color="#154481";
+
     }
+
+    if ("bcursos"+idcont != "bcursos"+cantidad) {
+
+      document.getElementById("bcursos"+cantidad).style.display="none";
+      document.getElementById("cir-event-"+cantidad).style.color="#154481";
+
+
+    }
+
+    var elem = document.getElementById(idcont);
+    elem.style.display="";
+    var elem = document.getElementById(idcir);
+    elem.style.color="#3c83df";
+
+    //document.getElementById("bcursos"+i).style.display = none;
+    //console.log(document.getElementById(idcir));
 
 
 

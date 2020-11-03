@@ -1,126 +1,228 @@
 
-{% set contador = (datos['cantidad']-1) %}
+{# cantidad de noticias que hay en el día de hoy #}
+{% set contador = datos['cantidad']-1 %}  
+
+
+{# los dividimos en grupos de 3 #}
+{% set control = (contador/3) %}
+
+{# vemos cuantos grupos de noticias vamos a sacar #}
+{# El primer grupo estará visible y los otro ocultos #}
+{# Se harán visibles cuando hagamos clic en el circulo #}
+{% if control > 0 %}
+  {% set circulos = 1 %}
+{% endif %}
+
+{% if control > 1 %}
+  {% set circulos = 2 %}
+{% endif %}
+
+{% if control > 2 %}
+  {% set circulos = 3 %}
+{% endif %}
+
+{% if control > 3 %}
+  {% set circulos = 4 %}
+{% endif %}
 
 
 <div id="proximos_eventos" class="proximos-eventos">
 
-  {# datos['factual']['diaHoy'] #}
+   <h2>{{ datos['titulo'] }}</h2>
 
-  <h2>{{ datos['titulo'] }}</h2>
+   <div class="eventos-general container">
 
-  <div class="eventos-general">
+      <div id="cuerpo-agenda" class="row cal-tit-grande">
 
-
-    {% if datos['eventos'] == true %}
-      {# si el día viene CON eventos #}
-
-      {# Mejor mostrar todo siempre igual if contador < 1 #}
-	{% if false %} 
-        {# CON EVENTOS PERO SÓLO UNO #}
-        <div class="cal-tit-uno">
-          <div class="row">
-            {# FECHA GENERAL #}
-            <div class="col-3 cal-dia">
-              <div class="rect-cal-dia">
-                <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
-                <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
-                <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
-              </div>
-            </div>
-            {# HORARIO Y CURSO #}
-            <div class="col-9 cal-body">
-              <div class="cal-tit-desc"><strong>{{ datos['curso'][0] }}</strong></div>              
-            </div>
-            {# PLANTA Y DIRIGIDO A #}
-            <div class="cal-cuerpo">
-              <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong></div>
-              <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
-              <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
-            </div>
-          </div>  
-        </div>
-        </div> 
-
-      {% else %}
-         {# MÁS DE UN EVENTO #} 
-        <div class="cal-tit-grande">
-
-            {# FECHA GENERAL #}
-            <div class="cal-cuerpo">
-
-                <div class="cal-tit-desc"><strong>aaaaaa{{ datos['curso'][0] }}</strong></div>
-                <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][0] }}</strong> </div>
-                <div class="cal-redate"><strong>Fecha:</strong> {{ datos['fecha'][0] }}</div>  
-                <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][0] }}</div>
-                <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][0] }}</div>
-                
-
-            </div>
-
-
-              {# for i in 0..contador #}
-
-              {# PLANTA Y DIRIGIDO A #}
-              <!-- <div class="cal-cuerpo">
-
-                <div class="cal-tit-desc"><strong>{{ datos['curso'][i] }}</strong></div>
-                <div class="cal-fecha-inicio">Hora: <strong>{{ datos['horario'][i] }}</strong> </div>
-                <div class="cal-redate"><strong>Fecha:</strong> {{ datos['fecha'][i] }}</div>  
-                <div class="cal-planta"><strong>Aula:</strong> {{ datos['planta'][i] }}</div>
-                <div class="cal-dirigido"><strong>Dirigido a:</strong> {{ datos['dirigido'][i] }}</div>
-                
-
-              </div>-->
-            {# endfor #}
-
-              
-  
-      </div>
-      {% endif %}
-      
-      
-      
-
-    {% else %}
-      {# si el día viene SIN eventos #}
-      <div class="cal-tit">
-        <div class="row">
-            {# FECHA GENERAL  #}
-          <!--div class="col-3 cal-dia">
-            <div class="rect-cal-dia">
-              <div class="des-dia">{{ datos['factual']['diaTexto'] }}</div>
-              <div class="des-num">{{ datos['factual']['diaNum'] }}</div>
-              <div class="des-mes">{{ datos['factual']['diaMes']}}</div>
-            </div>
-          </div-->
-          {# Sin eventos #}
-          <div class="col-9 cal-body">
-            <div class="cal-tit-desc py-1 my-2"><h4>{{ datos['nota'] }}</h4></div>            
+        <div class="col-2">
+          <div class="dia-grande text-center">
+          {# FECHA GENERAL #}
+                <div>{{ datos['factual']['diaTexto'] }}</div>
+                <div class="dia-num-texto"><b>{{ datos['factual']['diaNum'] }}</b></div>
+                <div>{{ datos['factual']['diaMes']}}</div>
+          {# FIN DE FECHA GENERAL #}
           </div>
+
+        </div>
+      {% if datos['eventos'] == true %}
+        <div class="col-10" >
+          
+
+            {% if circulos < 2 %}
+              {% set cant = contador %}
+            {% else %}
+              {% set cant = 2 %}
+            {% endif %}
+
+            <div id="bcursos0" style="display:" class="cal-cuerpo">
+            {% for i in 0..cant %}
+
+                <div class="grupo-evento ">              
+                  <div class="cal-tit-desc">{{ datos['curso'][i] }}</div>
+                  <div class="evento-horario">{{ datos['horario'][i] }}</div>
+                </div>
+            {% endfor %}
+            </div>
+
+            {% if circulos >= 2 %}
+              {% if circulos < 3 %}
+                {% set cant = contador %}
+              {% else %}
+                {% set cant = 5 %}
+              {% endif %}
+
+              <div id="bcursos1" style="display:none" class="cal-cuerpo">
+                {% for i in 3..cant %} 
+  
+
+                  <div class="grupo-evento ">
+                    <div class="cal-tit-desc">{{ datos['curso'][i] }}</div>
+                    <div class="evento-horario">{{ datos['horario'][i] }}</div>
+                </div>
+                {% endfor %}
+
+              </div>
+            {% endif %}
+
+            {% if circulos >= 3 %}
+              <div id="bcursos2" style="display:none" class="cal-cuerpo">
+                {% for i in 6..contador %}            
+                  <div class="cal-tit-desc">{{ datos['curso'][i] }}</div>
+                  <div class="evento-horario">{{ datos['horario'][i] }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
             
-        </div>  
+        </div>
+        <div class="col-4"><a href="{{datos['nuevaRuta']}}">Ver Agenda</a></div>
+        <div class="col-8 d-flex justify-content-end pr-3 cir-eventos">
+        {% if (circulos-1) != 0 %}
+          {% for i in 0..(circulos-1) %}
+            {% if i == 0 %}
+              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}', 'cir-event-{{i}}', '{{ circulos-1 }}')"><i id="cir-event-{{i}}" style="color:#3c83df" class="fas fa-circle"></i></a></div>
+
+            {% else %}
+              <div class="btn-circulo"><a onClick="mostrar_eventos('bcursos{{i}}', 'cir-event-{{i}}', '{{ circulos-1 }}')"><i id="cir-event-{{i}}" style="color:#154481" class="fas fa-circle"></i></a></div>
+            {% endif %}
+
+          {% endfor %}
+        {% endif %}
+
+
       </div>
-    {% endif %}
+  {% else %}
 
-    <div class="contador"> 
-
-        <ul>
-
-        {% for i in 0..contador %}
-          <li class="puntos"> {{ i }} </li>
-        {% endfor %}
-
-      </ul>
+    <div class="col-10">
+      <div id="bcursos0" style="display:" class="cal-cuerpo">
+        <div class="dia-nota text-center">{{ datos['nota'] }}</div>
+        
+      </div>
 
 
     </div>
+    <div class="col-4"><a href="{{datos['nuevaRuta']}}">Ver Agenda</a></div>
+    <div class="col-8 d-flex justify-content-end pr-3 cir-eventos"></div>
 
+  {% endif %}
+
+ 
+
+   </div>
+  </div>
   
-
-
-
-	  	{# <div class="all-agenda">
-        		 <a href="ver-toda-agenda">{{ datos['factual']['diaHoy'] }} - Ver toda la Agenda</a> 
-		</div> #}
-	</div>
 </div>
+
+
+<script type="text/javascript">
+
+  function mostrar_eventos(id){
+
+    const cuerpoAgenda = document.querySelector('.cal-cuerpo');
+    const bcursos0 = document.querySelector('#bcursos0');
+    const bcursos1 = document.querySelector('#bcursos1');
+    const bcursos2 = document.querySelector('#bcursos2');
+    const circulo0 = document.querySelector('#cir-event-0');
+    const circulo1 = document.querySelector('#cir-event-1');
+    const circulo2 = document.querySelector('#cir-event-2');
+
+    var ident = id;
+
+    switch (ident) {
+      case 'bcursos0':
+        console.log('estoy en el primer cursor '+ ident);
+        bcursos0.style.display = 'block';
+        circulo0.style.color = '#3c83df';
+        if (bcursos1) {
+          bcursos1.style.display ='none';
+          circulo1.style.color = '#154481';          
+        }
+        if (bcursos2) {
+          bcursos2.style.display ='none';
+          circulo2.style.color = '#154481';          
+        }
+     
+        break;
+      case 'bcursos1':
+        console.log('estoy en el segundo cursor '+ ident);
+        bcursos0.style.display = 'none';
+        bcursos1.style.display ='block';
+        circulo0.style.color = '#154481';
+        circulo1.style.color = '#3c83df';
+        if (bcursos2) {
+          bcursos2.style.display ='none';
+          circulo2.style.color = '#154481';
+
+          
+        }
+        break;
+      default:
+        console.log('estoy en el tercero cursor '+ ident);
+        bcursos0.style.display = 'none';
+        bcursos1.style.display ='none';
+        bcursos2.style.display ='block';
+        circulo0.style.color = '#154481';
+        circulo1.style.color = '#154481';
+        circulo2.style.color = '#3c83df';
+        break;
+    }
+
+    //console.log(bcursos1);
+
+
+  }
+
+  /*function mostrar_eventos(idcont, idcir, cant){
+
+    
+    var cantidad = cant;
+
+
+
+    for (var i = 0; i < cantidad; i++) {
+      //console.log(document.getElementById("bcursos"+i));
+      document.getElementById("bcursos"+i).style.display="none";
+      document.getElementById("cir-event-"+i).style.color="#154481";
+
+    }
+
+    if ("bcursos"+idcont != "bcursos"+cantidad) {
+
+      document.getElementById("bcursos"+cantidad).style.display="none";
+      document.getElementById("cir-event-"+cantidad).style.color="#154481";
+
+
+    }
+
+    var elem = document.getElementById(idcont);
+    elem.style.display="";
+    var elem = document.getElementById(idcir);
+    elem.style.color="#3c83df";
+
+    //document.getElementById("bcursos"+i).style.display = none;
+    //console.log(document.getElementById(idcir));
+
+
+
+  }*/
+
+</script>

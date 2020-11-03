@@ -2,8 +2,7 @@
 
 
 
-<div class="container mb-2 col-12">
-
+<div id="cejCarousel" class="container cejCarousel mb-2 col-12">
 
     <div id="magicCarousel" class="carousel slide" data-ride="carousel">
       {# <div class="col-12 col-md-12 p-3 dest-general"><h3 class="tit-destacados">DESTACADOS</h3></div> #}
@@ -17,21 +16,21 @@
 <!--    Carousel Slider    -->
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-          <a href="{{ convocatorias.urlNode[0] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[0] }}" class="d-block w-100"></a>
+          <a href="{{ convocatorias.urlNode[0] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[0] }}" class="imagenCar d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[0] }}</h3>
           </div>
         </div>
 
         <div class="carousel-item">
-          <a href="{{ convocatorias.urlNode[1] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[1] }}" class="d-block w-100"></a>
+          <a href="{{ convocatorias.urlNode[1] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[1] }}" class="imagenCar d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[1] }}</h3>
           </div>
         </div>
 
         <div class="carousel-item">
-          <a href="{{ convocatorias.urlNode[2] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[2] }}" class="d-block w-100"></a>
+          <a href="{{ convocatorias.urlNode[2] }}"><img src="{{ baseUrl }}{{ convocatorias.imagen.url[2] }}" class="imagenCar d-block w-100"></a>
           <div class="carousel-caption">
             <h3>{{ convocatorias.titulo[2] }}</h3>
           </div>
@@ -50,7 +49,7 @@
 
 
       </div>
-      <div class="mas-img"><a class="mensaje" href="{{rutaCompleta}}/portal/todas-noticias" data-toogle="tooltip" data-placement="top" title="Más imágenes"><h1>+</h1></a></div>
+      <div id="mas-img" class="mas-img"><a class="mensaje" href="{{rutaCompleta}}/portal/todas-noticias" data-toogle="tooltip" data-placement="top" title="Más imágenes"><h1>+</h1></a></div>
 
       </div>
 </div>
@@ -62,7 +61,6 @@
     $('[data-toogle="tooltip"]').tooltip();
     
   });
-
 
 </script>
 
