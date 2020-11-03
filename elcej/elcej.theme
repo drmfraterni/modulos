@@ -54,3 +54,5 @@ function elcej_preprocess(&$variables, $hook){
   $variables['urlAmbito'] = $pt.$_SERVER['HTTP_HOST'].$subruta;
 
 }
+
+

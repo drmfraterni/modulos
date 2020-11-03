@@ -1,32 +1,45 @@
 {# PARTE PERSONALIZADA BOTONES DE FORMACIÓN #}
+
 <div class="container pb-3">
 	<div id="area-formacion" class="row">
 
 	  <div class="col-12 col-sm-6 col-md-3">
-	    <div class="nueva-prueba card">
+	    <div class="area-interes card">
 	     <div class="card-body">
-	        <div class="card-title"><a href="{{rutaCompleta}}/formacion/inicial">Formación Inicial</a></div>
-	      </div>
-	      <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/01-apartado-f-inicial.png" alt="Formación Inicial">
-
+	        <div class="card-title"><a href="{{rutaCompleta}}/formacion-inicial">Formación Inicial</a></div>
+	     </div>
+	     <div class="img-btn-for">
+	     	<a href="{{rutaCompleta}}/formacion-inicial">
+	      		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/01formacion.png" alt="Formación Inicial">
+	      	</a>
+	  	</div>
 	    </div>
 	  </div>
 
 	  <div class="col-12 col-sm-6 col-md-3">
 	    <div class="area-interes card">
 	      <div class="card-body">
-	        <div class="card-title"><a href="{{rutaCompleta}}/formacion/continua">Formación Continua</a></div>
+	        <div class="card-title"><a href="{{rutaCompleta}}/formacion-continua">Formación Continua</a></div>
 	      </div>
-	      <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/02-apartado-f-continua.png" alt="Formación Continua">
+	    <div class="img-btn-for">
+	    	<a href="{{rutaCompleta}}/formacion-continua">
+	      		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/02formacion.png" alt="Formación Continua">
+	      	</a>
 	    </div>
+		</div>
 	  </div>
 
 	  <div class="col-12 col-sm-6 col-md-3">
 	    <div class="area-interes card">
 	      <div class="card-body">
-	        <div class="card-title"><a href="{{rutaCompleta}}/formacion/internacional"><span>Formación Internacional</span></a></div>
+	        <div class="card-title"><a href="{{rutaCompleta}}/formacion-internacional"><span>Formación Internacional</span></a>
+	        </div>
 	      </div>
-	      <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/03-apartado-f-internacional.png" alt="Formación Internacional">
+	      <div class="img-btn-for">
+	      	<a href="{{rutaCompleta}}/formacion-internacional">
+	      		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/03formacion.png" alt="Formación Internacional">
+	      	</a>
+	  	</div>
 
 	    </div>
 	  </div>
@@ -36,7 +49,9 @@
 	     <div class="card-body">
 	        <div class="card-title">Formación Abierta</div>
 	      </div>
-	      <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/04-apartado-f-abierta.png" alt="Formación Abierta">
+	      <div class="img-btn-for">
+	      	<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/04formacion.png" alt="Formación Abierta">
+	  	</div>
 	    </div>
 	  </div>
 
@@ -53,20 +68,26 @@
 <div id="area-interes" class="row">
 
   <div class="col-12 col-sm-6 col-md-3">
-    <div class="nueva-prueba card">
-    <img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/01-aula-global.png" alt="Aula Global">
-
-      <div class="card-body">
-        <div class="card-title"><a href="https://campus.cej-mjusticia.es/" target="_blank">Aula Global</a></div>
-      </div>
+    <div class="area-interes card">
+	    <div class="img-btn-for">
+	    	<a href="https://campus.cej-mjusticia.es/" target="_blank">
+	    	<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/aula-global.png" alt="Aula Global">
+	    	</a>
+		</div>
+      	<div class="card-body">
+        	<div class="card-title"><a href="https://campus.cej-mjusticia.es/" target="_blank">Aula Global</a></div>
+      	</div>
 
     </div>
   </div>
 
   <div class="col-12 col-sm-6 col-md-3">
     <div class="area-interes card">
-    <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/02-mediateca.png" alt="Mediateca">
-
+    <div class="img-btn-for">
+    	<a href="{{urlAmbito}}/mediateca" target="_blank">
+    		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/mediateca.png" alt="Mediateca">
+    	</a>
+	</div>
       <div class="card-body">
         <div class="card-title"><a href="{{urlAmbito}}/mediateca" target="_blank">Mediateca</a></div>
       </div>
@@ -75,8 +96,11 @@
 
   <div class="col-12 col-sm-6 col-md-3">
     <div class="area-interes card">
-    <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/03-publicaciones.png" alt="Publicaciones">
-
+    <div class="img-btn-for">
+    	<a href="{{rutaCompleta}}/biblioteca-documentacion/biblioteca">
+    		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/publicaciones.png" alt="Publicaciones">
+    	</a>
+    </div>
       <div class="card-body">
         <div class="card-title"><a href="{{rutaCompleta}}/biblioteca-documentacion/biblioteca">Publicaciones</a></div>
       </div>
@@ -86,15 +110,17 @@
 
   <div class="col-12 col-sm-6 col-md-3">
     <div class="area-interes card">
-    <img class="card-img-top" src="/portal/themes/custom/elcej/img/apartados/04-sede-electronica.png" alt="Sede electrónica">
+    <div class="img-btn-for">
+    	<a href="http://10.12.99.140/sedeVirtual/">
+    		<img class="card-img-top" src="{{urlAmbito}}/themes/custom/elcej/img/apartados/sede-electronica.png" alt="Sede electrónica">
+    	</a>
+    </div>
 
       <div class="card-body">
-        <div class="card-title">Sede Electrónica</div>
+        <div class="card-title"><a href="http://10.12.99.140/sedeVirtual/">Sede Electrónica</a></div>
       </div>
     </div>
   </div>
-
-
 
 </div>
 

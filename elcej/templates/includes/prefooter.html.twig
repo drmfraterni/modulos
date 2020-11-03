@@ -1,26 +1,27 @@
+{# rutaAmbito es variable general del tema que está en elcej.module #}
 <div class="container-fluid bg-warning">
   <div class="row">
      <div class="col-12" id="navs">
       <nav>
         <ul class="nav justify-content-center p-2">
           <li class="nav-item border-left">
-            <a class="nav-link" href="aviso-legal">Aviso Legal</a>
+            <a class="nav-link" href="{{urlAmbito}}/aviso-legal">Aviso Legal</a>
           </li>
           <li class="nav-item border-left">
-            <a class="nav-link" href="sitemap">Mapa Web</a>
+            <a class="nav-link" href="{{urlAmbito}}/sitemap">Mapa Web</a>
           </li>
           <li class="nav-item border-left">
-           <a class="nav-link" href="guia-navegacion">Guía de Navegación</a>
+           <a class="nav-link" href="{{urlAmbito}}/guia-de-navegacion">Guía de Navegación</a>
           </li>
           <li class="nav-item border-left">
-            <a class="nav-link" href="canales">Canales</a>
+            <a class="nav-link" href="{{urlAmbito}}/canales">Canales</a>
           </li>
           <li class="nav-item border-left">
-             <a class="nav-link" href="enlaces-interes">Enlaces de interés</a>
+             <a class="nav-link" href="{{urlAmbito}}/areas-tematicas/enlaces-interes">Enlaces de interés</a>
           </li>
           <li class="nav-item border-left border-right">
             <a class="nav-link" href="accesibilidad">Accesibilidad
-              <img src="{{ rutaCompleta }}/themes/custom/elcej/img/accesibilidad.gif" alt="accesibilidad" >
+              <img src="{{ urlAmbito }}/themes/custom/elcej/img/accesibilidad.gif" alt="accesibilidad" >
             </a>
           </li>
         </ul>
