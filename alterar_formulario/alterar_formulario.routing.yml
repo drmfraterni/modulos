@@ -67,3 +67,12 @@ alterar_formulario.proteccion-datos:
     fecha_fin: ''
   requirements:
     _access: 'TRUE'
+alterar_formulario.galeria-imagenes:
+  path: '/galeria-imagenes'
+  defaults:
+    _title: 'GALERÍA DE IMÁGENES'
+    _controller: '\Drupal\alterar_formulario\Controller\GaleriaController::ver_galeria'
+    fecha_inicio: ''
+    fecha_fin: ''
+  requirements:
+    _access: 'TRUE'

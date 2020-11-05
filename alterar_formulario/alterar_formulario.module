@@ -167,6 +167,13 @@ use Drupal\node\Entity\Node;
 
           ],
         ],
+      'galeria_imagenes' => [
+        'variables' => [
+          'titulo' => 'GALERÍA DE IMÁGENES',
+          'galeria' => NULL,
+
+          ],
+        ],
         'calendario' => [
           'variables' => [
             'titulo' => 'Eventos del CEJ',

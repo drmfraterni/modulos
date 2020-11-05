@@ -1,4 +1,3 @@
-
 {# cantidad de noticias que hay en el día de hoy #}
 {% set contador = datos['cantidad']-1 %}  
 
@@ -9,7 +8,7 @@
 {# vemos cuantos grupos de noticias vamos a sacar #}
 {# El primer grupo estará visible y los otro ocultos #}
 {# Se harán visibles cuando hagamos clic en el circulo #}
-{% if control > 0 %}
+{% if control >= 0 %}
   {% set circulos = 1 %}
 {% endif %}
 

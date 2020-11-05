@@ -1,0 +1,31 @@
+{% set contador = (galeria.contador-1) %}
+<div>
+	<div id="resumen-galeria" class="container">
+		<h1 class="text-center my-4">GALERIA DE IMÁGENES<br/>COLECCIONES</h1>
+		<div class="row rgaleria">
+
+			{% for i in 0..contador %}
+				<div class="col-12 col-md-3 colecciones">
+					<div class=" gal-col">
+						<div class="rgal-img"><img class="img-fluid" src="{{galeria.urlBase}}/sites/default/files/styles/medium/public/{{galeria.imagUrl[i]}}"></div>
+						<div class="rgal-tit">{{galeria.titulo[i] | length > 100 ? galeria.titulo[i] | slice(0,40) ~ ' (...) ' : galeria.titulo[i] }}</div>
+
+						<div class="rgal-num">{{galeria.repe[i]}}</div>
+						<div class="row rgal-fechas">
+							<div class="col-6">{{galeria.annio[i]}}</div>
+							<div class="col-6">{{galeria.mes[i]}}</div>
+						</div>
+						
+					</div>
+				</div>
+
+			{% endfor %}
+
+			
+
+			
+		</div>
+
+
+	</div>
+</div>

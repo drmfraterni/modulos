@@ -105,9 +105,12 @@ class Agenda extends BlockBase {
             $textos['eventos'] = true; 
             $textos['cantidad']++;
           }
+
+        $recodarTit = $cat_fact[4];
+
       }  
 
-      $recodarTit = $cat_fact[4];    
+          
 
     }
 
