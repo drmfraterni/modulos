@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\alterar_formulario\Controller;
 
 
@@ -11,13 +12,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Drupal\alterar_formulario\Services\Miscelaneo;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\taxonomy\Entity\Term;
+
 /**
 * Controlador para la Galería   
 */
 
 class GaleriaController extends ControllerBase {
 
-	public function ver_galeria(){
+	private $numPag; 
+
+	public function ver_galeria($page) {
+
+      // incluimos el formulario para filtrar       
+
+      $form = $this->formBuilder()->getForm('Drupal\alterar_formulario\Form\FiltroGaleriaForm');
+
+	if (!empty($page)){
+		$this->numPag = $page; 
+	}else{
+
+		$this->numPag = 1;
+	}
+
 
 	// SACAMOS TODAS LAS IMÁGENES
       $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
@@ -31,10 +47,9 @@ class GaleriaController extends ControllerBase {
       $nuevoTit = new Miscelaneo (); // instanciamos la funciones de Miscelaneo
       $galeriaImg['urlBase'] = $nuevoTit->urlCompleta(); // ruta completa
 
-      //var_dump($galeriaImg['urlBase']);
-      //die();
 
       $ctit = "";
+      $elemId = array();
 
       // ELEMENTOS DE LA BASE DE DATOS
 
@@ -51,9 +66,13 @@ class GaleriaController extends ControllerBase {
       		$galeriaImg['imagUrl'][] = substr($node->get('field_galeria_imagen')->entity->uri->value, 8);
       		//termino referenciado en taxonomia año
       		$annio = $node->get('field_a')->target_id;
+      		//código de referencia anual taxonomia
+      		$nAnnio[] = $annio;
       		$termAnnio[] = taxonomy_term_load($annio);
       		//termino referenciado en taxonomia mes
       		$nmes = $node->get('field_mes')->target_id;
+      		//código de referencia mesual taxonomia
+      		$elmes[] = $nmes; 
       		$termMes[] = taxonomy_term_load($nmes);
 
       	} 
@@ -67,25 +86,33 @@ class GaleriaController extends ControllerBase {
 
 
 
-      // Sacamos el número de veces que cada elemento estárepetidos
+      // Sacamos el número de veces que cada elemento está repetidos
       $nt = array_count_values($galeriaImg['allTit']);
       $galeriaImg['contador'] = count($nt);
+      $paginas = (count($nt))/20;
+      // Sabemos cuantas páginas tenemos.
+      $galeriaImg['paginas'] = ceil($paginas);
+      $galeriaImg['numPag'] = $this->numPag;
 
 
 
       for ($i=0; $i < count($nt) ; $i++) { 
 
       	$galeriaImg['repe'][$i] = $nt[$galeriaImg['titulo'][$i]];
-      	$galeriaImg['annio'][$i] = $termAnnio[$i]->get('name')->value;
-      	$galeriaImg['mes'][$i] = $termMes[$i]->get('name')->value;
+      	$galeriaImg['nannio'][$i] = $nAnnio[$i];
+      	//$galeriaImg['annio'][$i] = $termAnnio[$i]->get('name')->value;
+            $galeriaImg['annio'][$i] =(!empty($termAnnio[$i]) ? $termAnnio[$i]->get('name')->value : '');
+      	//$galeriaImg['mes'][$i] = $termMes[$i]->get('name')->value;
+            $galeriaImg['mes'][$i] = (!empty($termMes[$i]) ? $termMes[$i]->get('name')->value : '');
+      	$galeriaImg['elmes'][$i] = $elmes[$i];
 
       }
-
 	
-		return [
-            '#theme' => 'galeria_imagenes',
-            '#galeria' => $galeriaImg,
-        ];
+	return [
+        '#theme' => 'galeria_imagenes',
+        '#galeria' => $galeriaImg,
+        '#formulario' => $form,
+      ];
 
     }
 

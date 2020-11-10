@@ -1,31 +1,103 @@
 {% set contador = (galeria.contador-1) %}
+
+{% set enlace = galeria.urlBase ~ '/' %}
+
+{% set inicioPage = galeria.numPag - 1 %}
+
+
+{% if galeria.numPag != galeria.paginas %}
+	{% set inicio = (inicioPage * 20) %}
+	{% set final = ((galeria.numPag * 20)-1) %}
+{% else %}
+	{% set inicio = (inicioPage * 20) %}
+	{% set final = contador %}
+{% endif %}
+
+
+	
 <div>
+
 	<div id="resumen-galeria" class="container">
 		<h1 class="text-center my-4">GALERIA DE IMÁGENES<br/>COLECCIONES</h1>
-		<div class="row rgaleria">
 
-			{% for i in 0..contador %}
+		{# INICIO DEL FORMULARIO FILTRO #}
+
+		<div id="formFiltro" class="formulario-filtro my-5">
+
+			<form id="{{ formulario['#id']}}" method="{{ formulario['#method'] }}">
+
+				<div class="row filtroForm">
+					<div class="col-12 col-md-4 campoFiltro" >{{ formulario.titulo }}</div>
+					<div class="col-12 col-md-4 campoFiltro" >{{ formulario.mes }}</div>
+					<div class="col-12 col-md-4 campoFiltro" >{{ formulario.annio}}</div>					
+					<div class="col-12">
+						<div class="col-12 col-md-2 boton-enviar">{{ formulario.submit }}</div>
+					</div>
+
+					{{formulario.form_build_id }}
+					{{formulario.form_token }}
+					{{formulario.form_id }}
+				
+				</div>
+			</form>
+		</div>
+
+		{# FIN del formulario #}
+
+		{# INICIO de la GALERIA #}
+
+		<div class="row rgaleria">
+			{% for i in inicio..final %}
 				<div class="col-12 col-md-3 colecciones">
 					<div class=" gal-col">
-						<div class="rgal-img"><img class="img-fluid" src="{{galeria.urlBase}}/sites/default/files/styles/medium/public/{{galeria.imagUrl[i]}}"></div>
-						<div class="rgal-tit">{{galeria.titulo[i] | length > 100 ? galeria.titulo[i] | slice(0,40) ~ ' (...) ' : galeria.titulo[i] }}</div>
-
-						<div class="rgal-num">{{galeria.repe[i]}}</div>
-						<div class="row rgal-fechas">
-							<div class="col-6">{{galeria.annio[i]}}</div>
-							<div class="col-6">{{galeria.mes[i]}}</div>
+						<div class="rgal-img">
+							<div class="rgal-destacada">
+								<a href="imagenes?title={{ galeria.titulo[i] }}&field_mes_target_id={{ galeria.elmes[i] }}&field_a_target_id={{ galeria.nannio[i] }}">
+								<img class="img-fluid" src="{{galeria.urlBase}}/sites/default/files/styles/medium/public/{{galeria.imagUrl[i]}}">
+								</a>
+							</div>
 						</div>
+						<div class="rgal-tit">{{galeria.titulo[i] | length > 100 ? galeria.titulo[i] | slice(0,40) ~ ' (...) ' : galeria.titulo[i] }}</div>
+						<div class="row rgal-fechas">
+							<div class="col-6 galfannio"><a href="imagenes?field_a_target_id={{ galeria.nannio[i] }}">{{galeria.annio[i]}}</a></div>
+							<div class="col-6 galfmes"><a href="imagenes?field_mes_target_id={{ galeria.elmes[i] }}">{{galeria.mes[i]}}</a></div>
+						</div>
+						<div class="rgal-num">
+							{{ galeria.repe[i] }} {{ galeria.repe[i] == 1 ? '<span> IMAGEN </span>' : '<span> IMÁGENES </span>'}}</div>						
 						
 					</div>
 				</div>
 
 			{% endfor %}
-
-			
-
-			
 		</div>
+		{# FIN de la GALERIA #}
+
+		{# INICIO del paginador de la galeria #}
+
+		{% set pagelast = galeria.numPag - 1 %}
+		{% set pagenext = galeria.numPag + 1 %}
+
+		<div class="paginador">
+			{% if galeria.paginas > 1 %}
+
+			<ul>
+				{% if galeria.numPag > 1 %}
+					<li><a href="{{ enlace }}galeria-imagenes/{{ pagelast }}"> << </a></li>
+				{% endif  %}
+
+				{% for i in 1..galeria.paginas %}
+					<li><a href="{{ enlace }}galeria-imagenes/{{i}}">{{i}}</a></li>
+				{% endfor %}
+
+				{% if galeria.numPag != galeria.paginas %}
+					<li><a href="{{ enlace }}galeria-imagenes/{{ pagenext }}"> >> </a></li>
+				{% endif %}
+
+			</ul>
+			{% endif %}
 
 
+		</div>
+		{# FIN del paginador #}
 	</div>
 </div>

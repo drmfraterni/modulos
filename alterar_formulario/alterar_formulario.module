@@ -171,8 +171,10 @@ use Drupal\node\Entity\Node;
         'variables' => [
           'titulo' => 'GALERÍA DE IMÁGENES',
           'galeria' => NULL,
+          'formulario' => NULL,
 
           ],
+          'render element' => 'formulario'
         ],
         'calendario' => [
           'variables' => [

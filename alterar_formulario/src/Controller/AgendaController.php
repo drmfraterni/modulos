@@ -65,6 +65,10 @@ class AgendaController extends ControllerBase {
 		$diaHoy = date("d-m-Y", $fecha);		
 		$month = date("Y-m", $fecha);
 		$elmes = date("m", $fecha);
+
+		$controlDia = date("Y-m-d", $fecha);
+		$agenda['diahoy'] = $controlDia;
+		
 		$verMeses = $usCalendar->calendar_month($month);
 		$verMes = $usCalendar->spanish_month($verMeses['month']);
 

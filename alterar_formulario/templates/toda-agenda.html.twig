@@ -44,15 +44,19 @@
         <div class="col header-col">Sab</div>
         <div class="col header-col">Dom</div>
       </div>
+
+
       <!-- inicio de semana -->
       {% for weekdata in aCalendario['calendar'] %}
+
         <div id="dias-mes" class="row">
           {% for dayweek in weekdata['datos'] %}
             {% if dayweek['mes'] == aCalendario['month'] %}
               <div class="col box-day"
               {# coloreamos los días que hay eventos #}
               {% for i in 0..datos['cantEventosMes'] %}
-                {% if  dayweek['fecha'] == datos['eventMes'][i] %}
+             
+                {% if  dayweek['fecha'] == agenda['diahoy'] %}
                   id="destacado" 
                 {% endif %}
               {% endfor %} 
@@ -78,7 +82,7 @@
 
   <div id="proximos_eventos" class="proximos-eventos pt-5">
 
-    <h2>PRÓXIMOS EVENTOS</h2>
+    <h2>&nbsp;</h2>
 
 	<div class="eventos-general">
 	{% for evento in datos %}
