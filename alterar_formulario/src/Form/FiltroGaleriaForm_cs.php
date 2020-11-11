@@ -114,7 +114,7 @@ class FiltroGaleriaForm extends FormBase {
     
 
     // RECOGERMOS LA FUNCIÓN DE RUTA ABSOLUTA DEL SERVICIO MISCELANEO
-    /*
+
     $nuevoElem = new Miscelaneo ();
     $base_url = $nuevoElem->urlCompleta();
 
@@ -129,16 +129,6 @@ class FiltroGaleriaForm extends FormBase {
     $response = new RedirectResponse($ruta);
     
     $response->send();
-    */
-
-    /* PRUEBA   */
-
-    $url = Url::fromRoute('alterar_formulario.galeria-imagenes')
-            ->setRouteParameters(array('titulo' => $titulo, 'mes' => $mes, 'annio' => $annio));
-
-
-    $form_state->setRedirectUrl($url);
-
     
     return;
 

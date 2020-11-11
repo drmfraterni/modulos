@@ -34,13 +34,55 @@ class GaleriaController extends ControllerBase {
 		$this->numPag = 1;
 	}
 
+      $titulo = \Drupal::request()->query->get('titulo');
+      $annio = \Drupal::request()->query->get('annio');
+      $mes = \Drupal::request()->query->get('mes');
+
+
+
 
 	// SACAMOS TODAS LAS IMÁGENES
       $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
-      $query->condition('type', 'galeria_imagen'); //
+      $query->condition('type', 'galeria_imagen');
+
+      if (!empty($titulo)){
+            $query->condition('title','%'.$titulo.'%', 'LIKE');
+
+      }
+
+      if (!empty($mes)){
+            $query->condition('field_mes',$mes);
+
+      }
+
+      if (!empty($annio)){
+            $query->condition('field_a',$annio);
+
+      }
+
+
       $query->sort('title', 'ASC');
       // ->condition('field_ficha', $clave);
+
       $nids = $query->execute();
+
+      $galeriaImg['mensaje'] = FALSE;
+
+
+
+      if (empty($nids)) {
+
+            $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+            $query->condition('type', 'galeria_imagen');
+            $query->sort('title', 'ASC');
+            // ->condition('field_ficha', $clave);
+            $nids = $query->execute();
+            $galeriaImg['mensaje'] = TRUE;
+
+
+      }
+
+
       $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
 
       // Datos que cogemos de Services > Miscelaneo
