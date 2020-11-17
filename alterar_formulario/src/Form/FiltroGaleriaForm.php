@@ -37,6 +37,15 @@ class FiltroGaleriaForm extends FormBase {
 
   public function buildForm(array $form, FormStateInterface $form_state){
 
+    // instanciamos el servicio Miscelaneo para sacar los términos de la taxonomia
+
+    $nuevoElem = new Miscelaneo ();
+    $terminoAnnio = $nuevoElem-> taxTerminos('galeria_ano');
+    $terminoMes = $nuevoElem-> taxTerminos('galeria_mes');
+
+
+
+
     //$this->envioconf = TRUE;
 
     if (!empty($this->envioconf)){
@@ -51,29 +60,19 @@ class FiltroGaleriaForm extends FormBase {
       
 
       $form['annio'] = array (
-        '#type' => 'entity_autocomplete',
+        '#type' => 'select',
         '#target_type' => 'taxonomy_term',
         '#title' => $this->t('<strong>Año</strong>'),
-        '#description' => $this->t('Introduce el año ej.: 2021.'),
-        '#default_value' => '',
-        '#tags' => TRUE,
-        '#selection_settings' => [
-        'target_bundles' => ['galeria_ano'],
-          ],
-          '#weight' => '0',
+        '#description' => $this->t('Búsqueda por año'),
+        '#options' => $terminoAnnio,        
       );
 
       $form['mes'] = array (
-        '#type' => 'entity_autocomplete',
+        '#type' => 'select',
         '#target_type' => 'taxonomy_term',
         '#title' => $this->t('<strong>Mes</strong>'),
-        '#description' => $this->t('Introduce el mes ej.: Febrero.'),
-        '#default_value' => '',
-        '#tags' => TRUE,
-        '#selection_settings' => [
-        'target_bundles' => ['galeria_mes'],
-          ],
-          '#weight' => '0',
+        '#description' => $this->t('Búsqueda por mes.'),
+        '#options' => $terminoMes,        
       );
 
       $form ['submit'] = [
@@ -108,8 +107,11 @@ class FiltroGaleriaForm extends FormBase {
     $titulo = $form_state->getValue('titulo');
     $eleAnnio = $form_state->getValue('annio');
     $eleMes = $form_state->getValue('mes');
-    $annio = $eleAnnio[0]['target_id'];
-    $mes = $eleMes[0]['target_id'];
+    //$annio = $eleAnnio[0]['target_id'];
+    //$mes = $eleMes[0]['target_id'];
+
+    //var_dump($eleAnnio);
+
 
     
 
@@ -134,7 +136,7 @@ class FiltroGaleriaForm extends FormBase {
     /* PRUEBA   */
 
     $url = Url::fromRoute('alterar_formulario.galeria-imagenes')
-            ->setRouteParameters(array('titulo' => $titulo, 'mes' => $mes, 'annio' => $annio));
+            ->setRouteParameters(array('titulo' => $titulo, 'mes' => $eleMes, 'annio' => $eleAnnio));
 
 
     $form_state->setRedirectUrl($url);

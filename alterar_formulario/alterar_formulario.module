@@ -176,6 +176,15 @@ use Drupal\node\Entity\Node;
           ],
           'render element' => 'formulario'
         ],
+        'mostrar_imagenes' => [
+        'variables' => [
+          'titulo' => 'COLECCIÓN DE IMÁGENES',
+          'galeria' => NULL,
+          'formulario' => NULL,
+
+          ],
+          'render element' => 'formulario'
+        ],
         'calendario' => [
           'variables' => [
             'titulo' => 'Eventos del CEJ',
@@ -193,6 +202,21 @@ use Drupal\node\Entity\Node;
         'agenda' => [
           'variables' => [
             'titulo' => 'AGENDA',
+            'datos' => NULL,
+
+            ],
+          ],
+        'areasTematicas' => [
+          'variables' => [
+            'titulo' => 'ÁREAS TEMÁTICAS',
+            'datos' => NULL,
+
+            ],
+          ],
+
+        'mediateca' => [
+          'variables' => [
+            'titulo' => 'MEDIATECA',
             'datos' => NULL,
 
             ],

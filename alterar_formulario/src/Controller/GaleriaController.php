@@ -34,11 +34,11 @@ class GaleriaController extends ControllerBase {
 		$this->numPag = 1;
 	}
 
+      // Se realizamos un filtro a través del formulario recogemos las variables
+
       $titulo = \Drupal::request()->query->get('titulo');
       $annio = \Drupal::request()->query->get('annio');
       $mes = \Drupal::request()->query->get('mes');
-
-
 
 
 	// SACAMOS TODAS LAS IMÁGENES
@@ -69,6 +69,8 @@ class GaleriaController extends ControllerBase {
       $galeriaImg['mensaje'] = FALSE;
 
 
+      // si la consulta no me da resultados lo indicamos en un mensaje y ponemos todos
+      // las colecciones
 
       if (empty($nids)) {
 
@@ -91,7 +93,7 @@ class GaleriaController extends ControllerBase {
 
 
       $ctit = "";
-      $elemId = array();
+      $elemId = 0;
 
       // ELEMENTOS DE LA BASE DE DATOS
 
@@ -104,6 +106,7 @@ class GaleriaController extends ControllerBase {
       	if ($ctit != $comprobartit) {
 
 			// Los título que vamos a ver.
+                  $galeriaImg['elemId'] = $elemId;
       		$galeriaImg['titulo'][] = strip_tags($node->get('title')->value);
       		$galeriaImg['imagUrl'][] = substr($node->get('field_galeria_imagen')->entity->uri->value, 8);
       		//termino referenciado en taxonomia año
@@ -116,14 +119,22 @@ class GaleriaController extends ControllerBase {
       		//código de referencia mesual taxonomia
       		$elmes[] = $nmes; 
       		$termMes[] = taxonomy_term_load($nmes);
+                  $elemId++;
 
       	} 
 
       	// todos los titulos
-      	$galeriaImg['allTit'][] = strip_tags($node->get('title')->value); 
+            $galeriaImg['Id'][] = $galeriaImg['elemId'];
+      	$galeriaImg['allTit'][] = strip_tags($node->get('title')->value);
+            $galeriaImg['allImagUrl'][$galeriaImg['elemId']][] = substr($node->get('field_galeria_imagen')->entity->uri->value, 8); 
       	$ctit = $nuevoTit->limpiarTitulo(strip_tags($node->get('title')->value));
 
       }
+      
+      //var_dump($galeriaImg['Id'], $galeriaImg['titulo']);
+      //var_dump(array_count_values($galeriaImg['Id']));      
+      //var_dump($galeriaImg['allImagUrl']);
+      //die();
 
 
 
@@ -157,6 +168,81 @@ class GaleriaController extends ControllerBase {
       ];
 
     }
+
+    public function mediateca () {
+
+      // Datos que cogemos de Services > Miscelaneo
+      $nuevoTit = new Miscelaneo (); // instanciamos la funciones de Miscelaneo
+      $urlMedia = $nuevoTit->urlCompleta(); // ruta completa
+
+      $titulos = array('Galería de fotos', 'Galería de videos', $urlMedia );
+
+
+      return [
+        '#theme' => 'mediateca',
+        '#datos' => $titulos,
+      ];
+
+
+    }
+
+
+    public function mostrar_galeria ($titulo, $mes, $annio){
+
+      // RUTA ABSOLUTA
+
+      $urlBase = new Miscelaneo (); // instanciamos la funciones de Miscelaneo
+      $galeriaImg['urlBase'] = $urlBase->urlCompleta(); // ruta completa
+
+
+      // FORMULARIO DE FILTRO PARA BUSCAR COLECCIONES
+
+      $form = $this->formBuilder()->getForm('Drupal\alterar_formulario\Form\FiltroGaleriaForm');
+
+      // CONSULTA A LA BASE DE DATOS //
+
+      $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+      $query->condition('type', 'galeria_imagen');
+      $query->condition('title',$titulo, '=');
+      $query->condition('field_mes',$mes);
+      $query->condition('field_a',$annio);
+
+
+      $query->sort('title', 'ASC');
+      // ->condition('field_ficha', $clave);
+
+      $nids = $query->execute();
+
+      $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+
+      foreach ($nodes as $node){
+            $galeriaImg['titulo']= strip_tags($node->get('title')->value);
+            // Año
+            $annio = $node->get('field_a')->target_id;
+            $termAnnio = taxonomy_term_load($annio);
+            $galeriaImg['annio'] = $termAnnio->get('name')->value;
+            // Mes
+            $mes = $node->get('field_mes')->target_id;
+            $termMes = taxonomy_term_load($mes);
+            $galeriaImg['mes'] = $termMes->get('name')->value;
+            // Descripción de la imagen
+            $galeriaImg['descripcion'][] = strip_tags($node->get('field_galeria_imagen_descripcion')->value);
+
+            $galeriaImg['ImagUrl'][] = substr($node->get('field_galeria_imagen')->entity->uri->value, 8); 
+      }
+
+      return [
+        '#theme' => 'mostrar_imagenes',
+        '#galeria' => $galeriaImg,
+        '#formulario' => $form,
+      ];
+      
+
+
+    }
+
+
+
 
 }
 

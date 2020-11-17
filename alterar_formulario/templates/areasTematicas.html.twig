@@ -1,0 +1,18 @@
+{% set rutaAbs = datos.urlBase %}
+{% set cantAreas = (datos|length)+1 %}
+<div class="areas-tematicas container">
+	<div class="row areas">
+		{% for i in 0..cantAreas %}
+			<div class="col-6 col-md-2 area">
+				<div class="detalle-destacada text-center">
+					<a href="{{ datos.urlNode[i] }}"><img class="img-fluid" src="{{ rutaAbs ~ '/sites/default/files' ~ datos.destacada[i]}}"></a>
+					<p>{{ datos.titulo[i]}}</p> 
+				</div>
+
+				
+			</div>
+
+		{% endfor %}
+	</div>
+	
+</div>

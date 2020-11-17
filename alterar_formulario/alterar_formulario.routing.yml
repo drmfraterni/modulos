@@ -75,3 +75,17 @@ alterar_formulario.galeria-imagenes:
     page: ''
   requirements:
     _access: 'TRUE'
+alterar_formulario.mostrar-imagenes:
+  path: '/mostrar-imagenes/{titulo}/{mes}/{annio}'
+  defaults:
+    _title: 'GALERÍA DE IMÁGENES'
+    _controller: '\Drupal\alterar_formulario\Controller\GaleriaController::mostrar_galeria'
+  requirements:
+    _access: 'TRUE'
+alterar_formulario.mediateca:
+  path: '/mediateca'
+  defaults:
+    _title: 'MEDIATECA'
+    _controller: '\Drupal\alterar_formulario\Controller\GaleriaController::mediateca'
+  requirements:
+    _access: 'TRUE'

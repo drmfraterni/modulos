@@ -64,24 +64,22 @@
 							{% set ImagCan = galeria.allImagUrl[i]|length %}
 							{% for imagenes in galeria.allImagUrl[i] %}
 
-								<div id="img{{ (i+1) ~ contImg }}" class="rgal-destacada rgal-ident{{i}}">
-									<a href="{{ enlace }}mostrar-imagenes/{{ galeria.titulo[i] }}/{{ galeria.elmes[i] }}/{{ galeria.nannio[i] }}">								
+								<div id="img{{ (i+1) ~ contImg }}" class="rgal-destacada">
+									<a href="{{ enlace }}imagenes?title={{ galeria.titulo[i] }}&field_mes_target_id={{ galeria.elmes[i] }}&field_a_target_id={{ galeria.nannio[i] }}">								
 									<div><img class="img-fluid" src="{{galeria.urlBase}}/sites/default/files/styles/medium/public/{{ imagenes }}"></div>
 									</a>
 								</div>
 								
 								{% set contImg = contImg + 1 %}
-
-							{# SELECTOR DE IMÁGENES #}
-							{% if ImagCan != 1 %}
-								<div id="pasaizq{{i}}" class="btn-pasaizq"><a onClick="plusDivs(-1, 'rgal-ident{{i}}')"> <strong><</strong> </a></div>
-								<div id="pasader{{i}}" class="btn-pasader"><a onClick="plusDivs(+1, 'rgal-ident{{i}}')"><strong>></strong> </a></div>
-							{% endif %}
-							{# FIN DEL SELECTOR DE IMÁGENES #}
 								
 							{% endfor %}
 
-							
+							{# SELECTOR DE IMÁGENES #}
+							{% if ImagCan != 1 %}
+								<div id="pasaizq{{i}}" class="btn-pasaizq"><a onClick="mostrar_eventos('{{ImagCan}}', {{i}}), 'izq'"> <strong><</strong> </a></div>
+								<div id="pasader{{i}}" class="btn-pasader"><a onClick="mostrar_eventos('{{ImagCan}}', {{i}}, 'der')"><strong>></strong> </a></div>
+							{% endif %}
+							{# FIN DEL SELECTOR DE IMÁGENES #}
 						</div>
 						{# título de la imagen #}
 						<div class="rgal-tit">{{galeria.titulo[i] | length > 100 ? galeria.titulo[i] | slice(0,40) ~ ' (...) ' : galeria.titulo[i] }}</div>
@@ -138,25 +136,55 @@
 
 <script type="text/javascript">
 
-var slideIndex = 1;
-showDivs(slideIndex);
+var mover = 0;
+var control = null;
 
-function plusDivs(n, c) {
-  showDivs(slideIndex += n, c);
-}
+ function mostrar_eventos(cant, col, btn){
+_
+ 	var boton = btn;
+ 	var btnDer = "pasador"+col;
 
-function showDivs(n, c) {
-  console.log(n);
-  var i;
-  var x = document.getElementsByClassName(c);
-  console.log(c);
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length} ;
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  x[slideIndex-1].style.display = "block";
-}
+ 	//var ident = id; //identificación
+ 	var cantidad = cant; //cantidad
+ 	var coleccion = (col+1)*10; //colección
+ 	var ident = "img"+coleccion;
+ 	//var pas = "pasador"+coleccion;
+ 	var fin = ident.split("img");
+ 	var final = fin[1];
+
+
+ 	//var imagPeq = document.getElementById(ident).style.display="none";
+ 	//var pasador = document.getElementById(pas).style.display="none";
+ 	//ident = "img"+(coleccion+1);
+
+ 	console.log (cantidad, coleccion, final, mover);
+
+ 	if (mover != (cantidad-1) ) {
+ 		if (boton == 'der'){
+ 			var nuevaCol = (coleccion)+ mover;
+ 			var nuevoDiv = "img" + nuevaCol;
+ 			mover = mover + 1;
+ 			console.log (nuevoDiv);
+ 		}else{
+ 			var nuevaCol = (coleccion)- mover;
+ 			var nuevoDiv = "img" + nuevaCol;
+ 			mover = mover - 1;
+ 			console.log ('vamos '+nuevoDiv);
+ 		}
+
+ 		var imagPeq = document.getElementById(nuevoDiv).style.display="none"; 		
+
+ 	}else{
+ 		mover = 0;
+ 		var imagPeq = document.getElementById(btnDer).style.display="none"; 
+
+ 	}	
+
+ 	control = coleccion;
+
+ 	
+
+ }
 
 
 

@@ -47,8 +47,17 @@ public function urlCompleta () {  //
 
     }
 
-	
 
+  public function taxTerminos ($taxonomia) {
 
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($taxonomia);
+    $term_data [0] = "- Cualquiera -";
+    foreach ($terms as $term) {
+      $term_data [$term->tid] = $term->name;
+    }
+
+    return $term_data;
+
+  }
 
 }
