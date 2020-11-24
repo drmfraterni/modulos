@@ -135,10 +135,15 @@ class BusquedasController extends ControllerBase {
   function nuevaRuta () {  // rutas para que carguen las imágenes en el carousel
 
 
-    if (isset($_SERVER['REQUEST_URI'])){
+    /*if (isset($_SERVER['REQUEST_URI'])){
       $subruta = explode("/", $_SERVER['REQUEST_URI']);
       $subruta = "/".$subruta[1];
 
+    }*/
+
+    if (isset($_SERVER['REQUEST_URI'])) {
+      $subruta = explode("/", $_SERVER['REQUEST_URI']);
+      $subruta = $subruta[1]!='portal' ? NULL : "/".$subruta[1];
     }
 
     if (isset($_SERVER['HTTPS'])) {
@@ -147,8 +152,14 @@ class BusquedasController extends ControllerBase {
       $pt = "http://";
     }
 
+    if ($subruta == NULL) {
+      $nr= $pt.$_SERVER['HTTP_HOST'];
+    }else{
+      $nr = $pt.$_SERVER['HTTP_HOST'].$subruta;
+    }
 
-    $nr = $pt.$_SERVER['HTTP_HOST'].$subruta;
+
+    //$nr = $pt.$_SERVER['HTTP_HOST'].$subruta;
 
     return $nr;
 

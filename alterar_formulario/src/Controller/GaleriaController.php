@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Drupal\alterar_formulario\Services\Miscelaneo;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Cache\UncacheableDependencyTrait;
 
 /**
 * Controlador para la Galería   
@@ -22,6 +23,7 @@ class GaleriaController extends ControllerBase {
 	private $numPag; 
 
 	public function ver_galeria($page) {
+
 
       // incluimos el formulario para filtrar       
 
@@ -39,6 +41,11 @@ class GaleriaController extends ControllerBase {
       $titulo = \Drupal::request()->query->get('titulo');
       $annio = \Drupal::request()->query->get('annio');
       $mes = \Drupal::request()->query->get('mes');
+
+      // comprobar las variables que entra
+      //$galeriaImg['terminos'] = $titulo.' - '.$annio.' - '.$mes;
+
+
 
 
 	// SACAMOS TODAS LAS IMÁGENES
@@ -87,6 +94,8 @@ class GaleriaController extends ControllerBase {
 
       $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
 
+
+
       // Datos que cogemos de Services > Miscelaneo
       $nuevoTit = new Miscelaneo (); // instanciamos la funciones de Miscelaneo
       $galeriaImg['urlBase'] = $nuevoTit->urlCompleta(); // ruta completa
@@ -98,6 +107,8 @@ class GaleriaController extends ControllerBase {
       // ELEMENTOS DE LA BASE DE DATOS
 
       foreach ($nodes as $node){
+
+
 
       	$comprobartit = $nuevoTit->limpiarTitulo(strip_tags($node->get('title')->value)); 
 
@@ -122,6 +133,8 @@ class GaleriaController extends ControllerBase {
                   $elemId++;
 
       	} 
+
+
 
       	// todos los titulos
             $galeriaImg['Id'][] = $galeriaImg['elemId'];

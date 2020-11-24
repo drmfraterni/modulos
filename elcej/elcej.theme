@@ -38,9 +38,10 @@ function elcej_preprocess(&$variables, $hook){
 
   // direccion de logo
 
-  if (isset($_SERVER['REQUEST_URI'])){
+  if (isset($_SERVER['REQUEST_URI'])) {
     $subruta = explode("/", $_SERVER['REQUEST_URI']);
-    $subruta = "/".$subruta[1];
+
+    $subruta = $subruta[1]!='portal' ? NULL : "/".$subruta[1];
 
   }
 
@@ -50,8 +51,12 @@ function elcej_preprocess(&$variables, $hook){
     $pt = "http://";
   }
 
-
-  $variables['urlAmbito'] = $pt.$_SERVER['HTTP_HOST'].$subruta;
+  if ($subruta == NULL) {
+    $variables['urlAmbito'] = $pt.$_SERVER['HTTP_HOST'];
+  }else{
+    $variables['urlAmbito'] = $pt.$_SERVER['HTTP_HOST'].$subruta;
+  }
+  
 
 }
 

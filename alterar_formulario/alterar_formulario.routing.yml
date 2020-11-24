@@ -75,6 +75,8 @@ alterar_formulario.galeria-imagenes:
     page: ''
   requirements:
     _access: 'TRUE'
+  options:
+    no_cache: 'TRUE'
 alterar_formulario.mostrar-imagenes:
   path: '/mostrar-imagenes/{titulo}/{mes}/{annio}'
   defaults:
@@ -82,6 +84,8 @@ alterar_formulario.mostrar-imagenes:
     _controller: '\Drupal\alterar_formulario\Controller\GaleriaController::mostrar_galeria'
   requirements:
     _access: 'TRUE'
+  options:
+    no_cache: 'TRUE'
 alterar_formulario.mediateca:
   path: '/mediateca'
   defaults:

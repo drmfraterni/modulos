@@ -23,6 +23,7 @@ class Agenda extends BlockBase {
    */
   public function build() {
     
+    $build['#cache']['max-age'] = 0;
 
     $config = $this->getConfiguration();
 

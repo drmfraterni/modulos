@@ -450,13 +450,7 @@ img.align-right {
     color: white;
     font-size: 17px;
 }
-.view-gestion-de-contenido-secretaria-general, 
-.view-gestion-de-contenido-biblioteca,
-.view-gestion-de-contenido-formacion, 
-.view-gestion-de-contenido-biblioteca {
-    padding: 0px 5px 0px 20px;
-    border: 2px solid #e3e3dc;
-}
+
 
 
 /* FORMULARIO PARA LOGARSE    */
@@ -782,6 +776,13 @@ header #search-block-form {
 /*eventos y avisos*/
 
 /* AGENDA Y CALENDARIO */
+
+div#block-agenda {
+  background-color: #ffffff;
+  margin-bottom: 5px;
+  height: 285px;
+}
+
 /*.cal-tit, .cal-tit-grande, .cal-tit-uno {
   background-color: white;
   padding: 15px;
@@ -1316,7 +1317,8 @@ header .text-formatted {
 
 .imagenCar {
   margin-top: 65px;
-  max-height: 458px;
+  height: 458px;
+  object-fit: cover;
 }
 
 /* CAROUSEL MÁS IMÁGENES  */
@@ -1401,6 +1403,7 @@ header .text-formatted {
 #proximos_eventos {
   position: relative;
   background-color: #f0f3f2;
+  margin-bottom: 25px;
 }
 
 #proximos_eventos h2 {
@@ -1596,7 +1599,7 @@ div .tit-formacion {
 }
 
 div#cuerpo-agenda .col-10 {
-  padding: 5px 0 0 30px;
+  padding: 5px 0 0 40px;
   margin: 0px;
   font-size: 12px;
   height: 180px;
@@ -1628,7 +1631,7 @@ div#cuerpo-agenda .col-8 {
 }
 
 .dia-grande {
-  font-size:14px;
+  font-size:1em;
   font-style: italic;
   background-color: #e4e6e9;
   padding: 5px;

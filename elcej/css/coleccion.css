@@ -1,0 +1,297 @@
+ /* Galeria de imagenes */
+
+.rgal-img {
+	text-align: center;
+}
+
+.rgal-img img {
+	object-fit: cover;
+	height: 150px;
+	width: 100%;
+}
+
+.rgal-tit {
+	margin: 5px;
+	padding: 5px;
+	height: 65px;
+	text-align: center;
+	border:1px solid #bccce2;
+	background-color: #e8ebee;
+	text-transform: uppercase;
+}
+.rgal-fechas {
+	margin: 5px;
+	padding: 5px;
+
+}
+
+.rgal-img {
+	overflow: hidden;
+	height: 150px;
+	position: relative;
+}
+
+.rgal-destacada {	
+	filter: grayscale(90%);
+	transition: all 0.3s ease;
+}
+.rgal-destacada:hover {
+	cursor: pointer;
+	filter: grayscale(0%);
+	transform: scale(1.2);
+}
+
+.gal-col, .gal-col-vista {
+	border: 1px solid #436fa8;
+	margin: 5px 0px 5px 0px;
+	height: 310px;
+	box-shadow: 2px 2px 2px 2px rgba(15, 15, 15, 0.2);
+	/*position: relative;*/
+}
+
+.gal-col-vista {
+	width: 250px;
+}
+
+.colecciones {
+	padding: 10px 5px ;
+}
+
+.rgal-num {
+	font-size: 1.2em;
+	text-align: center;
+}
+.rgal-num span {
+	font-size: 0.8em;
+
+}
+
+.galfmes {
+	text-align: right;
+}
+
+/* MENSAJE DE BÚSQUEDA  */
+
+#mensaje {
+	text-align: center;
+	padding: 5px 0px;
+	margin: 5px 0px;
+	border: 1px solid #161717;
+	color: white;
+	background-color: #154481;
+	text-transform: uppercase;
+}
+
+.btn-pasader {
+	position: absolute;
+	top:75%;
+	left:88%;	
+	background-color: #ffffff;
+	padding:2px;
+	text-align: center;
+	border:1px solid #154481;
+	cursor: pointer;
+	width: 20px;
+	height: 30px;
+}
+
+.btn-pasaizq {
+	position: absolute;
+	top:75%;
+	left:5%;	
+	background-color: #ffffff;
+	padding:2px;
+	text-align: center;
+	border:1px solid #154481;
+	cursor: pointer;
+	width: 20px;
+	height: 30px;
+}
+
+.paginador {
+	margin:20px 0;
+}
+ 
+.paginador ul {
+	list-style:none;
+	text-align: center;
+}
+ 
+.paginador ul li {
+	display:inline-block;
+	margin-right:10px;
+}
+ 
+.paginador ul li a {
+	display:block;
+	padding:10px 20px;
+	color:#fff;
+	background:#154481;
+	text-decoration: none;
+}
+ 
+.paginador ul li a:hover {
+	background:#6f95c7;
+}
+ 
+.paginador ul li .active {
+	background:#6f95c7;
+	font-weight:bold;
+}
+
+/* formulario filtro  */
+
+#formFiltro {
+	border: 1px solid #154481;
+	padding: 5px 10px;
+}
+
+/* MEDIATECA */
+
+.media-imagenes {
+	background-color: #9fc0ea;
+	text-align: center;
+	color: white;
+	padding: 0px;
+	margin: 10px 0px;
+	border: 1px solid #154488;
+}
+
+.media-img-tit {
+	text-transform: uppercase;
+	font-size: 2em;
+	background-color: #154481;
+	padding: 2px;
+}
+
+.media-img-body {
+	overflow: hidden;
+}
+
+.media-img-body a img {
+	transition: all 0.3s ease;
+}
+
+.media-img-body a img:hover {
+	transform: scale(1.2);
+}
+
+/* bloque áreas temáticas  */ 
+
+#block-areastematicas-2{
+	color: #154481;
+	width: 100%;
+	margin: 30px 0px;
+	background-color: #f4f4f4;
+	padding: 20px 5px;
+}
+
+#block-areastematicas-2 h2{
+	font-size: 2em;
+	text-align: center;
+	border-bottom: 1px solid #1544819c;
+	text-transform: uppercase;
+}
+
+.detalle-area {
+	display: block;
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+
+}
+
+.detalle-destacada p::before {
+	content: '';
+	width: 10px;
+	height: 2px;
+	background-color: #ffc107;
+	display: block;
+	margin: 10px auto 20px auto;
+	transition: all 0.3s ease;
+}
+
+.detalle-destacada:hover p::before {
+	width: 80px;
+
+}
+
+.detalle-destacada {
+	margin:20px 0px 20px 0px;
+}
+
+.detalle-destacada img {
+	transition: all 0.3s ease;
+}
+
+.detalle-destacada:hover img {
+	cursor: pointer;
+	transform: scale(1.2);
+
+}
+
+.area {
+	margin-bottom: 20px 0px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+/* MOSTRAR IMÁGENES */
+
+.carousel-inner {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	max-height: 680px;
+}
+
+.carousel-inner img {
+	object-fit: cover;
+}
+
+/* FORMACIÓN INICIAL   */
+
+#block-views-block-gestion-de-contenido-secretaria-general-block-1, 
+#block-views-block-gestion-de-contenido-formacion-block-1,
+#block-views-block-gestion-de-contenido-biblioteca-block-1,
+#block-views-block-gestion-de-contenido-biblioteca-block-1-1,
+#block-views-block-gestion-de-contenido-formacion-block-2,
+#block-views-block-gestion-de-contenido-formacion-block-2-2,
+#block-views-block-gestion-de-contenido-formacion-block-3,
+#block-views-block-gestion-de-contenido-formacion-block-3-2,
+#block-views-block-gestion-de-contenido-formacion-block-4 {
+	background-color: white;
+
+}
+#block-views-block-gestion-de-contenido-secretaria-general-block-1 h2, 
+#block-views-block-gestion-de-contenido-formacion-block-1 h2,
+#block-views-block-gestion-de-contenido-biblioteca-block-1 h2,
+#block-views-block-gestion-de-contenido-biblioteca-block-1-1 h2,
+#block-views-block-gestion-de-contenido-formacion-block-2 h2,
+#block-views-block-gestion-de-contenido-formacion-block-2-2 h2,
+#block-views-block-gestion-de-contenido-formacion-block-3 h2,
+#block-views-block-gestion-de-contenido-formacion-block-3-2 h2,
+#block-views-block-gestion-de-contenido-formacion-block-4 h2 {
+	padding: 10px;
+	font-size: 20px;
+	text-transform: uppercase;
+	background-color: white;
+	color: #154481;
+}
+
+.view-gestion-de-contenido-secretaria-general, 
+.view-gestion-de-contenido-biblioteca,
+.view-gestion-de-contenido-formacion, 
+.view-gestion-de-contenido-biblioteca {
+    padding: 0px 5px 0px 20px;
+    /* border: 2px solid #e3e3dc; */
+}
+
+ul.list-secretariado li, ul.list-formacion-continua {
+	margin: 5px;
+	font-size: 18px;
+}
+
+.list-formacion-continua .views-field,  .list-secretariado .views-field {
+    margin: 5px;
+}
