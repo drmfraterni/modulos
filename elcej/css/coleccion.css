@@ -252,6 +252,7 @@
 /* FORMACIÓN INICIAL   */
 
 #block-views-block-gestion-de-contenido-secretaria-general-block-1, 
+#block-views-block-gestion-de-contenido-formacion-block-1-2,
 #block-views-block-gestion-de-contenido-formacion-block-1,
 #block-views-block-gestion-de-contenido-biblioteca-block-1,
 #block-views-block-gestion-de-contenido-biblioteca-block-1-1,
@@ -263,7 +264,9 @@
 	background-color: white;
 
 }
-#block-views-block-gestion-de-contenido-secretaria-general-block-1 h2, 
+
+#block-views-block-gestion-de-contenido-secretaria-general-block-1 h2,
+#block-views-block-gestion-de-contenido-formacion-block-1-2 h2, 
 #block-views-block-gestion-de-contenido-formacion-block-1 h2,
 #block-views-block-gestion-de-contenido-biblioteca-block-1 h2,
 #block-views-block-gestion-de-contenido-biblioteca-block-1-1 h2,
@@ -287,11 +290,13 @@
     /* border: 2px solid #e3e3dc; */
 }
 
-ul.list-secretariado li, ul.list-formacion-continua {
+ul.list-secretariado li, ul.list-formacion-continua li,
+ul.list-formacion-internacional li {
 	margin: 5px;
 	font-size: 18px;
 }
 
-.list-formacion-continua .views-field,  .list-secretariado .views-field {
+.list-formacion-continua .views-field,  .list-secretariado .views-field,
+ .list-formacion-internacional .views-field {
     margin: 5px;
 }
