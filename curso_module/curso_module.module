@@ -1,0 +1,60 @@
+<?php
+
+    /**
+     * Implements hook_help();
+     */
+    function curso_module_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match) {
+        switch ($route_name) {
+    
+        // Main module help for the block module.
+        case 'help.page.curso_module':
+            return '<p> Este es el hook de ayuda de muestro módulo de curso</p>';
+    
+        // Help for another path in the block module.
+        
+        }
+    }
+    /**
+     * Implements hook_ENTITY_TYPE_update();
+     */
+
+    
+    function curso_module_node_update(\Drupal\node\NodeInterface $node) {
+
+        dpm('esto es una prueba de actualización');
+    }
+
+
+    /**
+     * Implements hook_ENTITY_TYPE_insert();
+     */
+
+    function curso_module_node_insert(\Drupal\node\NodeInterface $node) {
+
+        dpm('esto es una prueba de actualización');
+    }
+
+    /**
+     * Crear plantillas
+     */
+
+    function curso_module_theme($existing, $type, $theme, $path) {
+
+        return [
+            'curso_plantilla' => [
+                'variables' => [
+                    'etiqueta' => NULL,
+                    'tipo' => NULL,
+                ]    
+            ]
+        ];
+
+
+    }
+
+
+
+
+
+
+?>
