@@ -45,10 +45,67 @@
                 'variables' => [
                     'etiqueta' => NULL,
                     'tipo' => NULL,
+                    'formulario' => NULL,
                 ]    
             ]
         ];
 
+
+    }
+
+    /**
+     * Vamos a modificar diferentes formularios
+     * El primero es el formulario creado a través de nuestro módulo
+     * El segundo es el formulario de crear un artículo y que nos los da
+     * Drupal por defecto.
+     */
+
+    /*
+
+    function curso_module_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+    {
+
+        if ('curso_module_curso_form' == $form_id) 
+        {
+            dpm($form);
+            dpm('Entra en el formulario');
+
+
+            $form['checkbox']['#required'] = FALSE;
+        }
+
+        if ('node_article_form' == $form_id ) 
+        {
+
+            dpm($form);
+        }
+
+    }
+    */
+
+    /**
+     * En el ejemplo de arriba utilizamos el hook_form_alter
+     * En el ejemplo de abajo utilizamos el hook_form_FORM_ID_alter
+     * Sirven para lo mismo lo único que se hace de forma diferente.
+     * Mientras en el primero podemos concentrar todo los id de formulario
+     * En el de abajo tenemos que utilizar un hook por cada id.
+     */
+
+    //  hook_form_BASE_FORM_ID_alter
+
+    function curso_module_form_curso_module_curso_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+    {
+
+        $form['checkbox']['#required'] = FALSE;
+       
+
+    }
+
+    function curso_module_form_node_article_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+    {
+
+        dpm('Hemos entrado en el formulario de artículos');
+       
 
     }
 

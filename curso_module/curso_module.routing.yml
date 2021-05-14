@@ -18,3 +18,24 @@ curso_module.tercera_ruta:
     _controller: '\Drupal\curso_module\Controller\CursoController::nodos'
   requirements:
     _permission: 'access content'
+
+curso_module.curso_form:
+  path: '/curso/form/curso'
+  defaults:
+    _form: '\Drupal\curso_module\Form\CursoForm'
+  requirements:
+    _permission: 'access content'
+
+curso_module.controlador_form:
+  path: '/curso/controller/form'
+  defaults:
+    _controller: '\Drupal\curso_module\Controller\CursoController::formulario'
+  requirements:
+    _permission: 'access content'
+
+curso_module.ruta_configuracion:
+  path: '/curso/controller/config'
+  defaults:
+    _controller: '\Drupal\curso_module\Controller\CursoController::configCurso'
+  requirements:
+    _permission: 'access content'

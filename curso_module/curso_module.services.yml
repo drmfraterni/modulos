@@ -1,3 +1,4 @@
 services:
   curso_module.repetir: 
     class: Drupal\curso_module\Services\Miscelaneo
+    arguments: ['@messenger', '@entity_type.manager']
