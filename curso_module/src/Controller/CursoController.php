@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\curso_module\Services\Repetir;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Drupal\curso_module\Services\Miscelaneo;
 use Psr\Container\ContainerInterface;
@@ -23,6 +24,7 @@ class CursoController extends ControllerBase {
 
     // variable para el servicio
     private $repetir;
+    //private $configFactory;
 
     /**
      * Funcion constructora para instanciar los servicios
@@ -36,15 +38,26 @@ class CursoController extends ControllerBase {
     {
         $this->repetir = $repetir;   
     }*/
+
+    /**
+     * Constructor para instanciar dos clases la nuestra de Miselaneo
+     * La clase de configuración del sistema (configuración del sitio)
+     */
     
-    public function __construct(Miscelaneo $repetir)
+    public function __construct(Miscelaneo $repetir, ConfigFactoryInterface $configFactory)
     {
-        $this->repetir = $repetir;   
+        $this->repetir = $repetir; 
+        $this->configFactory = $configFactory;  
     }
+    /**
+     * CREAMOS los contianer para seguir instanciando las clases
+     * Misceloneo y config system
+     */
 
     public static function create(ContainerInterface $container) {
         return new static (
-            $container->get('curso_module.repetir')
+            $container->get('curso_module.repetir'),
+            $container->get('config.factory')
             //$container->get('entity_type.manager')
         );
     }
@@ -118,14 +131,28 @@ class CursoController extends ControllerBase {
     }
 
     /**
-     * Formulario de configuración del sistema
+     * Formulario de configuración del SISTEMA
      */
 
-    public function configCurso(){
+        public function configCurso(){
 
         $config = $this->config('system.site');
         dpm($config);
         dpm($config->get('name'), 'name');
+
+        $configEditable = $this->configFactory->getEditable('system.site');
+
+        /**
+         * para hacer la configuración del sistema editable
+         */        
+
+        $configEditable->set('slogan', 'Slogan editado desde el código');
+        $configEditable->save();
+
+        dpm($configEditable, 'config Editable');
+
+
+        
 
         return ['#markup' => 'ruta de configuración'];
     }

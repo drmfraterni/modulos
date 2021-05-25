@@ -39,3 +39,25 @@ curso_module.ruta_configuracion:
     _controller: '\Drupal\curso_module\Controller\CursoController::configCurso'
   requirements:
     _permission: 'access content'
+
+curso_module.carga_entidad:
+  path: '/curso/controller/entity/load'
+  defaults:
+    _controller: 'Drupal\curso_module\Controller\EntityController::entityLoad'
+  requirements:
+    _permission: 'access content'
+
+curso_module.crear_entidad:
+  path: '/curso/controller/entity/create'
+  defaults:
+    _controller: 'Drupal\curso_module\Controller\EntityController::entityCreate'
+  requirements:
+    _permission: 'access content'
+
+curso_module.editar_entidad:
+  path: '/curso/controller/entity/editar'
+  defaults:
+    _controller: 'Drupal\curso_module\Controller\EntityController::entityEdit'
+  requirements:
+    _permission: 'access content'
+  
