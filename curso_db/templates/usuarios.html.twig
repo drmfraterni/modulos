@@ -1,0 +1,23 @@
+
+<div class="todos-usuarios">
+
+    <div class="container my-3 mostrar-usu ">
+        <div class="tit-usuarios"><h1>{{ titulo }}</h1></div>
+        <div class="descripcion-usurios">{{ descripcion }}</div>
+        <div class="row">
+            {% for i in inicio..20 %}        
+            
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-1 tarjeta">
+                    <div class="tarjeta-usu">
+                        <div class="usu-apellidos">{{datos['apellidos'][i] }}</div>
+                        <div class="usu-nombre">{{datos['nombre'][i] }}</div>                        
+                        <div class="usu-correo">Email:<br/> {{datos['correo'][i] }}</div>
+                    </div>
+                </div>       
+
+      
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

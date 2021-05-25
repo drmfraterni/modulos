@@ -1,0 +1,3 @@
+services:
+  curso_db.nuevaconexion: 
+    class: Drupal\curso_db\Services\Nconexion

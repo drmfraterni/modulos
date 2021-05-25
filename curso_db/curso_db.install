@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ * @return array
+ */
+function curso_db_schema() {
+  $schema['curso_db'] = [
+    'description' => 'Almacena la informacion para el curso.',
+    'fields' => [
+      'id' => [
+        'description' => 'La ID de la informacion.',
+        'type' => 'serial', // autoincremental
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'description' => 'The identifier of the data.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'value' => [
+        'description' => 'The value.',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 128,
+      ],
+      'nid' => [
+        'description' => 'The node id.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ],
+    ],
+    'foreign keys' => [
+      'curso_db' => [
+        'table' => 'node',
+        'columns' => [
+          'nid' => 'nid'
+        ]
+      ],
+    ],
+    'primary key' => [
+      'id',
+    ],
+  ];
+  return $schema;
+}

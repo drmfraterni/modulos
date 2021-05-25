@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains multistep_form.module..
+ */
+
+
+/**
+ * Implements hook_theme().
+ */
+function curso_db_theme($existing, $type, $theme, $path) {
+
+  return[
+    'usuarios' => [
+      'variables' => [
+        'titulo' => NULL,
+        'descripcion' => NULL,
+        'datos' => NULL,
+        ],
+     ],
+  ];
+}
+

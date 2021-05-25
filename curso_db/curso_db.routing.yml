@@ -1,0 +1,48 @@
+curso_db.ruta_estatica:
+  path: '/curso/db/query'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::queryEstatica'
+  requirements:
+    _permission: 'access content'
+
+curso_db.ruta_select:
+  path: '/curso/db/select'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::selectDinamico'
+  requirements:
+    _permission: 'access content'
+
+curso_db.ruta_insert:
+  path: '/curso/db/insert'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::insertDinamico'
+  requirements:
+    _permission: 'access content'
+
+curso_db.ruta_update:
+  path: '/curso/db/update'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::updateDinamico'
+  requirements:
+    _permission: 'access content'
+
+curso_db.ruta_delete:
+  path: '/curso/db/delete'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::deleteDinamico'
+  requirements:
+    _permission: 'access content'
+
+curso_db.ruta_merge:
+  path: '/curso/db/merge'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\DbController::mergeDinamico'
+  requirements:
+    _permission: 'access content'
+
+curso_db.nueva_conexion:
+  path: '/aplicacion/allusuarios'
+  defaults:
+    _controller: 'Drupal\curso_db\Controller\NuevadbController::allUsuarios'
+  requirements:
+    _permission: 'access content'
