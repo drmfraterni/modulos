@@ -1,0 +1,18 @@
+<div class="all-nodos">
+    <h1>Ver todo los nodos</h1>
+
+    {% set num = datos|length %}
+
+   
+    {% for i in inicio..num %} 
+
+        <div class="nodos">
+            <p class="nd-id">NODOS: {{datos['id'][i]}}</p>
+            <p class="nd-titulo">TÍTULO: {{datos['titulo'][i]}}</p>
+            <p class="nd-contenido">CONTENIDO: {{datos['contenido'][i]|striptags}}</p>
+
+        </div>     
+
+    {% endfor %}
+
+</div>

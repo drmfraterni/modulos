@@ -48,7 +48,7 @@ class Nconexion{
     return $this->con;
   }
 
-  public function buscarUsuarios() 
+  public function buscarUsuarios($usuario = '') 
   {
     $consulta = $this->con->query("SELECT idUsuario, dsNombre, dsApellido1, dsApellido2,
     dsEmail, fcAlta, dsTelefono1, cdTarjeta FROM bza_usuarios");

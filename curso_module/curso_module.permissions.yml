@@ -1,0 +1,4 @@
+curso permiso limitado:
+  title: 'Acceso limitado al contenido del curso'
+  restrict access: true 
+  

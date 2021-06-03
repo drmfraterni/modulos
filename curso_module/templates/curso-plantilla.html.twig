@@ -1,6 +1,18 @@
 <div>Esta es la etiqueta del nodo: {{ etiqueta }}</div>
 <div>Este el el tipo de nodo: {{ tipo }}</div>
 
+{% if contenido %}
+
+    <div class="cont-destacado">
+        <div class="cont-tit">{{contenido[0] | striptags }}</div>
+        <div class="cont-body">{{contenido[1] | striptags }}</div>
+
+    </div>
+
+    
+
+{% endif %}
+
 <div class="formulario-nuevo">
     {{ formulario }}
 </div>

@@ -1,0 +1,6 @@
+curso_tabla.ruta_tabla:
+  path: '/curso/tabla'
+  defaults:
+    _controller: '\Drupal\curso_tabla\Controller\TablaController::tabla'
+  requirements:
+    _permission: 'curso acceder tabla'

@@ -1,0 +1,5 @@
+curso_tabla.ruta_tabla:
+  title: 'Tabla'
+  description: 'Tabla de ejemplo del curso'
+  route_name: curso_tabla.ruta_tabla
+  menu_name: 'main'
